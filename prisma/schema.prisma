@@ -1,0 +1,630 @@
+// =============================================================================
+// hireCNC Egypt — Production Database Schema
+// Phase 2: Database Rebuild (ADR-001, ADR-002, ADR-005, ADR-008)
+// With Tenant Isolation, Many-to-Many Skills, Job Expiry, and Reliability History
+// =============================================================================
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// =============================================================================
+// ENUMS
+// =============================================================================
+
+enum Role {
+  SUPER_ADMIN
+  SUPPORT_AGENT
+  FINANCIAL_ADMIN
+  EMPLOYER
+  CANDIDATE
+}
+
+enum UserStatus {
+  PENDING_EMAIL      // Registered, email not verified yet
+  ACTIVE             // Verified and active
+  PENDING_APPROVAL   // Employer awaiting admin verification
+  REJECTED           // Admin rejected employer registration
+  SUSPENDED          // Temporarily suspended by admin
+  BANNED             // Permanently banned
+  DELETED            // Soft deleted
+}
+
+enum CandidateType {
+  TECHNICIAN
+  ENGINEER
+}
+
+enum SkillLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+enum JobStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  CLOSED
+}
+
+enum ApplicationStatus {
+  PENDING
+  CONTACTED
+  INTERVIEW
+  ACCEPTED
+  REJECTED
+  NO_SHOW
+}
+
+enum ControlType {
+  FANUC
+  SIEMENS
+  HEIDENHAIN
+  HAAS
+  MAZATROL
+  OTHER
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+  PENDING
+}
+
+enum TransactionStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+enum NotificationChannel {
+  EMAIL
+  WHATSAPP
+  SMS
+  IN_APP
+}
+
+enum NotificationStatus {
+  PENDING
+  QUEUED
+  SENT
+  FAILED
+  READ
+}
+
+// =============================================================================
+// CORE IDENTITY — Phase 1: Foundation Rebuild (ADR-001, ADR-002)
+// =============================================================================
+
+model User {
+  id            String     @id @default(uuid())
+  email         String     @unique
+  passwordHash  String
+  name          String     // الاسم الشخصي للمستخدم
+
+  // Email verification (ADR-002: email is primary identity)
+  emailVerified Boolean    @default(false)
+  phoneNumber   String?    @unique
+  phoneVerified Boolean    @default(false)
+  role          Role
+  status        UserStatus @default(PENDING_EMAIL)
+
+  lastLoginAt   DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  deletedAt     DateTime?
+
+  // Account locking security fields (Sprint 3)
+  failedLoginAttempts Int      @default(0)
+  lockedUntil         DateTime?
+
+  // Profiles
+  employerProfile  EmployerProfile?
+  candidateProfile CandidateProfile?
+  adminProfile     AdminProfile?
+
+  // Tokens
+  emailVerifyTokens   EmailVerifyToken[]
+  passwordResetTokens PasswordResetToken[]
+  refreshTokens       RefreshToken[]
+
+  // Operations & Logs
+  auditLogs     AuditLog[]
+  notifications Notification[]
+  posts         Post[]
+
+  @@index([email])
+  @@index([phoneNumber])
+  @@index([role, status])
+}
+
+// =============================================================================
+// PROFILE TABLES
+// =============================================================================
+
+model EmployerProfile {
+  id                 String   @id @default(uuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  companyName        String
+  industryZone       String
+  address            String
+  commercialRegId    String?
+  businessLicenseUrl String?
+  logoUrl            String?
+  isVerified         Boolean  @default(false)
+  rejectionReason    String?
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  jobs          Job[]
+  subscriptions Subscription[]
+
+  @@index([isVerified])
+}
+
+model CandidateProfile {
+  id               String        @id @default(uuid())
+  userId           String        @unique
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  candidateType    CandidateType @default(TECHNICIAN)
+  governorate      String
+  city             String
+  experienceYears  Int
+  expectedSalary   Decimal       @db.Decimal(10, 2)
+
+  reliabilityScore Float         @default(100.0)
+  isAvailable      Boolean       @default(true)
+  cvUrl            String?
+
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  // Many-to-Many Skills Refinement (Note 1 & 2)
+  machines     CandidateMachine[]
+  softwares    CandidateSoftware[]
+
+  applications JobApplication[]
+  workHistory  WorkHistory[]
+  reliabilityHistories ReliabilityHistory[]
+
+  @@index([isAvailable, governorate])
+  @@index([candidateType, isAvailable])
+}
+
+model AdminProfile {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  permissions String[]
+  createdAt   DateTime @default(now())
+}
+
+// =============================================================================
+// MANY-TO-MANY SKILLS (Note 1 & 2)
+// =============================================================================
+
+model CandidateMachine {
+  id                 String           @id @default(uuid())
+  candidateProfileId String
+  candidateProfile   CandidateProfile @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+  machineTypeId      String
+  machineType        MachineType      @relation(fields: [machineTypeId], references: [id], onDelete: Cascade)
+
+  experienceYears    Int              @default(0)
+  level              SkillLevel       @default(INTERMEDIATE)
+  verified           Boolean          @default(false)
+
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  @@unique([candidateProfileId, machineTypeId])
+}
+
+model CandidateSoftware {
+  id                 String                 @id @default(uuid())
+  candidateProfileId String
+  candidateProfile   CandidateProfile       @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+  softwareId         String
+  software           SoftwareSpecialization @relation(fields: [softwareId], references: [id], onDelete: Cascade)
+
+  experienceYears    Int                    @default(0)
+  level              SkillLevel             @default(INTERMEDIATE)
+  verified           Boolean                @default(false)
+
+  createdAt          DateTime               @default(now())
+  updatedAt          DateTime               @updatedAt
+
+  @@unique([candidateProfileId, softwareId])
+}
+
+// =============================================================================
+// RELIABILITY AUDITING (Note 5)
+// =============================================================================
+
+model ReliabilityHistory {
+  id                 String           @id @default(uuid())
+  candidateProfileId String
+  candidateProfile   CandidateProfile @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+
+  actorId            String           // ID of user or "SYSTEM"
+  change             Float            // e.g. -5.0 or +10.0
+  oldScore           Float
+  newScore           Float
+  reason             String           // e.g. "NO_SHOW" | "COMPLETED_PROFILE" | "INTERVIEW_ATTENDED"
+
+  createdAt          DateTime         @default(now())
+
+  @@index([candidateProfileId])
+}
+
+// =============================================================================
+// AUTH TOKENS
+// =============================================================================
+
+model EmailVerifyToken {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([token])
+  @@index([userId])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  used      Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([token])
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  revoked   Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([token])
+  @@index([userId])
+}
+
+// =============================================================================
+// CANDIDATE DOMAIN
+// =============================================================================
+
+model WorkHistory {
+  id                 String           @id @default(uuid())
+  candidateProfileId String
+  candidateProfile   CandidateProfile @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+
+  companyName  String
+  jobTitle     String
+  startDate    DateTime
+  endDate      DateTime?
+  description  String?
+}
+
+// =============================================================================
+// JOBS DOMAIN
+// =============================================================================
+
+model Job {
+  id              String          @id @default(uuid())
+  employerId      String
+  employer        EmployerProfile @relation(fields: [employerId], references: [id], onDelete: Cascade)
+
+  // Tenant Isolation (Note 8)
+  tenantId        String          // Maps to employerId (the B2B tenant)
+
+  title           String
+  controlRequired ControlType
+  location        String
+  experienceMin   Int
+  experienceMax   Int
+  salaryMin       Decimal         @db.Decimal(10, 2)
+  salaryMax       Decimal         @db.Decimal(10, 2)
+  hideSalary      Boolean         @default(false)
+  description     String
+  status          JobStatus       @default(DRAFT)
+
+  // Job Expiry & Featured Status (Note 3)
+  expiresAt       DateTime?
+  isFeatured      Boolean         @default(false)
+
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
+
+  applications       JobApplication[]
+  screeningQuestions ScreeningQuestion[]
+
+  @@index([tenantId])
+  @@index([status, createdAt])
+  @@index([employerId, status])
+  @@index([controlRequired, status])
+}
+
+model ScreeningQuestion {
+  id           String  @id @default(uuid())
+  jobId        String
+  job          Job     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  question     String
+  options      String[]
+  correctIndex Int
+}
+
+model JobApplication {
+  id                  String            @id @default(uuid())
+  jobId               String
+  job                 Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  candidateProfileId  String
+  candidateProfile    CandidateProfile  @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+
+  status              ApplicationStatus @default(PENDING)
+  score               Float?
+
+  interviewDate       DateTime?
+  interviewLocation   String?
+
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  @@unique([jobId, candidateProfileId])
+  @@index([jobId, status])
+  @@index([candidateProfileId, status])
+}
+
+// =============================================================================
+// SUBSCRIPTION & BILLING DOMAIN
+// =============================================================================
+
+model SubscriptionPlan {
+  id               String  @id @default(uuid())
+  name             String  @unique
+  description      String?
+  priceEGP         Decimal @db.Decimal(10, 2)
+  durationDays     Int
+
+  maxActiveJobs    Int     // -1 = unlimited
+  maxPhoneViews    Int     // -1 = unlimited
+  canViewPhone     Boolean @default(false)
+  canExportData    Boolean @default(false)
+
+  isActive         Boolean @default(true)
+  sortOrder        Int     @default(0)
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id             String             @id @default(uuid())
+  employerId     String
+  employer       EmployerProfile    @relation(fields: [employerId], references: [id], onDelete: Cascade)
+  planId         String
+  plan           SubscriptionPlan   @relation(fields: [planId], references: [id])
+
+  // Tenant Isolation (Note 8)
+  tenantId       String             // Maps to employerId
+
+  status         SubscriptionStatus @default(PENDING)
+  startDate      DateTime?
+  endDate        DateTime?
+
+  // Quota caching fields (Note 4)
+  remainingJobPosts Int             @default(0)
+  remainingViews    Int             @default(0)
+
+  phoneViewsUsed Int                @default(0)
+  quotaResetAt   DateTime?
+
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  invoices       Invoice[]
+
+  @@index([tenantId])
+  @@index([employerId, status])
+  @@index([endDate, status])
+}
+
+model Invoice {
+  id             String       @id @default(uuid())
+  subscriptionId String
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+
+  // Tenant Isolation (Note 8)
+  tenantId       String       // Maps to subscription.employerId
+
+  amount         Decimal      @db.Decimal(10, 2)
+  currency       String       @default("EGP")
+  issuedAt       DateTime     @default(now())
+  pdfUrl         String?
+
+  transactions   Transaction[]
+
+  @@index([tenantId])
+}
+
+model Transaction {
+  id             String            @id @default(uuid())
+  invoiceId      String
+  invoice        Invoice           @relation(fields: [invoiceId], references: [id])
+
+  // Tenant Isolation (Note 8)
+  tenantId       String            // Maps to invoice.tenantId
+
+  idempotencyKey String            @unique
+  gatewayRef     String?
+  paymentMethod  String?
+  status         TransactionStatus @default(PENDING)
+  amount         Decimal           @db.Decimal(10, 2)
+  currency       String            @default("EGP")
+
+  failureReason  String?
+  webhookPayload Json?
+
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  @@index([tenantId])
+  @@index([idempotencyKey])
+  @@index([gatewayRef])
+  @@index([status])
+}
+
+// =============================================================================
+// NOTIFICATIONS
+// =============================================================================
+
+model Notification {
+  id        String              @id @default(uuid())
+  userId    String
+  user      User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type      String
+  title     String
+  body      String
+  channel   NotificationChannel
+  status    NotificationStatus  @default(PENDING) // Note 6
+  isRead    Boolean             @default(false)
+
+  metadata  Json?
+  error     String?
+
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+
+  @@index([userId, isRead])
+  @@index([status, channel])
+}
+
+// =============================================================================
+// AUDIT & OBSERVABILITY
+// =============================================================================
+
+model AuditLog {
+  id            String   @id @default(uuid())
+  actorId       String
+  actor         User     @relation(fields: [actorId], references: [id])
+
+  // Tenant Isolation (Note 8)
+  tenantId      String?  // Optional since admins and candidates don't belong to a tenant
+
+  action        String
+  entityType    String?
+  entityId      String?
+  oldValue      Json?
+  newValue      Json?
+
+  correlationId String?
+  ipAddress     String?
+  userAgent     String?
+
+  createdAt     DateTime @default(now())
+
+  @@index([tenantId])
+  @@index([actorId])
+  @@index([entityType, entityId])
+  @@index([correlationId])
+  @@index([createdAt])
+}
+
+// =============================================================================
+// CONFIGURATION (Phase 12)
+// =============================================================================
+
+model SystemSetting {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       String
+  type        String
+  category    String
+  isPublic    Boolean  @default(false)
+  description String?
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([isPublic])
+}
+
+model FeatureFlag {
+  id          String   @id @default(uuid())
+  name        String
+  environment String
+  isActive    Boolean  @default(false)
+  description String?
+  updatedAt   DateTime @updatedAt
+
+  @@unique([name, environment])
+  @@index([name, environment, isActive])
+}
+
+// =============================================================================
+// LOOKUP TABLES
+// =============================================================================
+
+model MachineType {
+  id        String             @id @default(uuid())
+  name      String             @unique
+  candidates CandidateMachine[]
+}
+
+model SoftwareSpecialization {
+  id        String              @id @default(uuid())
+  name      String              @unique
+  candidates CandidateSoftware[]
+}
+
+// =============================================================================
+// BLOG / CMS (Note 7)
+// =============================================================================
+
+model Post {
+  id              String   @id @default(uuid())
+  title           String
+  slug            String   @unique
+  content         String
+  excerpt         String
+  coverImage      String?
+  published       Boolean  @default(false)
+  authorId        String
+  author          User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  // SEO Fields (Note 7)
+  metaTitle       String?
+  metaDescription String?
+  canonicalUrl    String?
+  ogImage         String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([published, createdAt])
+  @@index([slug])
+}
