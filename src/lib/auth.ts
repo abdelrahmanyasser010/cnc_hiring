@@ -1,9 +1,10 @@
 // src/lib/auth.ts
-// NextAuth configuration — Unified Email+Password for ALL roles (ADR-001, ADR-002)
-// Eliminates the candidate_session cookie system entirely
+// NextAuth configuration — Unified Email+Password & Google OAuth for ALL roles (ADR-001, ADR-002)
+// Eliminates the candidate_session cookie system entirely and provides 1-click Google sign-in.
 
 import type { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import { db } from "./db";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
@@ -39,18 +40,24 @@ export const authOptions: NextAuthOptions = {
     error: "/login",
   },
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || "placeholder_client_id",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "placeholder_client_secret",
+      allowDangerousEmailAccountLinking: true,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
+        email: { label: "Email", type: "text" },
+        phoneNumber: { label: "Phone", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
+        const identifier = (credentials?.email || credentials?.phoneNumber || "").toLowerCase().trim();
+        if (!identifier || !credentials?.password) {
           throw new Error("يرجى إدخال البريد الإلكتروني أو رقم الهاتف وكلمة المرور");
         }
 
-        const identifier = credentials.email.toLowerCase().trim();
         const user = await db.user.findFirst({
           where: {
             OR: [
@@ -164,8 +171,76 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
+    async signIn({ user, account }) {
+      if (account?.provider === "google") {
+        if (!user.email) return false;
+        const email = user.email.toLowerCase().trim();
+        const existingUser = await db.user.findUnique({
+          where: { email },
+        });
+
+        if (existingUser) {
+          if (existingUser.status === "BANNED" || existingUser.status === "DELETED") {
+            return false;
+          }
+          await db.user.update({
+            where: { id: existingUser.id },
+            data: {
+              emailVerified: true,
+              status: existingUser.status === "PENDING_EMAIL" ? "ACTIVE" : existingUser.status,
+              lastLoginAt: new Date(),
+            },
+          });
+          return true;
+        } else {
+          // Create new employer account via Google OAuth
+          const randomHash = await bcrypt.hash(crypto.randomUUID(), 10);
+          await db.user.create({
+            data: {
+              email,
+              name: user.name || email.split("@")[0],
+              passwordHash: randomHash,
+              role: "EMPLOYER",
+              status: "ACTIVE",
+              emailVerified: true,
+              lastLoginAt: new Date(),
+              employerProfile: {
+                create: {
+                  companyName: user.name || "ورشة تشغيل CNC",
+                  industryZone: "العاشر من رمضان",
+                  address: "مصر",
+                },
+              },
+            },
+          });
+          return true;
+        }
+      }
+      return true;
+    },
+    async jwt({ token, user, account }) {
+      if (account?.provider === "google" || (user && !token.role)) {
+        const email = user?.email || token?.email;
+        if (email) {
+          const dbUser = await db.user.findUnique({
+            where: { email: email.toLowerCase().trim() },
+          });
+          if (dbUser) {
+            token.id = dbUser.id;
+            token.role = dbUser.role;
+            token.status = dbUser.status;
+            const refreshTokenString = crypto.randomBytes(64).toString("hex");
+            await db.refreshToken.create({
+              data: {
+                userId: dbUser.id,
+                token: refreshTokenString,
+                expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+              },
+            });
+            token.refreshToken = refreshTokenString;
+          }
+        }
+      } else if (user) {
         token.id = user.id;
         token.role = (user as unknown as { role: string }).role;
         token.status = (user as unknown as { status: string }).status;
@@ -189,7 +264,6 @@ export const authOptions: NextAuthOptions = {
           }
         } catch (error) {
           console.error("[NextAuth JWT Callback] Refresh token check failed:", error);
-          // Don't crash but fail safe on database errors
           return {} as typeof token;
         }
       }
@@ -202,7 +276,6 @@ export const authOptions: NextAuthOptions = {
         session.user.status = token.status as string;
         session.user.refreshToken = token.refreshToken as string;
       } else if (!token.id) {
-        // Clear session user if token was cleared
         Object.assign(session, { user: null });
       }
       return session;

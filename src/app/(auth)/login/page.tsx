@@ -47,12 +47,15 @@ function LoginContent() {
     setSuccess(null);
     setIsLoading(true);
 
-    // التحقق البسيط من رقم الهاتف المصري
-    const phoneRegex = /^01[0125][0-9]{8}$/;
-    if (!phoneRegex.test(phoneNumber)) {
-      setError("يرجى إدخال رقم هاتف مصري صحيح مكون من 11 رقماً (مثال: 01012345678)");
-      setIsLoading(false);
-      return;
+    // التحقق من البريد الإلكتروني أو رقم الهاتف المصري
+    const isEmail = phoneNumber.includes("@");
+    if (!isEmail) {
+      const phoneRegex = /^01[0125][0-9]{8}$/;
+      if (!phoneRegex.test(phoneNumber)) {
+        setError("يرجى إدخال رقم هاتف مصري صحيح (مثال: 01012345678) أو بريد إلكتروني صحيح");
+        setIsLoading(false);
+        return;
+      }
     }
 
     if (password.length < 6) {
@@ -63,6 +66,7 @@ function LoginContent() {
 
     try {
       const result = await signIn("credentials", {
+        email: phoneNumber,
         phoneNumber,
         password,
         redirect: false,
@@ -125,10 +129,10 @@ function LoginContent() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Phone Input */}
+            {/* Phone/Email Input */}
             <div>
               <label htmlFor="phone" className="block text-sm font-semibold text-foreground/80 mb-2">
-                رقم الهاتف المحمول
+                البريد الإلكتروني أو رقم الهاتف المحمول
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
@@ -137,7 +141,7 @@ function LoginContent() {
                 <input
                   id="phone"
                   type="text"
-                  placeholder="01xxxxxxxxx"
+                  placeholder="name@example.com أو 010xxxxxxxx"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-left"
@@ -154,9 +158,6 @@ function LoginContent() {
                 <label htmlFor="password" className="block text-sm font-semibold text-foreground/80">
                   كلمة المرور
                 </label>
-                {/* <Link href="/forgot-password" className="text-xs text-primary hover:underline">
-                  نسيت كلمة المرور؟
-                </Link> */}
               </div>
               <div className="relative">
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
@@ -194,6 +195,32 @@ function LoginContent() {
           </form>
 
           {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-border"></div>
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="bg-card px-3 text-foreground/50 font-medium">أو سجل الدخول بضغطة واحدة</span>
+            </div>
+          </div>
+
+          {/* Google OAuth Button */}
+          <button
+            type="button"
+            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+            disabled={isLoading}
+            className="w-full py-3 px-4 rounded-xl border border-border bg-card hover:bg-secondary/10 transition-all font-semibold flex items-center justify-center gap-3 shadow-sm cursor-pointer disabled:opacity-50 text-sm mb-4"
+          >
+            <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
+              <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.1 8.9 5 12 5z"/>
+              <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/>
+              <path fill="#FBBC05" d="M5.3 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.6 7.4C.6 9.4 0 11.6 0 14s.6 4.6 1.6 6.6l3.7-2.8z"/>
+              <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5.2L1.6 15.9C3.5 19.7 7.4 23 12 23z"/>
+            </svg>
+            <span>الدخول السريع بحساب Google (Gmail)</span>
+          </button>
+
+          {/* Divider 2 */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-border"></div>
