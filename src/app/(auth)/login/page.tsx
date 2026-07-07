@@ -5,7 +5,7 @@ import React, { useState, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Lock, Phone, AlertCircle, CheckCircle, ArrowRight, Loader2 } from "lucide-react";
+import { Lock, Mail, AlertCircle, CheckCircle, ArrowRight, Loader2 } from "lucide-react";
 
 function LoginContent() {
   const router = useRouter();
@@ -129,22 +129,22 @@ function LoginContent() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Phone/Email Input */}
+            {/* Email/Phone Input */}
             <div>
               <label htmlFor="phone" className="block text-sm font-semibold text-foreground/80 mb-2">
-                البريد الإلكتروني أو رقم الهاتف المحمول
+                البريد الإلكتروني الأساسي <span className="text-xs text-foreground/40">(أو رقم الهاتف)</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
-                  <Phone className="w-5 h-5" />
+                  <Mail className="w-5 h-5" />
                 </div>
                 <input
                   id="phone"
                   type="text"
-                  placeholder="name@example.com أو 010xxxxxxxx"
+                  placeholder="name@company.com (أو 010xxxxxxxx)"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-left"
+                  className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-left font-mono"
                   dir="ltr"
                   disabled={isLoading}
                   required

@@ -15,7 +15,9 @@ import {
   Loader2, 
   ArrowLeft,
   Cpu,
-  Laptop
+  Laptop,
+  Mail,
+  Lock
 } from "lucide-react";
 import Link from "next/link";
 
@@ -121,7 +123,46 @@ export function CandidateRegisterForm({ lookups }: { lookups: Lookups }) {
         )}
       </div>
 
-      {/* 4. Phone number */}
+      {/* 4. Email (Primary for Login & Notifications) & Password */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="flex flex-col gap-2">
+          <label className="text-xs font-bold text-foreground/80">البريد الإلكتروني (الأساسي للدخول) <span className="text-red-500">*</span></label>
+          <div className="relative">
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="name@example.com" 
+              required
+              dir="ltr"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm text-left font-mono"
+            />
+            <Mail className="absolute left-3 top-3 w-4 h-4 text-foreground/30 pointer-events-none" />
+          </div>
+          {state?.errors?.email && (
+            <span className="text-[10px] text-red-500 font-semibold">{state.errors.email[0]}</span>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-xs font-bold text-foreground/80">كلمة المرور (للحساب) <span className="text-red-500">*</span></label>
+          <div className="relative">
+            <input 
+              type="password" 
+              name="password" 
+              placeholder="••••••••" 
+              required
+              dir="ltr"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm text-left font-mono"
+            />
+            <Lock className="absolute left-3 top-3 w-4 h-4 text-foreground/30 pointer-events-none" />
+          </div>
+          {state?.errors?.password && (
+            <span className="text-[10px] text-red-500 font-semibold">{state.errors.password[0]}</span>
+          )}
+        </div>
+      </div>
+
+      {/* 5. Phone number */}
       <div className="flex flex-col gap-2">
         <label className="text-xs font-bold text-foreground/80">رقم الهاتف (الواتساب النشط) <span className="text-red-500">*</span></label>
         <div className="relative">

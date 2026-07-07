@@ -12,6 +12,7 @@ import {
   Phone, 
   Lock, 
   User, 
+  Mail,
   AlertCircle, 
   ArrowRight, 
   Loader2,
@@ -38,6 +39,7 @@ export default function RegisterPage() {
 
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     companyName: "",
     industryZone: "",
     address: "",
@@ -62,12 +64,21 @@ export default function RegisterPage() {
     setError(null);
     setIsLoading(true);
 
-    // التحقق من رقم الهاتف المصري
-    const phoneRegex = /^01[0125][0-9]{8}$/;
-    if (!phoneRegex.test(formData.phoneNumber)) {
-      setError("يرجى إدخال رقم هاتف مصري صحيح مكون من 11 رقماً (مثال: 01012345678)");
+    // التحقق الأساسي من البريد الإلكتروني (الأولوية للدخول)
+    if (!formData.email || !formData.email.includes("@")) {
+      setError("يرجى إدخال بريد إلكتروني صحيح (مثال: name@company.com)");
       setIsLoading(false);
       return;
+    }
+
+    // التحقق من رقم الهاتف المصري (اختياري لكن إن وجد يجب أن يكون صحيحاً)
+    if (formData.phoneNumber && formData.phoneNumber.trim() !== "") {
+      const phoneRegex = /^01[0125][0-9]{8}$/;
+      if (!phoneRegex.test(formData.phoneNumber)) {
+        setError("يرجى إدخال رقم هاتف مصري صحيح مكون من 11 رقماً (مثال: 01012345678)");
+        setIsLoading(false);
+        return;
+      }
     }
 
     if (formData.password.length < 6) {
@@ -165,7 +176,7 @@ export default function RegisterPage() {
               {/* Personal Name Input */}
               <div>
                 <label htmlFor="name" className="block text-sm font-semibold text-foreground/80 mb-2">
-                  الاسم الشخصي (مسؤول التوظيف)
+                  الاسم الشخصي (مسؤول التوظيف) <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
@@ -185,10 +196,36 @@ export default function RegisterPage() {
                 </div>
               </div>
 
+              {/* Email Input (Primary) */}
+              <div>
+                <label htmlFor="email" className="block text-sm font-semibold text-foreground/80 mb-2">
+                  البريد الإلكتروني (الأساسي للدخول) <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="name@company.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-left"
+                    dir="ltr"
+                    disabled={isLoading}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
               {/* Company Name Input */}
               <div>
                 <label htmlFor="companyName" className="block text-sm font-semibold text-foreground/80 mb-2">
-                  اسم الشركة / المصنع / الورشة
+                  اسم الشركة / المصنع / الورشة <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
@@ -207,13 +244,37 @@ export default function RegisterPage() {
                   />
                 </div>
               </div>
+
+              {/* Password Input */}
+              <div>
+                <label htmlFor="password" className="block text-sm font-semibold text-foreground/80 mb-2">
+                  كلمة المرور <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
+                    <Lock className="w-5 h-5" />
+                  </div>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="••••••••"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-left"
+                    dir="ltr"
+                    disabled={isLoading}
+                    required
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
               {/* Industry Zone Dropdown */}
               <div>
                 <label htmlFor="industryZone" className="block text-sm font-semibold text-foreground/80 mb-2">
-                  المنطقة الصناعية
+                  المنطقة الصناعية <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
@@ -244,7 +305,7 @@ export default function RegisterPage() {
               {/* Detailed Address */}
               <div>
                 <label htmlFor="address" className="block text-sm font-semibold text-foreground/80 mb-2">
-                  العنوان بالتفصيل
+                  العنوان بالتفصيل <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
@@ -265,11 +326,11 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-4">
-              {/* Phone Input */}
+            <div className="grid md:grid-cols-1 gap-4">
+              {/* Phone Input (Optional) */}
               <div>
                 <label htmlFor="phoneNumber" className="block text-sm font-semibold text-foreground/80 mb-2">
-                  رقم الهاتف المحمول
+                  رقم الهاتف المحمول <span className="text-xs text-foreground/40">(اختياري / للتواصل عبر الواتساب)</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
@@ -282,34 +343,9 @@ export default function RegisterPage() {
                     placeholder="01xxxxxxxxx"
                     value={formData.phoneNumber}
                     onChange={handleChange}
-                    className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-left"
+                    className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-left font-mono"
                     dir="ltr"
                     disabled={isLoading}
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Password Input */}
-              <div>
-                <label htmlFor="password" className="block text-sm font-semibold text-foreground/80 mb-2">
-                  كلمة المرور
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
-                    <Lock className="w-5 h-5" />
-                  </div>
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="••••••••"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-left"
-                    dir="ltr"
-                    disabled={isLoading}
-                    required
                   />
                 </div>
               </div>
