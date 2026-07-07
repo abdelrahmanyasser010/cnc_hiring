@@ -88,7 +88,7 @@ export default async function AdminVerifyPage() {
   }
 
   return (
-    <div className="space-y-8 text-right" dir="rtl">
+    <div className="space-y-6 sm:space-y-8">
       
       {/* رأس الصفحة */}
       <div className="flex items-center justify-between border-b border-border pb-4">

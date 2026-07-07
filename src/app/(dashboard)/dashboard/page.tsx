@@ -317,7 +317,7 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="space-y-8 text-right font-sans" dir="rtl">
+    <div className="space-y-6 sm:space-y-8 font-sans">
       
       {/* عنوان الصفحة والترحيب */}
       <div className="flex flex-col gap-1">

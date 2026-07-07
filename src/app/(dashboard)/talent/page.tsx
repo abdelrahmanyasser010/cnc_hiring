@@ -5,11 +5,11 @@ export const dynamic = "force-dynamic";
 
 import React from "react";
 import { candidateRepo } from "@/infrastructure/container";
-import { AlertCircle, Users } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import TalentFilters from "@/components/dashboard/TalentFilters";
 import TalentCard from "@/components/dashboard/TalentCard";
 import Pagination from "@/components/shared/Pagination";
-import { AR_DICTIONARY } from "@/lib/dictionary/ar";
+import { TalentHeader } from "@/components/dashboard/TalentHeader";
 
 const MOCK_DATE = new Date("2026-06-26T12:00:00Z");
 
@@ -190,20 +190,10 @@ export default async function TalentPage({ searchParams }: PageProps) {
   }
 
   return (
-    <div dir="rtl" className="space-y-8 text-right">
+    <div className="space-y-6 sm:space-y-8">
       
-      {/* رأس الصفحة والمطور */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="space-y-1">
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground/90 flex items-center gap-2">
-            <Users className="w-8 h-8 text-primary" />
-            <span>{AR_DICTIONARY.talent.pageTitle}</span>
-          </h1>
-          <p className="text-sm text-foreground/60">
-            {AR_DICTIONARY.talent.pageSubtitle}
-          </p>
-        </div>
-      </div>
+      {/* رأس الصفحة الديناميكي (عربي / إنجليزي) */}
+      <TalentHeader />
 
       {/* تنبيه بيئة التطوير المحلية */}
       {isMockData && (

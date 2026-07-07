@@ -18,7 +18,7 @@ import { authOptions } from "@/lib/auth";
 import { dashboardRepo, planRepo } from "@/infrastructure/container";
 import { redirect } from "next/navigation";
 import { UpgradePlanButton } from "./UpgradePlanButton";
-import { AR_DICTIONARY } from "@/lib/dictionary/ar";
+import { BillingHeader } from "@/components/dashboard/BillingHeader";
 
 interface BillingPageProps {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -279,10 +279,7 @@ export default async function BillingPage({ searchParams }: BillingPageProps) {
 
       {/* Plan Tiers Grid */}
       <div id="plans" className="space-y-6 pt-6 border-t border-border">
-        <div className="text-center space-y-2">
-          <h2 className="text-xl md:text-2xl font-bold">{AR_DICTIONARY.billing.pageTitle}</h2>
-          <p className="text-xs text-foreground/60">{AR_DICTIONARY.billing.pageSubtitle}</p>
-        </div>
+        <BillingHeader />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {dbPlans.length > 0 ? (

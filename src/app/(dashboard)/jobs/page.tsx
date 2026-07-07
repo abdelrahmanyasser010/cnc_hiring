@@ -17,7 +17,7 @@ export default async function JobsPage() {
   const jobs = await jobRepo.getJobsForDashboard();
 
   return (
-    <div className="space-y-8 text-right" dir="rtl">
+    <div className="space-y-6 sm:space-y-8">
       
       {/* Header section with Create Button */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
