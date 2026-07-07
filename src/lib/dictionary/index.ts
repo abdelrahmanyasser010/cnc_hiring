@@ -6,7 +6,7 @@ import { EN_DICTIONARY } from "./en";
 
 // Relax string literal types to general string type so both Arabic and English dictionaries match
 type DeepString<T> = {
-  [K in keyof T]: T[K] extends string ? string : T[K] extends Record<string, any> ? DeepString<T[K]> : T[K];
+  [K in keyof T]: T[K] extends string ? string : T[K] extends Record<string, unknown> ? DeepString<T[K]> : T[K];
 };
 
 export type Dictionary = DeepString<typeof AR_DICTIONARY>;
