@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import type {
   IEmployerRepository,
   ActiveSubscriptionRecord,
+  ReferralRequestRecord,
 } from "@/application/ports/IEmployerRepository";
 
 export class PrismaEmployerRepository implements IEmployerRepository {
@@ -302,5 +303,39 @@ export class PrismaEmployerRepository implements IEmployerRepository {
       select: { id: true },
     });
     return req;
+  }
+
+  async getAllReferralRequests(status?: string): Promise<ReferralRequestRecord[]> {
+    const where = status && status !== "ALL" ? { status } : {};
+    const records = await db.referralRequest.findMany({
+      where,
+      include: {
+        employer: {
+          select: {
+            id: true,
+            companyName: true,
+            industryZone: true,
+            user: {
+              select: {
+                phoneNumber: true,
+                email: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return records as unknown as ReferralRequestRecord[];
+  }
+
+  async updateReferralRequestStatus(requestId: string, status: string): Promise<void> {
+    await db.referralRequest.update({
+      where: { id: requestId },
+      data: { status },
+    });
   }
 }

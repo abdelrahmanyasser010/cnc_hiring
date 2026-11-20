@@ -104,6 +104,8 @@ describe("Referral Request Repository Contract (Sprint 13)", () => {
       createCheckoutTransaction: vi.fn(),
       activateSubscriptionAfterPayment: vi.fn(),
       createReferralRequest: vi.fn(),
+      getAllReferralRequests: vi.fn(),
+      updateReferralRequestStatus: vi.fn(),
     };
   });
 
@@ -124,5 +126,40 @@ describe("Referral Request Repository Contract (Sprint 13)", () => {
     const result = await mockEmployerRepo.createReferralRequest(reqData);
     expect(result.id).toBe("ref-test-123");
     expect(mockEmployerRepo.createReferralRequest).toHaveBeenCalledWith(reqData);
+  });
+
+  it("should allow administrators to retrieve and update referral request statuses", async () => {
+    const mockList = [
+      {
+        id: "ref-1",
+        employerId: "emp-1",
+        industry: "الإسطمبات والفرم",
+        jobTitle: "فني فريزة CNC",
+        machinesNeeded: "DMG MORI",
+        experienceYears: 5,
+        governorate: "الشرقية",
+        salaryRange: "15000 ج.م",
+        notes: null,
+        status: "PENDING",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        employer: {
+          id: "emp-1",
+          companyName: "مصنع الدلتا",
+          industryZone: "العاشر من رمضان",
+          user: { phoneNumber: "01000000000", email: "info@delta.com" },
+        },
+      },
+    ];
+
+    vi.mocked(mockEmployerRepo.getAllReferralRequests).mockResolvedValue(mockList);
+    vi.mocked(mockEmployerRepo.updateReferralRequestStatus).mockResolvedValue(undefined);
+
+    const list = await mockEmployerRepo.getAllReferralRequests();
+    expect(list.length).toBe(1);
+    expect(list[0].status).toBe("PENDING");
+
+    await mockEmployerRepo.updateReferralRequestStatus("ref-1", "MATCHING");
+    expect(mockEmployerRepo.updateReferralRequestStatus).toHaveBeenCalledWith("ref-1", "MATCHING");
   });
 });

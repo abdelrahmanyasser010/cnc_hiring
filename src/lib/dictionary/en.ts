@@ -22,6 +22,7 @@ export const EN_DICTIONARY = {
     billingAndPlans: "Hiring Plans & Subscriptions",
     adminVerify: "Factory Verification & Badging 🛡️",
     adminPlans: "Pricing & Plans Management 💎",
+    adminReferrals: "Direct Referral Requests 🎯",
     candidateProfile: "My Technical Profile & Experience",
     logout: "Log Out",
     login: "Log In",

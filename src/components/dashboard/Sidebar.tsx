@@ -16,7 +16,8 @@ import {
   Cpu,
   CheckCircle,
   FileText,
-  ShieldCheck
+  ShieldCheck,
+  Target
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
@@ -49,6 +50,11 @@ export function Sidebar({ onItemClick }: SidebarProps) {
     },
     ...(user?.role === "SUPER_ADMIN"
       ? [
+          {
+            title: t.nav.adminReferrals,
+            path: "/admin/referrals",
+            icon: Target,
+          },
           {
             title: t.nav.adminVerify,
             path: "/admin/verify",

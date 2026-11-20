@@ -22,6 +22,7 @@ export const AR_DICTIONARY = {
     billingAndPlans: "باقات التوظيف والاشتراكات",
     adminVerify: "توثيق واعتماد المصانع والورش 🛡️",
     adminPlans: "إدارة التسعير والباقات 💎",
+    adminReferrals: "طلبات الترشيح المباشر 🎯",
     candidateProfile: "ملفي الفني وسجل خبراتي",
     logout: "تسجيل الخروج",
     login: "تسجيل الدخول",

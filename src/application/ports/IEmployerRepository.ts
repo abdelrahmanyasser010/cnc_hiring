@@ -28,6 +28,30 @@ export interface ReferralRequestData {
   notes?: string;
 }
 
+export interface ReferralRequestRecord {
+  id: string;
+  employerId: string;
+  industry: string;
+  jobTitle: string;
+  machinesNeeded: string;
+  experienceYears: number | null;
+  governorate: string | null;
+  salaryRange: string | null;
+  notes: string | null;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+  employer: {
+    id: string;
+    companyName: string;
+    industryZone: string;
+    user: {
+      phoneNumber: string;
+      email: string | null;
+    };
+  };
+}
+
 export interface IEmployerRepository {
   findProfileIdByUserId(userId: string): Promise<string | null>;
   findActiveSubscription(employerProfileId: string): Promise<ActiveSubscriptionRecord | null>;
@@ -36,6 +60,8 @@ export interface IEmployerRepository {
   getVerifiedCompaniesWithJobs(query?: string, zone?: string): Promise<unknown[]>;
   incrementPhoneViews(subscriptionId: string): Promise<void>;
   createReferralRequest(data: ReferralRequestData): Promise<{ id: string }>;
+  getAllReferralRequests(status?: string): Promise<ReferralRequestRecord[]>;
+  updateReferralRequestStatus(requestId: string, status: string): Promise<void>;
   createCheckoutTransaction(
     employerId: string,
     planId: string,

@@ -61,3 +61,44 @@ export async function toggleVerificationAction(
     };
   }
 }
+
+export async function updateReferralStatusAction(
+  requestId: string,
+  newStatus: string
+): Promise<AdminActionResponse> {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user) {
+      return { success: false, error: "يجب تسجيل الدخول أولاً" };
+    }
+
+    const isAdmin = authorizationService.role.isAdmin({
+      id: session.user.id,
+      role: session.user.role as Role,
+      status: session.user.status as UserStatus,
+    });
+
+    if (!isAdmin) {
+      return { success: false, error: "عذراً، هذا الإجراء يتطلب صلاحية مسؤول النظام (SUPER_ADMIN)." };
+    }
+
+    await employerRepo.updateReferralRequestStatus(requestId, newStatus);
+
+    await auditService.log({
+      actorId: session.user.id,
+      action: `تم تحديث حالة طلب الترشيح ${requestId} إلى ${newStatus}`,
+      entityType: "ReferralRequest",
+      entityId: requestId,
+      newValue: { status: newStatus },
+    });
+
+    revalidatePath("/admin/referrals");
+    return { success: true };
+  } catch (error) {
+    console.error("[updateReferralStatusAction] error:", error);
+    return {
+      success: false,
+      error: "حدث خطأ غير متوقع أثناء تحديث حالة الطلب.",
+    };
+  }
+}
