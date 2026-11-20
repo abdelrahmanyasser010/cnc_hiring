@@ -19,23 +19,26 @@ import {
   ChevronDown,
   UploadCloud
 } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const EGYPTIAN_INDUSTRIAL_ZONES = [
-  "6 أكتوبر",
-  "أبو رواش",
-  "العبور",
-  "العاشر من رمضان",
-  "المنطقة الحرة بمدينة نصر",
-  "بدر",
-  "برج العرب الجديدة",
-  "السادات",
-  "شق التعبان",
-  "قويسنا الصناعية",
-  "أخرى / خارج المناطق الصناعية"
+  { ar: "6 أكتوبر", en: "6th of October" },
+  { ar: "أبو رواش", en: "Abu Rawash" },
+  { ar: "العبور", en: "Obour City" },
+  { ar: "العاشر من رمضان", en: "10th of Ramadan" },
+  { ar: "المنطقة الحرة بمدينة نصر", en: "Nasr City Free Zone" },
+  { ar: "بدر", en: "Badr City" },
+  { ar: "برج العرب الجديدة", en: "New Borg El-Arab" },
+  { ar: "السادات", en: "Sadat City" },
+  { ar: "شق التعبان", en: "Shaq El-Theban" },
+  { ar: "قويسنا الصناعية", en: "Quesna Industrial Zone" },
+  { ar: "أخرى / خارج المناطق الصناعية", en: "Other / Outside Industrial Zones" }
 ];
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { lang } = useLanguage();
+  const isAr = lang === "ar";
 
   const [formData, setFormData] = useState({
     name: "",
@@ -63,79 +66,102 @@ export default function RegisterPage() {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
+    setUploadStatus("");
 
-    // التحقق الأساسي من البريد الإلكتروني (الأولوية للدخول)
-    if (!formData.email || !formData.email.includes("@")) {
-      setError("يرجى إدخال بريد إلكتروني صحيح (مثال: name@company.com)");
+    // التحقق من صحة المدخلات الأساسية
+    if (!formData.name.trim() || formData.name.length < 3) {
+      setError(isAr ? "الاسم يجب أن يكون 3 أحرف على الأقل" : "Contact name must be at least 3 characters");
       setIsLoading(false);
       return;
     }
 
-    // التحقق من رقم الهاتف المصري (اختياري لكن إن وجد يجب أن يكون صحيحاً)
-    if (formData.phoneNumber && formData.phoneNumber.trim() !== "") {
+    if (!formData.email.trim() || !formData.email.includes("@")) {
+      setError(isAr ? "يرجى إدخال بريد إلكتروني صحيح ومسجل لديك" : "Please provide a valid company email address");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!formData.companyName.trim() || formData.companyName.length < 3) {
+      setError(isAr ? "اسم الشركة / المصنع يجب أن يكون 3 أحرف على الأقل" : "Facility or company name must be at least 3 characters");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!formData.industryZone) {
+      setError(isAr ? "يرجى تحديد المنطقة الصناعية لمصنعك" : "Please select your industrial zone");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!formData.address.trim() || formData.address.length < 5) {
+      setError(isAr ? "يرجى كتابة العنوان التفصيلي للمصنع (5 أحرف على الأقل)" : "Please provide detailed plant address (at least 5 characters)");
+      setIsLoading(false);
+      return;
+    }
+
+    // التحقق من رقم الهاتف إذا تم إدخاله
+    if (formData.phoneNumber) {
       const phoneRegex = /^01[0125][0-9]{8}$/;
       if (!phoneRegex.test(formData.phoneNumber)) {
-        setError("يرجى إدخال رقم هاتف مصري صحيح مكون من 11 رقماً (مثال: 01012345678)");
+        setError(isAr ? "رقم الهاتف المحمول يجب أن يكون رقم مصري صحيح (مثال: 01012345678)" : "Please enter a valid Egyptian phone number (e.g. 01012345678)");
         setIsLoading(false);
         return;
       }
     }
 
     if (formData.password.length < 6) {
-      setError("كلمة المرور يجب أن لا تقل عن 6 أحرف");
-      setIsLoading(false);
-      return;
-    }
-
-    if (!formData.industryZone) {
-      setError("يرجى تحديد المنطقة الصناعية التابع لها المصنع");
+      setError(isAr ? "كلمة المرور يجب أن لا تقل عن 6 أحرف" : "Password must be at least 6 characters");
       setIsLoading(false);
       return;
     }
 
     try {
-      let businessLicenseUrl = "";
-      
-      // Upload file if selected
+      let businessLicenseUrl: string | undefined = undefined;
+
+      // رفع مستند السجل التجاري إن وُجد
       if (licenseFile) {
-        setUploadStatus("جاري رفع السجل التجاري...");
-        const formDataUpload = new FormData();
-        formDataUpload.append("file", licenseFile);
-        
+        setUploadStatus(isAr ? "جاري رفع مستند السجل التجاري بأمان..." : "Uploading verification document securely...");
+        const uploadData = new FormData();
+        uploadData.append("file", licenseFile);
+        uploadData.append("type", "license");
+
         const uploadRes = await fetch("/api/upload", {
           method: "POST",
-          body: formDataUpload,
+          body: uploadData,
         });
-        
+
         if (!uploadRes.ok) {
-          const upErr = await uploadRes.json();
-          throw new Error(upErr.error || "فشل رفع الملف");
+          const uploadError = await uploadRes.json();
+          throw new Error(uploadError.error || (isAr ? "فشل رفع مستند السجل التجاري" : "Failed to upload document"));
         }
-        
-        const uploadData = await uploadRes.json();
-        businessLicenseUrl = uploadData.url;
-        setUploadStatus("");
+
+        const uploadResult = await uploadRes.json();
+        businessLicenseUrl = uploadResult.url;
       }
 
-      const payload = { ...formData, businessLicenseUrl };
+      setUploadStatus(isAr ? "جاري حفظ بيانات المنشأة..." : "Registering facility profile...");
       const actionForm = new FormData();
+      const payload = {
+        ...formData,
+        businessLicenseUrl,
+      };
       Object.entries(payload).forEach(([key, val]) => {
         if (val !== undefined && val !== null) {
           actionForm.append(key, String(val));
         }
       });
+
       const response = await registerEmployerAction(null, actionForm);
 
       if (!response.success) {
-        setError(response.error || "فشل تسجيل الحساب، يرجى مراجعة البيانات.");
+        setError(response.error || (isAr ? "فشل تسجيل الحساب، يرجى مراجعة البيانات." : "Failed to register account, please verify your details."));
         setIsLoading(false);
       } else {
-        // نجاح التسجيل - إعادة التوجيه لصفحة تسجيل الدخول مع رسالة نجاح
         router.push("/login?registered=true");
       }
     } catch (err: unknown) {
       console.error(err);
-      const errorMessage = err instanceof Error ? err.message : "حدث خطأ غير متوقع أثناء الاتصال بالسيرفر";
+      const errorMessage = err instanceof Error ? err.message : (isAr ? "حدث خطأ غير متوقع أثناء الاتصال بالسيرفر" : "Network error connecting to server");
       setError(errorMessage);
       setIsLoading(false);
       setUploadStatus("");
@@ -143,26 +169,30 @@ export default function RegisterPage() {
   };
 
   return (
-    <div dir="rtl" className="min-h-screen flex items-center justify-center bg-radial-[circle_at_bottom_left] from-primary/10 via-background to-background px-6 py-12">
+    <div dir={isAr ? "rtl" : "ltr"} className="min-h-screen flex items-center justify-center bg-radial-[circle_at_bottom_left] from-primary/10 via-background to-background px-6 py-12">
       {/* Background design elements */}
       <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full filter blur-3xl opacity-30 -z-10"></div>
       <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-sky-500/5 rounded-full filter blur-3xl opacity-30 -z-10"></div>
 
-      <div className="w-full max-w-lg">
+      <div className="w-full max-w-lg text-start">
         {/* Logo */}
-        <div className="flex flex-col items-center mb-6">
+        <div className="flex flex-col items-center mb-6 text-center">
           <Link href="/" className="flex items-center gap-2 font-bold text-2xl text-primary mb-2">
             <span className="bg-primary text-white px-2 py-0.5 rounded-lg text-lg">hire</span>
             <span>CNC Egypt</span>
           </Link>
-          <p className="text-foreground/60 text-sm">تسجيل حساب جديد للمصانع والشركات الصناعية</p>
+          <p className="text-foreground/60 text-sm">
+            {isAr ? "تسجيل حساب جديد للمصانع والمنشآت الصناعية" : "New Account Registration for Manufacturing Plants"}
+          </p>
         </div>
 
         {/* Card */}
         <div className="bg-card border border-border rounded-2xl p-8 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 left-0 h-1 bg-gradient-to-l from-primary via-sky-500 to-primary"></div>
           
-          <h2 className="text-xl font-bold text-foreground mb-6 text-right">إنشاء حساب صاحب عمل</h2>
+          <h2 className="text-xl font-bold text-foreground mb-6">
+            {isAr ? "إنشاء حساب منشأة صناعية" : "Register Industrial Facility Account"}
+          </h2>
 
           {error && (
             <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-500 rounded-xl flex items-start gap-3 text-sm animate-fadeIn">
@@ -176,20 +206,20 @@ export default function RegisterPage() {
               {/* Personal Name Input */}
               <div>
                 <label htmlFor="name" className="block text-sm font-semibold text-foreground/80 mb-2">
-                  الاسم الشخصي (مسؤول التوظيف) <span className="text-red-500">*</span>
+                  {isAr ? "الاسم الشخصي (المسؤول)" : "Contact Person"} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
+                  <div className={`absolute inset-y-0 ${isAr ? "right-0 pr-3" : "left-0 pl-3"} flex items-center pointer-events-none text-foreground/40`}>
                     <User className="w-5 h-5" />
                   </div>
                   <input
                     id="name"
                     name="name"
                     type="text"
-                    placeholder="مثال: م. أحمد محمد"
+                    placeholder={isAr ? "مثال: م. أحمد محمد" : "e.g. Eng. Ahmed"}
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                    className={`w-full ${isAr ? "pr-10 pl-3" : "pl-10 pr-3"} py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all`}
                     disabled={isLoading}
                     required
                   />
@@ -199,10 +229,10 @@ export default function RegisterPage() {
               {/* Email Input (Primary) */}
               <div>
                 <label htmlFor="email" className="block text-sm font-semibold text-foreground/80 mb-2">
-                  البريد الإلكتروني (الأساسي للدخول) <span className="text-red-500">*</span>
+                  {isAr ? "البريد الإلكتروني الأساسي" : "Company Email"} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
+                  <div className={`absolute inset-y-0 ${isAr ? "right-0 pr-3" : "left-0 pl-3"} flex items-center pointer-events-none text-foreground/40`}>
                     <Mail className="w-5 h-5" />
                   </div>
                   <input
@@ -212,7 +242,7 @@ export default function RegisterPage() {
                     placeholder="name@company.com"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-left"
+                    className={`w-full ${isAr ? "pr-10 pl-3" : "pl-10 pr-3"} py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-mono`}
                     dir="ltr"
                     disabled={isLoading}
                     required
@@ -225,20 +255,20 @@ export default function RegisterPage() {
               {/* Company Name Input */}
               <div>
                 <label htmlFor="companyName" className="block text-sm font-semibold text-foreground/80 mb-2">
-                  اسم الشركة / المصنع / الورشة <span className="text-red-500">*</span>
+                  {isAr ? "اسم المنشأة / المصنع / الورشة" : "Facility / Plant Name"} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
+                  <div className={`absolute inset-y-0 ${isAr ? "right-0 pr-3" : "left-0 pl-3"} flex items-center pointer-events-none text-foreground/40`}>
                     <Building2 className="w-5 h-5" />
                   </div>
                   <input
                     id="companyName"
                     name="companyName"
                     type="text"
-                    placeholder="مثال: مصنع النيل للهندسة"
+                    placeholder={isAr ? "مثال: مصنع النيل للهندسة" : "e.g. Nile Precision Machining"}
                     value={formData.companyName}
                     onChange={handleChange}
-                    className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                    className={`w-full ${isAr ? "pr-10 pl-3" : "pl-10 pr-3"} py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all`}
                     disabled={isLoading}
                     required
                   />
@@ -248,10 +278,10 @@ export default function RegisterPage() {
               {/* Password Input */}
               <div>
                 <label htmlFor="password" className="block text-sm font-semibold text-foreground/80 mb-2">
-                  كلمة المرور <span className="text-red-500">*</span>
+                  {isAr ? "كلمة المرور" : "Password"} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
+                  <div className={`absolute inset-y-0 ${isAr ? "right-0 pr-3" : "left-0 pl-3"} flex items-center pointer-events-none text-foreground/40`}>
                     <Lock className="w-5 h-5" />
                   </div>
                   <input
@@ -261,7 +291,7 @@ export default function RegisterPage() {
                     placeholder="••••••••"
                     value={formData.password}
                     onChange={handleChange}
-                    className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-left"
+                    className={`w-full ${isAr ? "pr-10 pl-3" : "pl-10 pr-3"} py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all`}
                     dir="ltr"
                     disabled={isLoading}
                     required
@@ -274,10 +304,10 @@ export default function RegisterPage() {
               {/* Industry Zone Dropdown */}
               <div>
                 <label htmlFor="industryZone" className="block text-sm font-semibold text-foreground/80 mb-2">
-                  المنطقة الصناعية <span className="text-red-500">*</span>
+                  {isAr ? "المنطقة الصناعية" : "Industrial Zone"} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
+                  <div className={`absolute inset-y-0 ${isAr ? "right-0 pr-3" : "left-0 pl-3"} flex items-center pointer-events-none text-foreground/40`}>
                     <MapPin className="w-5 h-5" />
                   </div>
                   <select
@@ -285,18 +315,20 @@ export default function RegisterPage() {
                     name="industryZone"
                     value={formData.industryZone}
                     onChange={handleChange}
-                    className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground/80 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all appearance-none cursor-pointer"
+                    className={`w-full ${isAr ? "pr-10 pl-3" : "pl-10 pr-3"} py-3 bg-secondary/5 border border-border rounded-xl text-foreground/80 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all appearance-none cursor-pointer`}
                     disabled={isLoading}
                     required
                   >
-                    <option value="" disabled>اختر المنطقة الصناعية</option>
+                    <option value="" disabled>
+                      {isAr ? "اختر المنطقة الصناعية" : "Select Industrial Zone"}
+                    </option>
                     {EGYPTIAN_INDUSTRIAL_ZONES.map((zone) => (
-                      <option key={zone} value={zone} className="bg-card text-foreground">
-                        {zone}
+                      <option key={zone.ar} value={zone.ar} className="bg-card text-foreground">
+                        {isAr ? zone.ar : zone.en}
                       </option>
                     ))}
                   </select>
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-foreground/40">
+                  <div className={`absolute inset-y-0 ${isAr ? "left-0 pl-3" : "right-0 pr-3"} flex items-center pointer-events-none text-foreground/40`}>
                     <ChevronDown className="w-4 h-4" />
                   </div>
                 </div>
@@ -305,20 +337,20 @@ export default function RegisterPage() {
               {/* Detailed Address */}
               <div>
                 <label htmlFor="address" className="block text-sm font-semibold text-foreground/80 mb-2">
-                  العنوان بالتفصيل <span className="text-red-500">*</span>
+                  {isAr ? "العنوان بالتفصيل" : "Detailed Address"} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
+                  <div className={`absolute inset-y-0 ${isAr ? "right-0 pr-3" : "left-0 pl-3"} flex items-center pointer-events-none text-foreground/40`}>
                     <MapPin className="w-5 h-5" />
                   </div>
                   <input
                     id="address"
                     name="address"
                     type="text"
-                    placeholder="مثال: قطعة 4، بلوك 12، خلف السلاب"
+                    placeholder={isAr ? "مثال: قطعة 4، بلوك 12، المنطقة الصناعية" : "e.g. Block 12, Plot 4"}
                     value={formData.address}
                     onChange={handleChange}
-                    className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                    className={`w-full ${isAr ? "pr-10 pl-3" : "pl-10 pr-3"} py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all`}
                     disabled={isLoading}
                     required
                   />
@@ -330,10 +362,10 @@ export default function RegisterPage() {
               {/* Phone Input (Optional) */}
               <div>
                 <label htmlFor="phoneNumber" className="block text-sm font-semibold text-foreground/80 mb-2">
-                  رقم الهاتف المحمول <span className="text-xs text-foreground/40">(اختياري / للتواصل عبر الواتساب)</span>
+                  {isAr ? "رقم الهاتف المحمول (اختياري / للتواصل المباشر)" : "Mobile Phone (Optional / Direct WhatsApp)"}
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-foreground/40">
+                  <div className={`absolute inset-y-0 ${isAr ? "right-0 pr-3" : "left-0 pl-3"} flex items-center pointer-events-none text-foreground/40`}>
                     <Phone className="w-5 h-5" />
                   </div>
                   <input
@@ -343,7 +375,7 @@ export default function RegisterPage() {
                     placeholder="01xxxxxxxxx"
                     value={formData.phoneNumber}
                     onChange={handleChange}
-                    className="w-full pr-10 pl-3 py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-left font-mono"
+                    className={`w-full ${isAr ? "pr-10 pl-3" : "pl-10 pr-3"} py-3 bg-secondary/5 border border-border rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-mono`}
                     dir="ltr"
                     disabled={isLoading}
                   />
@@ -354,7 +386,7 @@ export default function RegisterPage() {
             {/* File Upload Input */}
             <div>
               <label htmlFor="licenseFile" className="block text-sm font-semibold text-foreground/80 mb-2">
-                السجل التجاري أو البطاقة الضريبية (اختياري، يسرع التوثيق)
+                {isAr ? "السجل التجاري أو البطاقة الضريبية (اختياري / للتوثيق الفوري)" : "Commercial Registry or Tax ID (Optional for fast verification)"}
               </label>
               <div className="relative border-2 border-dashed border-border rounded-xl p-4 text-center hover:bg-secondary/5 transition-colors">
                 <input
@@ -368,22 +400,26 @@ export default function RegisterPage() {
                 <div className="flex flex-col items-center gap-2 text-foreground/60">
                   <UploadCloud className="w-8 h-8 text-primary" />
                   <span className="text-sm">
-                    {licenseFile ? licenseFile.name : "اضغط هنا لاختيار ملف (صورة أو PDF)"}
+                    {licenseFile ? licenseFile.name : (isAr ? "اضغط هنا لاختيار ملف (صورة أو PDF)" : "Click to attach document (Image or PDF)")}
                   </span>
                 </div>
               </div>
             </div>
 
             {/* Terms Checkbox */}
-            <div className="text-sm text-foreground/60 text-right flex items-center gap-2 mt-2">
+            <div className="text-sm text-foreground/60 flex items-center gap-2 mt-2">
               <input
                 id="terms"
                 type="checkbox"
                 required
                 className="w-4 h-4 text-primary border-border rounded focus:ring-primary focus:ring-2 cursor-pointer"
               />
-              <label htmlFor="terms" className="cursor-pointer">
-                أوافق على <span className="text-primary hover:underline font-semibold">شروط الاستخدام</span> وسياسة الخصوصية لمنصة hireCNC.
+              <label htmlFor="terms" className="cursor-pointer text-xs">
+                {isAr ? (
+                  <>أوافق على <span className="text-primary hover:underline font-semibold">شروط الاستخدام</span> وسياسة الخصوصية للمنصة.</>
+                ) : (
+                  <>I agree to the <span className="text-primary hover:underline font-semibold">Terms of Use</span> and Privacy Policy.</>
+                )}
               </label>
             </div>
 
@@ -396,10 +432,10 @@ export default function RegisterPage() {
               {isLoading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  <span>{uploadStatus || "جاري تسجيل الحساب الجديد..."}</span>
+                  <span>{uploadStatus || (isAr ? "جاري تسجيل الحساب الجديد..." : "Registering new account...")}</span>
                 </>
               ) : (
-                <span>إنشاء الحساب مجاناً</span>
+                <span>{isAr ? "إنشاء حساب المنشأة" : "Register Facility Account"}</span>
               )}
             </button>
           </form>
@@ -410,7 +446,9 @@ export default function RegisterPage() {
               <div className="w-full border-t border-border"></div>
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-card px-3 text-foreground/50 font-medium">أو سجل منشأتك بضغطة واحدة</span>
+              <span className="bg-card px-3 text-foreground/50 font-medium">
+                {isAr ? "أو التسجيل السريع" : "Or Quick Registration"}
+              </span>
             </div>
           </div>
 
@@ -427,7 +465,7 @@ export default function RegisterPage() {
               <path fill="#FBBC05" d="M5.3 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.6 7.4C.6 9.4 0 11.6 0 14s.6 4.6 1.6 6.6l3.7-2.8z"/>
               <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5.2L1.6 15.9C3.5 19.7 7.4 23 12 23z"/>
             </svg>
-            <span>التسجيل السريع بحساب Google (Gmail)</span>
+            <span>{isAr ? "التسجيل بحساب Google (Gmail)" : "Register with Google (Gmail)"}</span>
           </button>
 
           {/* Divider 2 */}
@@ -436,7 +474,9 @@ export default function RegisterPage() {
               <div className="w-full border-t border-border"></div>
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-card px-3 text-foreground/40 font-medium">لديك حساب بالفعل؟</span>
+              <span className="bg-card px-3 text-foreground/40 font-medium">
+                {isAr ? "لديك حساب بالفعل؟" : "Already have an account?"}
+              </span>
             </div>
           </div>
 
@@ -446,8 +486,8 @@ export default function RegisterPage() {
               href="/login"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
             >
-              <span>تسجيل الدخول لحسابك</span>
-              <ArrowRight className="w-4 h-4 rotate-180" />
+              <span>{isAr ? "تسجيل الدخول لحسابك" : "Sign In to Your Account"}</span>
+              <ArrowRight className={`w-4 h-4 ${isAr ? "rotate-180" : ""}`} />
             </Link>
           </div>
         </div>
@@ -455,7 +495,7 @@ export default function RegisterPage() {
         {/* Back to Home Link */}
         <div className="text-center mt-6">
           <Link href="/" className="text-xs text-foreground/40 hover:text-foreground/60 transition-colors">
-            الرجوع إلى الصفحة الرئيسية للمنصة
+            {isAr ? "الرجوع إلى الصفحة الرئيسية للمنصة" : "Back to Platform Home"}
           </Link>
         </div>
       </div>

@@ -10,7 +10,6 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { employerRepo } from "@/infrastructure/container";
 import ReferralsManagementClient, { ReferralItem } from "./ReferralsManagementClient";
-import { Sparkles } from "lucide-react";
 
 export default async function AdminReferralsPage() {
   const session = await getServerSession(authOptions);
@@ -118,25 +117,6 @@ export default async function AdminReferralsPage() {
   }
 
   return (
-    <div className="space-y-6" dir="rtl">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-border/50 pb-5">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-black text-foreground">طلبات الترشيح المباشر للكفاءات</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary/10 text-primary border border-primary/20 flex items-center gap-1">
-              <Sparkles className="w-3 h-3" />
-              خدمة الرعايات الحصرية
-            </span>
-          </div>
-          <p className="text-xs text-foreground/60 mt-1 max-w-2xl leading-relaxed">
-            متابعة طلبات أصحاب المصانع الذين يرغبون في ترشيح مباشر لكوادر CNC متخصصة بمواصفات ماكينات وصناعات دقيقة.
-          </p>
-        </div>
-      </div>
-
-      {/* Main Client Workspace */}
-      <ReferralsManagementClient initialRequests={requests} />
-    </div>
+    <ReferralsManagementClient initialRequests={requests} />
   );
 }

@@ -4,17 +4,20 @@
 "use client";
 
 import React, { useState } from "react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface UpgradePlanButtonProps {
   planId: string;
   amount: number;
-  label: string;
+  label?: string;
   isPrimary?: boolean;
 }
 
 export function UpgradePlanButton({ planId, amount, label, isPrimary = false }: UpgradePlanButtonProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { lang, t } = useLanguage();
+  const isAr = lang === "ar";
 
   const handleUpgrade = async () => {
     setLoading(true);
@@ -27,7 +30,7 @@ export function UpgradePlanButton({ planId, amount, label, isPrimary = false }: 
       });
       const data = await res.json();
       if (!res.ok || !data.success) {
-        setError(data.error || "فشل بدء جلسة الدفع");
+        setError(data.error || (isAr ? "فشل بدء جلسة الدفع" : "Failed to initiate payment session"));
         setLoading(false);
         return;
       }
@@ -35,10 +38,12 @@ export function UpgradePlanButton({ planId, amount, label, isPrimary = false }: 
       window.location.href = data.paymentUrl;
     } catch (err) {
       console.error("Upgrade error:", err);
-      setError("حدث خطأ في الاتصال بالخادم");
+      setError(isAr ? "حدث خطأ في الاتصال بالخادم" : "Server communication error");
       setLoading(false);
     }
   };
+
+  const defaultLabel = label || (isAr ? "اختيار الخطة والترقية" : "Select & Upgrade Plan");
 
   return (
     <div className="w-full space-y-1.5">
@@ -54,10 +59,10 @@ export function UpgradePlanButton({ planId, amount, label, isPrimary = false }: 
         {loading ? (
           <>
             <span className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
-            <span>جاري تجهيز بوابة الدفع...</span>
+            <span>{t.billing.processingPayment || (isAr ? "جاري تجهيز بوابة الدفع..." : "Preparing secure payment...")}</span>
           </>
         ) : (
-          label
+          defaultLabel
         )}
       </button>
       {error && <p className="text-[11px] text-destructive text-center font-medium">{error}</p>}

@@ -56,15 +56,15 @@ export function LandingContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <span className="text-primary text-xs sm:text-sm font-bold tracking-wider uppercase bg-primary/10 px-3 py-1 rounded-full">
-              {isAr ? "منهجية الربط والترشيح المتخصصة" : "Industrial Matching Framework"}
+              {isAr ? "منظومة الربط والترشيح الصناعي التخصصي" : "Specialized Industrial Referral Methodology"}
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-foreground mt-3">
-              {isAr ? "دورنا الربط والترشيح المنهجي، وليس التوظيف العشوائي" : "Precise Technical Referrals, Not Random Hiring"}
+              {isAr ? "الفرز الفني والترشيح المباشر لكوادر التشغيل الميكانيكي والـ CNC" : "Precise Technical Evaluation & Direct Referrals for CNC Machining"}
             </h2>
             <p className="text-xs sm:text-sm md:text-base text-foreground/65 mt-3 leading-relaxed">
               {isAr 
-                ? "بنية مصممة خصيصاً لتفادي مشاكل مواقع التوظيف التقليدية، ومراعاة الفروق التقنية الدقيقة بين ماكينات وصناعات الـ CNC في مصر."
-                : "Engineered specifically to solve the inefficiencies of generic job boards, addressing the precise technical variances across CNC machines and industries."}
+                ? "منظومة رقمية متخصصة تهدف لتلبية الاحتياجات التشغيلية للمصانع والورش الهندسية في مصر، بمراعاة المعايير الفنية لأنظمة التحكم (CNC Controllers) وتطبيقات الصناعات التحويلية."
+                : "An engineering-first platform tailored to production workshops and factories across Egypt, aligned with controller standards and sector-specific machining requirements."}
             </p>
           </div>
 
@@ -89,12 +89,12 @@ export function LandingContent() {
                 02
               </div>
               <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">
-                {isAr ? "حرية كتابة المسمى والماكينات" : "Free-Text Machine & Title Flexibility"}
+                {isAr ? "مرونة توصيف الماكينات والمهام" : "Free-Text Machine & Title Flexibility"}
               </h3>
               <p className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
                 {isAr 
-                  ? "بدون حصر المستخدم في قوائم ضيقة؛ يمكن للمرشح وصاحب العمل كتابة المسميات والماكينات وأنظمة الكنترول بحرية تامة تعكس واقع الورش والمصانع."
-                  : "No rigid predefined restrictions; candidates and employers freely define exact machine brands, controller variants (Fanuc, Siemens, Haas), and tooling setups."}
+                  ? "حرية تامة في تدوين المسميات الدقيقة، طرازات الماكينات، وأنظمة الكنترول (Fanuc، Siemens، Heidenhain) لتطابق واقع بيئة الإنتاج الفعلية دون قيود جامدة."
+                  : "Complete flexibility for defining exact machine models, controller variants (Fanuc, Siemens, Heidenhain), and machining operations reflecting production reality."}
               </p>
             </div>
 
@@ -103,12 +103,12 @@ export function LandingContent() {
                 03
               </div>
               <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">
-                {isAr ? "ترشيح استباقي بموافقة الكفاءة" : "Direct Nomination & Candidate Consent"}
+                {isAr ? "الترشيح المباشر بموافقة مسبقة" : "Direct Nomination & Candidate Consent"}
               </h3>
               <p className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
                 {isAr 
-                  ? "تقوم المنصة بمطابقة احتياجات الشركات وترشيح الكفاءات مباشرة حتى دون تقديم مسبق، بعد التواصل مع المرشح والتأكد من استعداده وموافقته."
-                  : "Direct matching and proactive referral even without prior job application, conducted only after candidate consent is secured."}
+                  ? "إدارة المنصة تطابق متطلبات المنشأة وترشح الكفاءات استباقياً، ولا تتم مشاركة بيانات الاتصال إلا بعد التنسيق المسبق مع المرشح والتأكد من ملاءمته وجاهزيته."
+                  : "Proactive candidate matching and nomination; contact details are shared only after candidate consultation and verified readiness."}
               </p>
             </div>
 
@@ -122,15 +122,15 @@ export function LandingContent() {
           
           <div className="flex flex-col items-center gap-3 mb-12 sm:mb-16">
             <span className="text-primary text-xs sm:text-sm font-semibold tracking-wide uppercase">
-              {isAr ? "باقات مرنة ومناسبة لعملك" : "Flexible & Tailored Pricing"}
+              {isAr ? "خطط الاشتراكات والتعاقد المؤسسي" : "Enterprise & Subscription Plans"}
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground">
-              {isAr ? "باقات أصحاب المصانع والورش" : "Factory & Workshop Subscription Plans"}
+              {isAr ? "باقات المنشآت الصناعية والورش الإنتاجية" : "Industrial Plants & Production Workshops Plans"}
             </h2>
             <p className="text-xs sm:text-sm md:text-base text-foreground/60 max-w-xl">
               {isAr 
-                ? "اختر الباقة المناسبة لاحتياجات ورشتك أو مصنعك وابدأ باستقبال المتقدمين والوصول المباشر للفنيين والمهندسين خلال دقائق."
-                : "Choose the right plan for your factory or workshop and start receiving qualified applicants and direct phone access within minutes."
+                ? "اختر الخطة التشغيلية الملائمة لحجم منشأتك لتفعيل نشر الوظائف والوصول المباشر لقاعدة بيانات الكفاءات الهندسية والفنية المعتمدة."
+                : "Select the operational plan matching your facility scale to unlock job publishing and direct access to our verified technical talent pool."
               }
             </p>
           </div>
@@ -140,10 +140,10 @@ export function LandingContent() {
             {/* Card 1: Bronze */}
             <div className="flex flex-col bg-card border border-border rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all relative text-start">
               <h3 className="text-lg sm:text-xl font-bold mb-2 text-foreground">
-                {isAr ? "الباقة البرونزية (صغار الورش)" : "Bronze Plan (Small Workshops)"}
+                {isAr ? "الباقة الأساسية (الورش الإنتاجية)" : "Basic Plan (Production Workshops)"}
               </h3>
               <p className="text-xs sm:text-sm text-foreground/60 mb-6">
-                {isAr ? "الحل الأمثل للورش الصغيرة ذات الميزانية الاقتصادية." : "Ideal solution for small workshops with economical budgets."}
+                {isAr ? "مخصصة للورش والمنشآت ذات متطلبات التوظيف المحددة." : "Designed for workshops with periodic technical staffing needs."}
               </p>
               <div className="flex items-baseline gap-1.5 mb-8">
                 <span className="text-3xl sm:text-4xl font-black text-foreground">900</span>
@@ -163,7 +163,7 @@ export function LandingContent() {
                 </li>
                 <li className="flex items-start gap-2.5 text-foreground/50">
                   <Check className="w-4 h-4 sm:w-5 sm:h-5 text-foreground/30 flex-shrink-0 mt-0.5" />
-                  <span>{isAr ? "أسئلة تصفية ذكية (تقييم فني آلي)" : "Smart technical AI screening questions"}</span>
+                  <span>{isAr ? "أسئلة تصفية ذكية (تقييم فني آلي)" : "Smart technical screening questions"}</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-foreground/50">
                   <Check className="w-4 h-4 sm:w-5 sm:h-5 text-foreground/30 flex-shrink-0 mt-0.5" />
@@ -175,21 +175,21 @@ export function LandingContent() {
                 href="/register?plan=bronze" 
                 className="mt-auto w-full py-3 bg-secondary text-secondary-foreground font-semibold text-xs sm:text-sm rounded-xl hover:bg-secondary/90 transition-all text-center block"
               >
-                {isAr ? "اشترك الآن" : "Subscribe Now"}
+                {isAr ? "اختيار الخطة" : "Select Plan"}
               </Link>
             </div>
 
             {/* Card 2: Silver (Popular) */}
             <div className="flex flex-col bg-card border-2 border-primary rounded-2xl p-6 sm:p-8 hover:shadow-2xl transition-all relative text-start shadow-lg shadow-primary/5">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white text-[11px] sm:text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider">
-                {isAr ? "الأكثر شهرة" : "Most Popular"}
+                {isAr ? "الأكثر ملاءمة للمصانع" : "Most Recommended"}
               </div>
               
               <h3 className="text-lg sm:text-xl font-bold mb-2 text-foreground">
-                {isAr ? "الباقة الفضية (مصانع متوسطة)" : "Silver Plan (Medium Factories)"}
+                {isAr ? "الباقة المتقدمة (المصانع المتوسطة)" : "Advanced Plan (Medium Manufacturing Plants)"}
               </h3>
               <p className="text-xs sm:text-sm text-foreground/60 mb-6">
-                {isAr ? "للمؤسسات والمصانع التي تحتاج تدفق مستمر للعمالة الملتزمة." : "For growing factories requiring continuous staff flow."}
+                {isAr ? "للمصانع الإنتاجية التي تتطلب استمراراً في تدفق وتعيين الكوادر الفنية." : "For production plants requiring continuous talent acquisition and technical pipeline."}
               </p>
               <div className="flex items-baseline gap-1.5 mb-8">
                 <span className="text-3xl sm:text-4xl font-black text-foreground">2,500</span>
@@ -209,7 +209,7 @@ export function LandingContent() {
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span>{isAr ? "أسئلة تصفية ذكية (تقييم فني آلي)" : "Smart technical AI screening questions"}</span>
+                  <span>{isAr ? "أسئلة تصفية ذكية (تقييم فني آلي)" : "Smart technical screening questions"}</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5" />
@@ -221,17 +221,17 @@ export function LandingContent() {
                 href="/register?plan=silver" 
                 className="mt-auto w-full py-3 bg-primary text-white font-semibold text-xs sm:text-sm rounded-xl hover:bg-primary/95 transition-all text-center shadow-md shadow-primary/25 block"
               >
-                {isAr ? "اشترك الآن" : "Subscribe Now"}
+                {isAr ? "اختيار الخطة" : "Select Plan"}
               </Link>
             </div>
 
             {/* Card 3: Gold */}
             <div className="flex flex-col bg-card border border-border rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all relative text-start">
               <h3 className="text-lg sm:text-xl font-bold mb-2 text-foreground">
-                {isAr ? "الباقة الذهبية (المؤسسات الكبرى)" : "Gold Plan (Major Institutions)"}
+                {isAr ? "الباقة الشاملة (المجمعات الصناعية والشركات الكبرى)" : "Enterprise Plan (Industrial Complexes & Large Enterprises)"}
               </h3>
               <p className="text-xs sm:text-sm text-foreground/60 mb-6">
-                {isAr ? "الحل الشامل للشركات التي تبحث عن موثوقية قصوى وتدقيق متقدم." : "Comprehensive solution for enterprises demanding maximum reach."}
+                {isAr ? "حل مؤسسي شامل يتيح الوصول الكامل لقاعدة البيانات وخدمات الدعم المباشر." : "Comprehensive institutional solution offering unrestricted talent access and dedicated support."}
               </p>
               <div className="flex items-baseline gap-1.5 mb-8">
                 <span className="text-3xl sm:text-4xl font-black text-foreground">6,000</span>
@@ -247,15 +247,15 @@ export function LandingContent() {
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span className="font-semibold text-foreground">{isAr ? "رؤية غير محدودة للفنيين والمهندسين وتصدير الملفات" : "Unlimited CV reveals & export candidates"}</span>
+                  <span className="font-semibold text-foreground">{isAr ? "رؤية غير محدودة وتصدير لبيانات الكفاءات" : "Unlimited candidate reveals & data export"}</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span>{isAr ? "تصفية ذكية متقدمة مع دعم فني عبر المكالمات" : "Advanced screening + dedicated phone support"}</span>
+                  <span>{isAr ? "تصفية متقدمة مع خط دعم فني مباشر" : "Advanced screening with dedicated engineering line"}</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span>{isAr ? "ترويج لوظائفك على جروباتنا على فيسبوك (600ألف فني ومهندس)" : "Job promotion across our FB groups (600K network)"}</span>
+                  <span>{isAr ? "أولوية نشر الوظائف في شبكة الكوادر الهندسية والتشغيلية المعتمدة" : "Priority distribution across verified industrial engineering networks"}</span>
                 </li>
               </ul>
               
@@ -263,7 +263,7 @@ export function LandingContent() {
                 href="/register?plan=gold" 
                 className="mt-auto w-full py-3 bg-secondary text-secondary-foreground font-semibold text-xs sm:text-sm rounded-xl hover:bg-secondary/90 transition-all text-center block"
               >
-                {isAr ? "اشترك الآن" : "Subscribe Now"}
+                {isAr ? "اختيار الخطة" : "Select Plan"}
               </Link>
             </div>
 
