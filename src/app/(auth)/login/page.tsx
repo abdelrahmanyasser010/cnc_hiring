@@ -5,7 +5,7 @@ import React, { useState, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Lock, Mail, AlertCircle, CheckCircle, ArrowRight, Loader2 } from "lucide-react";
+import { Lock, Mail, AlertCircle, CheckCircle, ArrowRight, Loader2, Star, ShieldCheck, CheckCircle2 } from "lucide-react";
 
 function LoginContent() {
   const router = useRouter();
@@ -93,22 +93,78 @@ function LoginContent() {
   };
 
   return (
-    <div dir="rtl" className="min-h-screen flex items-center justify-center bg-radial-[circle_at_top_right] from-primary/10 via-background to-background px-6 py-12">
+    <div dir="rtl" className="min-h-screen flex items-center justify-center bg-radial-[circle_at_top_right] from-primary/10 via-background to-background px-6 py-12 relative overflow-hidden">
       {/* Background design elements */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full filter blur-3xl opacity-30 -z-10"></div>
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-sky-500/5 rounded-full filter blur-3xl opacity-30 -z-10"></div>
 
-      <div className="w-full max-w-md">
-        {/* Logo */}
-        <div className="flex flex-col items-center mb-8">
-          <Link href="/" className="flex items-center gap-2 font-bold text-2xl text-primary mb-2">
-            <span className="bg-primary text-white px-2 py-0.5 rounded-lg text-lg">hire</span>
-            <span>CNC Egypt</span>
-          </Link>
-          <p className="text-foreground/60 text-sm">بوابة الدخول الآمن لأصحاب المصانع والشركات</p>
+      <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        {/* Right Column: Social Proof Sidebar (Visible on LG) */}
+        <div className="hidden lg:flex lg:col-span-6 flex-col justify-between h-full py-6 pr-4 space-y-8">
+          <div className="space-y-4">
+            <Link href="/" className="inline-flex items-center gap-2 font-black text-3xl text-primary">
+              <span className="bg-primary text-white px-2.5 py-0.5 rounded-xl text-xl shadow-md shadow-primary/20">hire</span>
+              <span>CNC Egypt</span>
+            </Link>
+            <h1 className="text-2xl font-black text-foreground leading-tight">
+              بوابة الدخول الموحدة لصناعة التشغيل الميكانيكي في مصر
+            </h1>
+            <p className="text-sm text-foreground/70 leading-relaxed">
+              انضم لأكبر منصة متخصصة تربط بين المصانع والورش والكوادر الماهرة والمختبرة في المخارط والفرايز وبرمجة الكام.
+            </p>
+          </div>
+
+          {/* Featured Testimonial */}
+          <div className="bg-card/80 border border-border/80 rounded-2xl p-6 shadow-sm space-y-4 relative overflow-hidden">
+            <div className="absolute -top-6 -left-6 w-24 h-24 bg-primary/5 rounded-full blur-xl"></div>
+            <div className="flex items-center gap-1">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-4 h-4 fill-amber-500 text-amber-500" />
+              ))}
+            </div>
+            <p className="text-sm text-foreground/85 leading-relaxed italic">
+              &ldquo;منذ اعتمادي على hireCNC، لم أعد أقلق من نقص فنيي المخرطة أو الفريزة. الفلترة والاختبار العملي للكوادر يوفران علينا شهوراً من البحث العشوائي.&rdquo;
+            </p>
+            <div className="flex items-center gap-3 pt-2 border-t border-border/50">
+              <div className="w-10 h-10 rounded-xl bg-primary text-white font-black text-xs flex items-center justify-center shrink-0 shadow-sm">
+                ط
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-foreground">م. طارق عبد الرؤوف</h4>
+                <p className="text-[11px] text-primary font-medium">مدير عام — مصنع الأمل للصناعات الهندسية</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Security & Trust Badges */}
+          <div className="space-y-2.5 pt-2">
+            <div className="flex items-center gap-2.5 text-xs text-foreground/80 font-semibold">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+              <span>فحص واختبار تقني وعملي لجميع الكوادر قبل إتاحتها بالمنصة</span>
+            </div>
+            <div className="flex items-center gap-2.5 text-xs text-foreground/80 font-semibold">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+              <span>شركات ومصانع موثقة بالسجل التجاري والبطاقة الضريبية</span>
+            </div>
+            <div className="flex items-center gap-2.5 text-xs text-foreground/80 font-semibold">
+              <ShieldCheck className="w-4 h-4 text-primary shrink-0" />
+              <span>تشفير كامل للبيانات وحماية الخصوصية وفق المعايير البنكية</span>
+            </div>
+          </div>
         </div>
 
-        {/* Card */}
+        {/* Left Column (or Right in RTL mobile): Login Card */}
+        <div className="lg:col-span-6 w-full max-w-md mx-auto">
+          {/* Mobile Logo (Visible on small screens only) */}
+          <div className="flex flex-col items-center mb-6 lg:hidden">
+            <Link href="/" className="flex items-center gap-2 font-bold text-2xl text-primary mb-2">
+              <span className="bg-primary text-white px-2 py-0.5 rounded-lg text-lg">hire</span>
+              <span>CNC Egypt</span>
+            </Link>
+            <p className="text-foreground/60 text-sm text-center">بوابة الدخول الآمن لأصحاب المصانع والشركات</p>
+          </div>
+
+          {/* Card */}
         <div className="bg-card border border-border rounded-2xl p-8 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 left-0 h-1 bg-gradient-to-l from-primary via-sky-500 to-primary"></div>
           
@@ -247,6 +303,7 @@ function LoginContent() {
           <Link href="/" className="text-xs text-foreground/40 hover:text-foreground/60 transition-colors">
             الرجوع إلى الصفحة الرئيسية للمنصة
           </Link>
+        </div>
         </div>
       </div>
     </div>

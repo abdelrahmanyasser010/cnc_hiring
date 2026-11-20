@@ -276,4 +276,31 @@ export class PrismaEmployerRepository implements IEmployerRepository {
       amount: Number(transaction.amount),
     };
   }
+
+  async createReferralRequest(data: {
+    employerId: string;
+    industry: string;
+    jobTitle: string;
+    machinesNeeded: string;
+    experienceYears?: number;
+    governorate?: string;
+    salaryRange?: string;
+    notes?: string;
+  }): Promise<{ id: string }> {
+    const req = await db.referralRequest.create({
+      data: {
+        employerId: data.employerId,
+        industry: data.industry,
+        jobTitle: data.jobTitle,
+        machinesNeeded: data.machinesNeeded,
+        experienceYears: data.experienceYears,
+        governorate: data.governorate,
+        salaryRange: data.salaryRange,
+        notes: data.notes,
+        status: "PENDING",
+      },
+      select: { id: true },
+    });
+    return req;
+  }
 }

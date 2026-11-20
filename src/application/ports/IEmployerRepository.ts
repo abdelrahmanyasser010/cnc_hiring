@@ -17,6 +17,17 @@ export interface ActiveSubscriptionRecord {
   };
 }
 
+export interface ReferralRequestData {
+  employerId: string;
+  industry: string;
+  jobTitle: string;
+  machinesNeeded: string;
+  experienceYears?: number;
+  governorate?: string;
+  salaryRange?: string;
+  notes?: string;
+}
+
 export interface IEmployerRepository {
   findProfileIdByUserId(userId: string): Promise<string | null>;
   findActiveSubscription(employerProfileId: string): Promise<ActiveSubscriptionRecord | null>;
@@ -24,6 +35,7 @@ export interface IEmployerRepository {
   findAllEmployersWithUsers(): Promise<unknown[]>;
   getVerifiedCompaniesWithJobs(query?: string, zone?: string): Promise<unknown[]>;
   incrementPhoneViews(subscriptionId: string): Promise<void>;
+  createReferralRequest(data: ReferralRequestData): Promise<{ id: string }>;
   createCheckoutTransaction(
     employerId: string,
     planId: string,

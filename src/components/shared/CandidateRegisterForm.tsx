@@ -1,8 +1,11 @@
 "use client";
 
 // src/components/shared/CandidateRegisterForm.tsx
-// نموذج تسجيل الفنيين والمهندسين التفاعلي (Client Component).
-// يحتوي على تبديل ديناميكي للحقول وخيارات الماكينات والبرامج المحملة من قاعدة البيانات.
+// نموذج تسجيل الكوادر الفنية والهندسية (CNC Candidates) المحدث طبقاً للبريف:
+// 1. التقسيم بالصناعة أولاً (مرتبة أبجدياً)
+// 2. المسمى الوظيفي والماكينات كتابة حرة
+// 3. السيرة الذاتية (CV) اختيارية تماماً مع تبسيط التجربة لمستخدمي الهواتف
+// 4. ترتيب أبجدي صارم لكافة القوائم المنسدلة
 
 import React, { useState, useActionState } from "react";
 import { registerCandidateAction } from "@/app/actions/auth";
@@ -14,36 +17,51 @@ import {
   CheckCircle, 
   Loader2, 
   ArrowLeft,
-  Cpu,
-  Laptop,
   Mail,
-  Lock
+  Lock,
+  Factory,
+  Wrench,
+  FileText,
+  Plus
 } from "lucide-react";
 import Link from "next/link";
+import { CNC_INDUSTRIES, EGYPTIAN_GOVERNORATES } from "@/lib/constants";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
-interface Lookups {
-  machines: string[];
-  softwares: string[];
-}
+export function CandidateRegisterForm() {
+  const { lang } = useLanguage();
+  const isAr = lang === "ar";
 
-export function CandidateRegisterForm({ lookups }: { lookups: Lookups }) {
   const [role, setRole] = useState<"TECHNICIAN" | "ENGINEER">("TECHNICIAN");
+  const [selectedIndustry, setSelectedIndustry] = useState<string>("");
+  const [machinesInput, setMachinesInput] = useState<string>("");
 
   // ربط إجراء السيرفر (Server Action) وإدارة حالات الخطأ والنجاح
   const [state, formAction, isPending] = useActionState(registerCandidateAction, null);
+
+  // مساعد لإضافة ماكينة سريعة بالنقر
+  const addQuickMachine = (name: string) => {
+    if (!machinesInput.includes(name)) {
+      setMachinesInput(prev => prev ? `${prev}، ${name}` : name);
+    }
+  };
 
   // عرض شاشة النجاح عند إتمام الحفظ بنجاح
   if (state?.success) {
     return (
       <div className="text-center space-y-6 py-8 animate-in fade-in duration-500">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600 dark:bg-green-950/30 dark:text-green-400">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
           <CheckCircle className="w-10 h-10" />
         </div>
         
         <div className="space-y-2">
-          <h2 className="text-xl font-bold text-foreground">تم تسجيل بياناتك بنجاح!</h2>
+          <h2 className="text-xl font-bold text-foreground">
+            {isAr ? "تم تسجيل ملفك الفني بنجاح!" : "Technical Profile Registered Successfully!"}
+          </h2>
           <p className="text-sm text-foreground/60 leading-relaxed max-w-md mx-auto">
-            مرحباً بك في مجتمع **hireCNC Egypt**. سيقوم النظام بمطابقة ملفك الشخصي مع وظائف المصانع تلقائياً، وستصلك مواعيد المقابلات فوراً على الواتساب.
+            {isAr 
+              ? "أصبح ملفك متاحاً الآن في قاعدة البيانات المتخصصة لمطابقته مع طلبات المصانع والشركات الشريكة. ستتواصل المنصة معك لإبلاغك بأي ترشيح مناسب بعد موافقتك."
+              : "Your technical profile is now listed in the specialized candidate pool. We will contact you directly once a verified factory requests your profile."}
           </p>
         </div>
 
@@ -52,7 +70,13 @@ export function CandidateRegisterForm({ lookups }: { lookups: Lookups }) {
             href="/" 
             className="px-6 py-2.5 bg-primary text-white text-xs font-semibold rounded-xl hover:bg-primary/95 transition-all shadow-md shadow-primary/20"
           >
-            العودة للرئيسية
+            {isAr ? "العودة للرئيسية" : "Back to Home"}
+          </Link>
+          <Link 
+            href="/login" 
+            className="px-6 py-2.5 bg-secondary/10 border border-border text-foreground text-xs font-semibold rounded-xl hover:bg-secondary/20 transition-all"
+          >
+            {isAr ? "تسجيل الدخول" : "Sign In"}
           </Link>
         </div>
       </div>
@@ -60,81 +84,317 @@ export function CandidateRegisterForm({ lookups }: { lookups: Lookups }) {
   }
 
   return (
-    <form action={formAction} className="space-y-6 text-right">
+    <form action={formAction} className="space-y-6 text-start">
       
       {/* 1. Global Errors */}
       {state?.error && (
-        <div className="p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 text-red-700 dark:text-red-400 rounded-xl text-xs font-semibold">
+        <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 rounded-xl text-xs font-semibold">
           ⚠️ {state.error}
         </div>
       )}
 
-      {/* 2. Role Selector (فني vs مهندس) */}
+      {/* 2. تصنيف الكادر الوظيفي (فني تشغيل vs مهندس مبرمج) */}
       <div className="flex flex-col gap-2">
-        <label className="text-xs font-bold text-foreground/80">تصنيف الكادر الوظيفي <span className="text-red-500">*</span></label>
+        <label className="text-xs font-bold text-foreground/80">
+          {isAr ? "تصنيف الكادر" : "Role Classification"} <span className="text-red-500">*</span>
+        </label>
         
-        {/* Hidden input to pass role value via FormData to Server Action */}
         <input type="hidden" name="role" value={role} />
 
-        <div className="grid grid-cols-2 gap-3 p-1 bg-secondary/10 rounded-xl border border-border">
+        <div className="grid grid-cols-2 gap-3 p-1 bg-secondary/5 rounded-xl border border-border">
           <button
             type="button"
             onClick={() => setRole("TECHNICIAN")}
-            className={`flex items-center justify-center gap-2 py-3 rounded-lg text-xs font-bold transition-all ${
+            className={`flex items-center justify-center gap-2 py-3 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               role === "TECHNICIAN"
-                ? "bg-card text-primary shadow-sm"
+                ? "bg-card text-primary shadow-sm border border-border/80"
                 : "text-foreground/60 hover:text-foreground"
             }`}
           >
-            <Cpu className="w-4 h-4" />
-            <span>فني تشغيل وصيانة CNC</span>
+            <Wrench className="w-4 h-4" />
+            <span>{isAr ? "فني تشغيل / سِتَابَر (Setter/Operator)" : "CNC Technician / Operator"}</span>
           </button>
           
           <button
             type="button"
             onClick={() => setRole("ENGINEER")}
-            className={`flex items-center justify-center gap-2 py-3 rounded-lg text-xs font-bold transition-all ${
+            className={`flex items-center justify-center gap-2 py-3 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               role === "ENGINEER"
-                ? "bg-card text-primary shadow-sm"
+                ? "bg-card text-primary shadow-sm border border-border/80"
                 : "text-foreground/60 hover:text-foreground"
             }`}
           >
-            <Laptop className="w-4 h-4" />
-            <span>مهندس برمجيات CNC / تصميم</span>
+            <Factory className="w-4 h-4" />
+            <span>{isAr ? "مهندس تشغيل / مبرمج CAM" : "CAM Engineer / Programmer"}</span>
           </button>
         </div>
       </div>
 
-      {/* 3. Candidate Name */}
+      {/* 3. اختيار الصناعة أولاً (مرتبة أبجدياً) */}
       <div className="flex flex-col gap-2">
-        <label className="text-xs font-bold text-foreground/80">الاسم الكامل (ثنائي أو ثلاثي) <span className="text-red-500">*</span></label>
+        <label className="text-xs font-bold text-foreground/80 flex items-center justify-between">
+          <span>{isAr ? "الصناعة الرئيسية التي تعمل بها (مرتبة أبجدياً)" : "Primary Industry (Alphabetical)"} <span className="text-red-500">*</span></span>
+          <span className="text-[10px] text-primary font-normal">{isAr ? "التقسيم الأساسي للمنصة" : "Core Platform Taxonomy"}</span>
+        </label>
+        
         <div className="relative">
-          <input 
-            type="text" 
-            name="name" 
-            placeholder="مثال: أحمد محمود علي" 
+          <select
+            name="industry"
+            value={selectedIndustry}
+            onChange={(e) => setSelectedIndustry(e.target.value)}
             required
-            className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm"
-          />
-          <User className="absolute left-3 top-3 w-4 h-4 text-foreground/30 pointer-events-none" />
+            className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm appearance-none cursor-pointer"
+          >
+            <option value="">{isAr ? "-- اختر الصناعة من القائمة الأبجدية --" : "-- Select Industry from Alphabetical List --"}</option>
+            {CNC_INDUSTRIES.map((ind) => (
+              <option key={ind.id} value={ind.ar}>
+                {isAr ? `${ind.ar} — (${ind.en})` : `${ind.en} — (${ind.ar})`}
+              </option>
+            ))}
+          </select>
+          <Factory className="absolute left-3 top-3 w-4 h-4 text-foreground/30 pointer-events-none" />
         </div>
-        {state?.errors?.name && (
-          <span className="text-[10px] text-red-500 font-semibold">{state.errors.name[0]}</span>
+        {state?.errors?.industry && (
+          <span className="text-[10px] text-red-500 font-semibold">{state.errors.industry[0]}</span>
         )}
       </div>
 
-      {/* 4. Email (Primary for Login & Notifications) & Password */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* 4. المسمى الوظيفي: كتابة حرة */}
+      <div className="flex flex-col gap-2">
+        <label className="text-xs font-bold text-foreground/80">
+          {isAr ? "المسمى الوظيفي الدقيق (كتابة حرة)" : "Precise Job Title (Free Text)"} <span className="text-red-500">*</span>
+        </label>
+        <div className="relative">
+          <input 
+            type="text" 
+            name="jobTitle" 
+            placeholder={isAr ? "مثال: فني مخرطة CNC سيمنز، أوبريتور فريزة 4 محاور، مبرمج Powermill..." : "e.g. CNC Lathe Setup, 4-Axis Mill Operator, Mastercam Programmer"} 
+            required
+            className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm"
+          />
+          <Briefcase className="absolute left-3 top-3 w-4 h-4 text-foreground/30 pointer-events-none" />
+        </div>
+        <p className="text-[11px] text-foreground/50">
+          {isAr ? "اكتب مسماك الفعلي الذي تمارسه في المصنع أو الورشة." : "Enter the exact title you perform in the workshop."}
+        </p>
+        {state?.errors?.jobTitle && (
+          <span className="text-[10px] text-red-500 font-semibold">{state.errors.jobTitle[0]}</span>
+        )}
+      </div>
+
+      {/* 5. الماكينات: كتابة حرة (يمكن كتابة أكثر من ماكينة) */}
+      <div className="flex flex-col gap-2">
+        <label className="text-xs font-bold text-foreground/80 flex items-center justify-between">
+          <span>{isAr ? "الماكينات التي تجيد العمل عليها (كتابة حرة)" : "Machines Handled (Free Text)"} <span className="text-red-500">*</span></span>
+          <span className="text-[10px] text-foreground/50">{isAr ? "يمكن كتابة أكثر من ماكينة" : "Multiple machines allowed"}</span>
+        </label>
+        
+        <div className="relative">
+          <input 
+            type="text" 
+            name="machinesFreeText" 
+            value={machinesInput}
+            onChange={(e) => setMachinesInput(e.target.value)}
+            placeholder={isAr ? "مثال: مخرطة دوسان Fanuc، فريزة بريدجبورت 3 محاور، ماكينة سلك وشرارة Sodick..." : "e.g. Haas VF-2, DMG MORI lathe, Fanuc wire cut"} 
+            required
+            className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm"
+          />
+          <Wrench className="absolute left-3 top-3 w-4 h-4 text-foreground/30 pointer-events-none" />
+        </div>
+
+        {/* أمثلة سريعة للنقر لتسهيل الإدخال من الهاتف */}
+        <div className="flex flex-wrap items-center gap-1.5 pt-1">
+          <span className="text-[11px] text-foreground/40">{isAr ? "إضافة سريعة:" : "Quick Add:"}</span>
+          {["مخرطة CNC", "فريزة CNC", "كنترول Fanuc", "كنترول Siemens", "سلك وشرارة", "راوتر ليزر", "Mastercam", "SolidWorks"].map((tag) => (
+            <button
+              key={tag}
+              type="button"
+              onClick={() => addQuickMachine(tag)}
+              className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-secondary/10 hover:bg-secondary/20 text-foreground/75 border border-border/50 transition-colors"
+            >
+              <Plus className="w-2.5 h-2.5" />
+              <span>{tag}</span>
+            </button>
+          ))}
+        </div>
+
+        {state?.errors?.machinesFreeText && (
+          <span className="text-[10px] text-red-500 font-semibold">{state.errors.machinesFreeText[0]}</span>
+        )}
+      </div>
+
+      {/* 6. الاسم ورقم الهاتف */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-bold text-foreground/80">البريد الإلكتروني (الأساسي للدخول) <span className="text-red-500">*</span></label>
+          <label className="text-xs font-bold text-foreground/80">
+            {isAr ? "الاسم الكامل" : "Full Name"} <span className="text-red-500">*</span>
+          </label>
+          <div className="relative">
+            <input 
+              type="text" 
+              name="name" 
+              placeholder={isAr ? "مثال: أحمد محمود إبراهيم" : "e.g. Ahmed Mahmoud"} 
+              required
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm"
+            />
+            <User className="absolute left-3 top-3 w-4 h-4 text-foreground/30 pointer-events-none" />
+          </div>
+          {state?.errors?.name && (
+            <span className="text-[10px] text-red-500 font-semibold">{state.errors.name[0]}</span>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-xs font-bold text-foreground/80">
+            {isAr ? "رقم الموبايل (واتساب نشط)" : "Mobile Phone (Active WhatsApp)"} <span className="text-red-500">*</span>
+          </label>
+          <div className="relative">
+            <input 
+              type="tel" 
+              name="phoneNumber" 
+              placeholder="01012345678" 
+              required
+              dir="ltr"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm text-start font-mono"
+            />
+            <Phone className="absolute left-3 top-3 w-4 h-4 text-foreground/30 pointer-events-none" />
+          </div>
+          {state?.errors?.phoneNumber && (
+            <span className="text-[10px] text-red-500 font-semibold">{state.errors.phoneNumber[0]}</span>
+          )}
+        </div>
+      </div>
+
+      {/* 7. المحافظة (أبجدياً) والمدينة */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="flex flex-col gap-2">
+          <label className="text-xs font-bold text-foreground/80">
+            {isAr ? "المحافظة السكنية (مرتبة أبجدياً)" : "Governorate (Alphabetical)"} <span className="text-red-500">*</span>
+          </label>
+          <div className="relative">
+            <select
+              name="governorate"
+              required
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm appearance-none cursor-pointer"
+            >
+              <option value="">{isAr ? "-- اختر المحافظة --" : "-- Select Governorate --"}</option>
+              {EGYPTIAN_GOVERNORATES.map((gov) => (
+                <option key={gov} value={gov}>{gov}</option>
+              ))}
+            </select>
+            <MapPin className="absolute left-3 top-3 w-4 h-4 text-foreground/30 pointer-events-none" />
+          </div>
+          {state?.errors?.governorate && (
+            <span className="text-[10px] text-red-500 font-semibold">{state.errors.governorate[0]}</span>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-xs font-bold text-foreground/80">
+            {isAr ? "المدينة أو المنطقة الصناعية" : "City or Industrial Zone"} <span className="text-red-500">*</span>
+          </label>
+          <input 
+            type="text" 
+            name="city" 
+            placeholder={isAr ? "مثال: العاشر من رمضان، قويسنا، العبور..." : "e.g. 10th of Ramadan, Obour"} 
+            required
+            className="px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm"
+          />
+          {state?.errors?.city && (
+            <span className="text-[10px] text-red-500 font-semibold">{state.errors.city[0]}</span>
+          )}
+        </div>
+      </div>
+
+      {/* 8. سنوات الخبرة والراتب المتوقع */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="flex flex-col gap-2">
+          <label className="text-xs font-bold text-foreground/80">
+            {isAr ? "سنوات الخبرة في تشغيل/برمجة CNC" : "Years of CNC Experience"} <span className="text-red-500">*</span>
+          </label>
+          <input 
+            type="number" 
+            name="experienceYears" 
+            placeholder="مثال: 5" 
+            min="0"
+            required
+            className="px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm"
+          />
+          {state?.errors?.experienceYears && (
+            <span className="text-[10px] text-red-500 font-semibold">{state.errors.experienceYears[0]}</span>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-xs font-bold text-foreground/80 flex items-center justify-between">
+            <span>{isAr ? "الراتب الشهري المتوقع (ج.م)" : "Expected Monthly Salary (EGP)"}</span>
+            <span className="text-[10px] text-foreground/50">{isAr ? "اختياري" : "Optional"}</span>
+          </label>
+          <input 
+            type="number" 
+            name="expectedSalary" 
+            placeholder="مثال: 9000" 
+            min="0"
+            className="px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm"
+          />
+        </div>
+      </div>
+
+      {/* 9. ملخص المهارات والسيرة الذاتية (CV اختياري تماماً - مناسب للفني) */}
+      <div className="p-4 bg-secondary/5 border border-border rounded-2xl space-y-3">
+        <div className="flex items-center justify-between">
+          <label className="text-xs font-bold text-foreground/80 flex items-center gap-1.5">
+            <FileText className="w-4 h-4 text-primary" />
+            <span>{isAr ? "السيرة الذاتية (CV) وملاحظات إضافية" : "CV & Technical Summary"}</span>
+          </label>
+          <span className="text-[11px] font-semibold text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded-full">
+            {isAr ? "اختياري تماماً" : "Fully Optional"}
+          </span>
+        </div>
+        
+        <p className="text-[11px] text-foreground/60 leading-relaxed">
+          {isAr 
+            ? "غير ملزم برفع سيرة ذاتية (مناسب للفنيين ومشغلي الماكينات). بيانات الصناعة والماكينات وسنوات الخبرة التي أدخلتها بالأعلى كافية تماماً لمطابقتك مع الوظائف وترشيحك للمصانع."
+            : "No CV required for machinists and operators. The industry, machine details, and experience provided above are completely sufficient."}
+        </p>
+
+        <div className="flex flex-col gap-2">
+          <input 
+            type="text" 
+            name="skillsSummary" 
+            placeholder={isAr ? "أي مهارات إضافية (مثال: قراءة الرسومات الهندسية، قياس بالميكروميتر، برمجة G-Code يدوياً...)" : "Additional skills (e.g. blueprint reading, G-code manual programming...)"}
+            className="w-full px-4 py-2 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-xs"
+          />
+        </div>
+
+        <div className="flex flex-col gap-1.5 pt-1">
+          <label className="text-[11px] text-foreground/60">
+            {isAr ? "رابط سيرة ذاتية (Google Drive / LinkedIn / PDF) إن وجد:" : "CV Link (if available):"}
+          </label>
+          <input 
+            type="url" 
+            name="cvUrl" 
+            placeholder="https://..."
+            dir="ltr"
+            className="w-full px-4 py-2 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-xs font-mono"
+          />
+        </div>
+      </div>
+
+      {/* 10. البريد الإلكتروني وكلمة المرور للحساب */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+        <div className="flex flex-col gap-2">
+          <label className="text-xs font-bold text-foreground/80">
+            {isAr ? "البريد الإلكتروني (لتسجيل الدخول لاحقاً)" : "Email (for account login)"} <span className="text-red-500">*</span>
+          </label>
           <div className="relative">
             <input 
               type="email" 
               name="email" 
-              placeholder="name@example.com" 
+              placeholder="technician@example.com" 
               required
               dir="ltr"
-              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm text-left font-mono"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm text-start font-mono"
             />
             <Mail className="absolute left-3 top-3 w-4 h-4 text-foreground/30 pointer-events-none" />
           </div>
@@ -144,7 +404,9 @@ export function CandidateRegisterForm({ lookups }: { lookups: Lookups }) {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-bold text-foreground/80">كلمة المرور (للحساب) <span className="text-red-500">*</span></label>
+          <label className="text-xs font-bold text-foreground/80">
+            {isAr ? "كلمة المرور" : "Password"} <span className="text-red-500">*</span>
+          </label>
           <div className="relative">
             <input 
               type="password" 
@@ -152,7 +414,7 @@ export function CandidateRegisterForm({ lookups }: { lookups: Lookups }) {
               placeholder="••••••••" 
               required
               dir="ltr"
-              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm text-left font-mono"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm text-start font-mono"
             />
             <Lock className="absolute left-3 top-3 w-4 h-4 text-foreground/30 pointer-events-none" />
           </div>
@@ -162,158 +424,22 @@ export function CandidateRegisterForm({ lookups }: { lookups: Lookups }) {
         </div>
       </div>
 
-      {/* 5. Phone number */}
-      <div className="flex flex-col gap-2">
-        <label className="text-xs font-bold text-foreground/80">رقم الهاتف (الواتساب النشط) <span className="text-red-500">*</span></label>
-        <div className="relative">
-          <input 
-            type="tel" 
-            name="phoneNumber" 
-            placeholder="مثال: 01012345678" 
-            required
-            className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm text-left font-mono"
-          />
-          <Phone className="absolute left-3 top-3 w-4 h-4 text-foreground/30 pointer-events-none" />
-        </div>
-        <p className="text-[10px] text-foreground/40 leading-relaxed">يرجى التأكد من أن الهاتف مسجل بالواتساب لاستلام تفاصيل ومواقع المقابلات.</p>
-        {state?.errors?.phoneNumber && (
-          <span className="text-[10px] text-red-500 font-semibold">{state.errors.phoneNumber[0]}</span>
-        )}
-      </div>
-
-      {/* 5. Governorate & City (Location columns) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        <div className="flex flex-col gap-2">
-          <label className="text-xs font-bold text-foreground/80">المحافظة السكنية <span className="text-red-500">*</span></label>
-          <div className="relative">
-            <input 
-              type="text" 
-              name="governorate" 
-              placeholder="مثال: الشرقية أو القاهرة" 
-              required
-              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm"
-            />
-            <MapPin className="absolute left-3 top-3 w-4 h-4 text-foreground/30 pointer-events-none" />
-          </div>
-          {state?.errors?.governorate && (
-            <span className="text-[10px] text-red-500 font-semibold">{state.errors.governorate[0]}</span>
-          )}
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label className="text-xs font-bold text-foreground/80">المدينة / المنطقة السكنية <span className="text-red-500">*</span></label>
-          <input 
-            type="text" 
-            name="city" 
-            placeholder="مثال: مدينة العاشر من رمضان" 
-            required
-            className="px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm"
-          />
-          {state?.errors?.city && (
-            <span className="text-[10px] text-red-500 font-semibold">{state.errors.city[0]}</span>
-          )}
-        </div>
-
-      </div>
-
-      {/* 6. Experience & Expected Salary (Numbers) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        <div className="flex flex-col gap-2">
-          <label className="text-xs font-bold text-foreground/80">سنوات الخبرة الإجمالية <span className="text-red-500">*</span></label>
-          <div className="relative">
-            <input 
-              type="number" 
-              name="experienceYears" 
-              placeholder="مثال: 3" 
-              min="0"
-              required
-              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm"
-            />
-            <Briefcase className="absolute left-3 top-3 w-4 h-4 text-foreground/30 pointer-events-none" />
-          </div>
-          {state?.errors?.experienceYears && (
-            <span className="text-[10px] text-red-500 font-semibold">{state.errors.experienceYears[0]}</span>
-          )}
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label className="text-xs font-bold text-foreground/80">الراتب الشهري المتوقع (بالجنيه) <span className="text-red-500">*</span></label>
-          <input 
-            type="number" 
-            name="expectedSalary" 
-            placeholder="مثال: 8500" 
-            min="0"
-            required
-            className="px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-sm"
-          />
-          {state?.errors?.expectedSalary && (
-            <span className="text-[10px] text-red-500 font-semibold">{state.errors.expectedSalary[0]}</span>
-          )}
-        </div>
-
-      </div>
-
-      {/* 7. Dynamic Checkbox Groups based on role state */}
-      {role === "TECHNICIAN" ? (
-        <div className="flex flex-col gap-3 p-4 bg-secondary/5 border border-border rounded-2xl animate-in fade-in duration-300">
-          <label className="text-xs font-bold text-foreground/80">أنواع الماكينات التي تجيد العمل عليها (اختر على الأقل واحدة) <span className="text-red-500">*</span></label>
-          <div className="grid grid-cols-2 gap-3 text-right">
-            {lookups.machines.map((machine, i) => (
-              <label key={i} className="flex items-center gap-2 justify-start cursor-pointer select-none text-xs font-medium">
-                <input 
-                  type="checkbox" 
-                  name="machineTypes" 
-                  value={machine}
-                  className="w-4 h-4 text-primary border-border bg-background rounded focus:ring-primary"
-                />
-                <span>{machine}</span>
-              </label>
-            ))}
-          </div>
-          {state?.errors?.machineTypes && (
-            <span className="text-[10px] text-red-500 font-semibold mt-1">{state.errors.machineTypes[0]}</span>
-          )}
-        </div>
-      ) : (
-        <div className="flex flex-col gap-3 p-4 bg-secondary/5 border border-border rounded-2xl animate-in fade-in duration-300">
-          <label className="text-xs font-bold text-foreground/80">البرامج والتخصصات الهندسية التي تتقنها (اختر على الأقل واحدة) <span className="text-red-500">*</span></label>
-          <div className="grid grid-cols-2 gap-3 text-right">
-            {lookups.softwares.map((software, i) => (
-              <label key={i} className="flex items-center gap-2 justify-start cursor-pointer select-none text-xs font-medium">
-                <input 
-                  type="checkbox" 
-                  name="specializations" 
-                  value={software}
-                  className="w-4 h-4 text-primary border-border bg-background rounded focus:ring-primary"
-                />
-                <span>{software}</span>
-              </label>
-            ))}
-          </div>
-          {state?.errors?.specializations && (
-            <span className="text-[10px] text-red-500 font-semibold mt-1">{state.errors.specializations[0]}</span>
-          )}
-        </div>
-      )}
-
-      {/* Form Actions */}
+      {/* Form Submission */}
       <div className="flex items-center justify-end gap-4 pt-6 border-t border-border">
         <button 
           type="submit" 
           disabled={isPending}
-          className="flex-1 sm:flex-initial px-6 py-3 bg-primary text-white font-semibold text-sm rounded-xl hover:bg-primary/95 transition-all shadow-md shadow-primary/20 hover:-translate-y-0.5 disabled:opacity-75 disabled:pointer-events-none flex items-center justify-center gap-2"
+          className="w-full sm:w-auto px-8 py-3 bg-primary text-white font-semibold text-sm rounded-xl hover:bg-primary/95 transition-all shadow-md shadow-primary/20 hover:-translate-y-0.5 disabled:opacity-75 disabled:pointer-events-none flex items-center justify-center gap-2 cursor-pointer"
         >
           {isPending ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" />
-              <span>جاري تقديم البيانات...</span>
+              <span>{isAr ? "جاري تسجيل الملف..." : "Registering Profile..."}</span>
             </>
           ) : (
             <>
-              <span>تسجيل البيانات الآن</span>
-              <ArrowLeft className="w-4 h-4" />
+              <span>{isAr ? "تسجيل الملف الفني الآن" : "Register Technical Profile"}</span>
+              <ArrowLeft className="w-4 h-4 rtl:rotate-0 ltr:rotate-180" />
             </>
           )}
         </button>

@@ -35,11 +35,16 @@ const CandidateRegisterSchema = z.discriminatedUnion("candidateType", [
     phoneNumber: z
       .string()
       .regex(/^01[0125][0-9]{8}$/, "رقم الهاتف غير صحيح"),
-    governorate: z.string().min(3, "يرجى تحديد المحافظة"),
-    city: z.string().min(3, "يرجى تحديد المدينة"),
+    industry: z.string().min(2, "يرجى اختيار الصناعة"),
+    jobTitle: z.string().min(2, "يرجى كتابة المسمى الوظيفي"),
+    machinesFreeText: z.string().min(2, "يرجى كتابة الماكينات التي تجيد العمل عليها"),
+    skillsSummary: z.string().optional(),
+    cvUrl: z.string().optional(),
+    governorate: z.string().min(2, "يرجى تحديد المحافظة"),
+    city: z.string().min(2, "يرجى تحديد المدينة أو المنطقة"),
     experienceYears: z.coerce.number().int().min(0),
-    expectedSalary: z.coerce.number().min(0),
-    machineTypes: z.array(z.string()).min(1, "يرجى اختيار نوع ماكينة واحد على الأقل"),
+    expectedSalary: z.coerce.number().min(0).optional().default(0),
+    machineTypes: z.array(z.string()).optional(),
   }),
   z.object({
     candidateType: z.literal("ENGINEER"),
@@ -49,11 +54,16 @@ const CandidateRegisterSchema = z.discriminatedUnion("candidateType", [
     phoneNumber: z
       .string()
       .regex(/^01[0125][0-9]{8}$/, "رقم الهاتف غير صحيح"),
-    governorate: z.string().min(3, "يرجى تحديد المحافظة"),
-    city: z.string().min(3, "يرجى تحديد المدينة"),
+    industry: z.string().min(2, "يرجى اختيار الصناعة"),
+    jobTitle: z.string().min(2, "يرجى كتابة المسمى الوظيفي"),
+    machinesFreeText: z.string().min(2, "يرجى كتابة الماكينات أو البرامج الهندسية"),
+    skillsSummary: z.string().optional(),
+    cvUrl: z.string().optional(),
+    governorate: z.string().min(2, "يرجى تحديد المحافظة"),
+    city: z.string().min(2, "يرجى تحديد المدينة أو المنطقة"),
     experienceYears: z.coerce.number().int().min(0),
-    expectedSalary: z.coerce.number().min(0),
-    specializations: z.array(z.string()).min(1, "يرجى اختيار تخصص واحد على الأقل"),
+    expectedSalary: z.coerce.number().min(0).optional().default(0),
+    specializations: z.array(z.string()).optional(),
   }),
 ]);
 
@@ -173,15 +183,20 @@ export async function registerCandidateAction(
     }
 
     const rawData = {
-      candidateType: formData.get("role"), // matches technician or engineer
+      candidateType: formData.get("role") || formData.get("candidateType") || "TECHNICIAN",
       name: formData.get("name"),
       email: formData.get("email"),
       password: formData.get("password"),
       phoneNumber: formData.get("phoneNumber"),
+      industry: formData.get("industry"),
+      jobTitle: formData.get("jobTitle"),
+      machinesFreeText: formData.get("machinesFreeText"),
+      skillsSummary: formData.get("skillsSummary") || undefined,
+      cvUrl: formData.get("cvUrl") || undefined,
       governorate: formData.get("governorate"),
       city: formData.get("city"),
-      experienceYears: formData.get("experienceYears"),
-      expectedSalary: formData.get("expectedSalary"),
+      experienceYears: formData.get("experienceYears") || 0,
+      expectedSalary: formData.get("expectedSalary") || 0,
       machineTypes: formData.getAll("machineTypes"),
       specializations: formData.getAll("specializations"),
     };
@@ -217,6 +232,11 @@ export async function registerCandidateAction(
       name: data.name,
       phoneNumber: data.phoneNumber,
       candidateType: data.candidateType,
+      industry: data.industry,
+      jobTitle: data.jobTitle,
+      machinesFreeText: data.machinesFreeText,
+      skillsSummary: data.skillsSummary,
+      cvUrl: data.cvUrl,
       governorate: data.governorate,
       city: data.city,
       experienceYears: data.experienceYears,

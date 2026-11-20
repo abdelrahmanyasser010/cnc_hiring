@@ -54,17 +54,45 @@ export default async function CandidateProfilePage() {
                   </div>
                 </div>
                 <div>
+                  <div className="text-sm text-foreground/50 mb-1">الصناعة الرئيسية</div>
+                  <div className="font-bold text-primary">{candidate.industry || "صناعة عامة"}</div>
+                </div>
+                <div>
+                  <div className="text-sm text-foreground/50 mb-1">المسمى الوظيفي</div>
+                  <div className="font-bold">{candidate.jobTitle || "فني / مبرمج CNC"}</div>
+                </div>
+                <div>
                   <div className="text-sm text-foreground/50 mb-1">الموقع</div>
                   <div className="font-bold flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-primary" /> {candidate.governorate} - {candidate.city}
                   </div>
                 </div>
                 <div>
-                  <div className="text-sm text-foreground/50 mb-1">الخبرة</div>
+                  <div className="text-sm text-foreground/50 mb-1">الخبرة الميدانية</div>
                   <div className="font-bold flex items-center gap-2">
                     <Briefcase className="w-4 h-4 text-primary" /> {candidate.experienceYears} سنوات
                   </div>
                 </div>
+                {candidate.machinesFreeText && (
+                  <div className="col-span-2 pt-2 border-t border-border/50">
+                    <div className="text-sm text-foreground/50 mb-1">الماكينات وأنظمة الكنترول</div>
+                    <div className="font-medium text-foreground/90">{candidate.machinesFreeText}</div>
+                  </div>
+                )}
+                {candidate.skillsSummary && (
+                  <div className="col-span-2 pt-2 border-t border-border/50">
+                    <div className="text-sm text-foreground/50 mb-1">ملخص المهارات الفنية</div>
+                    <div className="text-sm text-foreground/80">{candidate.skillsSummary}</div>
+                  </div>
+                )}
+                {candidate.cvUrl && (
+                  <div className="col-span-2 pt-2 border-t border-border/50">
+                    <div className="text-sm text-foreground/50 mb-1">السيرة الذاتية (CV)</div>
+                    <a href={candidate.cvUrl} target="_blank" rel="noopener noreferrer" className="text-primary text-sm font-bold underline">
+                      عرض الملف المرفق ←
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           </div>

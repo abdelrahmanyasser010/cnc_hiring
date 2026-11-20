@@ -21,6 +21,11 @@ export interface CandidateRegistrationData {
   name: string;
   phoneNumber: string;
   candidateType: "TECHNICIAN" | "ENGINEER";
+  industry?: string;
+  jobTitle?: string;
+  machinesFreeText?: string;
+  skillsSummary?: string;
+  cvUrl?: string;
   governorate: string;
   city: string;
   experienceYears: number;

@@ -100,6 +100,21 @@ export const AR_DICTIONARY = {
     unauthorized: "عذراً، هذا الإجراء يتطلب صلاحيات إضافية.",
     loading: "جاري التحميل...",
   },
+
+  // 8. خدمة طلب الترشيح المباشر (Referral & Direct Matching)
+  referral: {
+    sectionTitle: "طلب ترشيح كفاءة فنية مخصصة من إدارة المنصة",
+    sectionSubtitle: "اطلب فنيين أو مهندسين بمواصفات وماكينات محددة، وسيقوم فريقنا بمطابقة الكفاءات وترشيح الأنسب لمصنعك.",
+    requestBtn: "طلب ترشيح كفاءة +",
+    industryLabel: "الصناعة (مرتبة أبجدياً):",
+    jobTitleLabel: "المسمى الوظيفي المطلوب:",
+    machinesLabel: "الماكينات ونظام الكنترول:",
+    minExpLabel: "الحد الأدنى لسنوات الخبرة:",
+    locationLabel: "المحافظة أو النطاق الجغرافي:",
+    salaryLabel: "الميزانية أو الراتب المقترح:",
+    notesLabel: "تفاصيل إضافية عن بيئة العمل:",
+    submitBtn: "إرسال طلب الترشيح للإدارة",
+  },
 } as const;
 
 export type ArDictionary = typeof AR_DICTIONARY;

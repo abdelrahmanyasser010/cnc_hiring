@@ -18,35 +18,41 @@ export function LandingHero() {
         {/* Right Column: Copy & CTAs */}
         <div className="flex flex-col gap-5 sm:gap-6 text-start">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary text-xs font-semibold px-3 py-1.5 rounded-full w-fit">
-            <span>⚡ {isAr ? "المنصة الأولى والوحيدة لتوظيف فنيي ومهندسي الـ CNC في مصر" : "Egypt's #1 Dedicated CNC Industrial Staffing Platform"}</span>
+            <span>⚙️ {isAr ? "منظومة ربط وترشيح هندسية متخصصة في مجال الـ CNC داخل مصر" : "Dedicated CNC Engineering & Machining Staffing Platform in Egypt"}</span>
           </div>
           
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight sm:leading-tight md:leading-tight tracking-tight text-foreground">
-            {isAr ? "ماتشيلش هم عمالة المصنع.." : "Never Worry About Factory Staffing.."} <br />
+            {isAr ? "ربط الكفاءات الهندسية والفنية" : "Connecting Technical Specialists"} <br />
             <span className="text-primary bg-gradient-to-l from-primary to-sky-600 bg-clip-text text-transparent">
-              {isAr ? "أفضل الفنيين والمهندسين بين إيديك" : "The Best CNC Specialists At Your Fingertips"}
+              {isAr ? "بالمصانع والورش الصناعية" : "With Advanced Manufacturing Facilities"}
             </span>
           </h1>
           
-          <p className="text-sm sm:text-base md:text-lg text-foreground/70 leading-relaxed max-w-xl">
+          <p className="text-sm sm:text-base md:text-lg text-foreground/75 leading-relaxed max-w-xl">
             {isAr 
-              ? "نوفر لأصحاب الورش والمصانع في العاشر من رمضان، 6 أكتوبر، وكل مصر وصولاً مباشراً لأكثر من 5,000 فني ومهندس CNC ومبرمج وخراط محترف وموثق. قدم طلبك الآن وسنقوم بتصفية المتقدمين ذكياً."
-              : "We provide workshop and factory owners across 10th of Ramadan, 6th of October, and Egypt with direct access to over 5,000+ verified CNC setters, CAM programmers, and machinists. Submit your job request now for smart AI screening."
+              ? "نُسهّل وصول العاملين في مجال الـ CNC (فنيي تشغيل، سِتَابَر، ومبرمجي CAM) للشركات والوظائف، ونرشّح الكفاءات المناسبة للمصانع استباقياً طبقاً للصناعة والماكينات المطلوبة."
+              : "We streamline direct access between CNC professionals (operators, setters, CAM programmers) and industrial companies across Egypt, providing proactive candidate nominations tailored to industry and machinery specifications."
             }
           </p>
           
           <div className="flex flex-wrap gap-3 sm:gap-4 mt-2 sm:mt-4">
             <Link 
-              href="/register" 
-              className="px-5 sm:px-6 py-3 bg-primary text-white text-xs sm:text-sm md:text-base font-medium rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/35 hover:-translate-y-0.5 text-center"
+              href="/register/candidate" 
+              className="px-5 sm:px-6 py-3 bg-primary text-white text-xs sm:text-sm md:text-base font-semibold rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 hover:-translate-y-0.5 text-center"
             >
-              {isAr ? "ابدأ البحث عن فنيين ومهندسين الآن" : "Start Hiring CNC Specialists Now"}
+              {isAr ? "تسجيل كادر (فني / مهندس)" : "Register as Candidate"}
             </Link>
             <Link 
-              href="#pricing" 
-              className="px-5 sm:px-6 py-3 border border-border text-foreground hover:bg-secondary/5 text-xs sm:text-sm md:text-base font-medium rounded-xl transition-all hover:-translate-y-0.5 text-center"
+              href="/register" 
+              className="px-5 sm:px-6 py-3 border border-primary/30 text-primary bg-primary/5 hover:bg-primary/10 text-xs sm:text-sm md:text-base font-semibold rounded-xl transition-all hover:-translate-y-0.5 text-center"
             >
-              {isAr ? "عرض الباقات والأسعار" : "View Pricing & Plans"}
+              {isAr ? "تسجيل حساب مصنع / شركة" : "Register as Factory / Employer"}
+            </Link>
+            <Link 
+              href="/talent" 
+              className="px-4 py-3 border border-border text-foreground hover:bg-secondary/5 text-xs sm:text-sm md:text-base font-medium rounded-xl transition-all hover:-translate-y-0.5 text-center"
+            >
+              {isAr ? "قاعدة بيانات الكفاءات" : "Explore Talent Pool"}
             </Link>
           </div>
         </div>

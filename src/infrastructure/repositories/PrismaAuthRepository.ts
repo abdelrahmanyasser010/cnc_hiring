@@ -87,6 +87,11 @@ export class PrismaAuthRepository implements IAuthRepository {
           candidateProfile: {
             create: {
               candidateType: data.candidateType,
+              industry: data.industry,
+              jobTitle: data.jobTitle,
+              machinesFreeText: data.machinesFreeText,
+              skillsSummary: data.skillsSummary,
+              cvUrl: data.cvUrl,
               governorate: data.governorate,
               city: data.city,
               experienceYears: data.experienceYears,

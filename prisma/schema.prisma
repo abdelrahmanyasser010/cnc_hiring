@@ -170,6 +170,7 @@ model EmployerProfile {
 
   jobs          Job[]
   subscriptions Subscription[]
+  referralRequests ReferralRequest[]
 
   @@index([isVerified])
 }
@@ -178,6 +179,12 @@ model CandidateProfile {
   id               String        @id @default(uuid())
   userId           String        @unique
   user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // MVP Industry-First categorization (Brief requirement)
+  industry         String?       // الصناعة (مثل: الإسطمبات والفرم، الصناعات الطبية، صناعة الطيران، إلخ)
+  jobTitle         String?       // المسمى الوظيفي كتابة حرة (مثل: فني مخرطة Fanuc 4 محاور، مبرمج CAM)
+  machinesFreeText String?       // الماكينات كتابة حرة (DMG MORI, Haas VF-2, مخرطة دوسان، إلخ)
+  skillsSummary    String?       // المهارات الفنية الإضافية كتابة حرة
 
   candidateType    CandidateType @default(TECHNICIAN)
   governorate      String
@@ -202,6 +209,33 @@ model CandidateProfile {
 
   @@index([isAvailable, governorate])
   @@index([candidateType, isAvailable])
+  @@index([industry])
+  @@index([isAvailable, industry])
+}
+
+// =============================================================================
+// REFERRAL & HEADHUNTING DOMAIN (طلب ترشيحات من إدارة المنصة)
+// =============================================================================
+
+model ReferralRequest {
+  id              String          @id @default(uuid())
+  employerId      String
+  employer        EmployerProfile @relation(fields: [employerId], references: [id], onDelete: Cascade)
+
+  industry        String          // الصناعة المطلوبة
+  jobTitle        String          // المسمى الوظيفي
+  machinesNeeded  String          // الماكينات المطلوبة
+  experienceYears Int?            // سنوات الخبرة المطلوبة
+  governorate     String?         // المحافظة المفضلة
+  salaryRange     String?         // الميزانية أو الراتب المتوقع
+  notes           String?         // تفاصيل ومواصفات إضافية من المصنع
+
+  status          String          @default("PENDING") // PENDING, MATCHING, NOMINATED, HIRED, CLOSED
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([employerId])
+  @@index([status])
 }
 
 model AdminProfile {

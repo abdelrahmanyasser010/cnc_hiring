@@ -555,6 +555,20 @@ export default async function DashboardPage() {
               ) : (
                 <>
                   <Link 
+                    href="/talent" 
+                    className="flex items-center justify-between p-3 rounded-xl border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all group cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="p-2 rounded-lg bg-primary/20 text-primary">✨</span>
+                      <div className="text-right">
+                        <h4 className="text-xs font-bold text-primary">طلب ترشيح كفاءة خاصة</h4>
+                        <p className="text-[10px] text-foreground/50">ترشيح مباشر من إدارة المنصة بمواصفاتك</p>
+                      </div>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-primary rotate-180 transition-colors" />
+                  </Link>
+
+                  <Link 
                     href="/jobs/new" 
                     className="flex items-center justify-between p-3 rounded-xl border border-border hover:bg-secondary/5 transition-all group cursor-pointer"
                   >

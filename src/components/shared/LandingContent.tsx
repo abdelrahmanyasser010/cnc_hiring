@@ -51,6 +51,71 @@ export function LandingContent() {
         </div>
       </section>
 
+      {/* منهجية العمل والربط الصناعي (Pillars from Brief) */}
+      <section id="about" className="py-20 bg-background border-b border-border/60">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <span className="text-primary text-xs sm:text-sm font-bold tracking-wider uppercase bg-primary/10 px-3 py-1 rounded-full">
+              {isAr ? "منهجية الربط والترشيح المتخصصة" : "Industrial Matching Framework"}
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-foreground mt-3">
+              {isAr ? "دورنا الربط والترشيح المنهجي، وليس التوظيف العشوائي" : "Precise Technical Referrals, Not Random Hiring"}
+            </h2>
+            <p className="text-xs sm:text-sm md:text-base text-foreground/65 mt-3 leading-relaxed">
+              {isAr 
+                ? "بنية مصممة خصيصاً لتفادي مشاكل مواقع التوظيف التقليدية، ومراعاة الفروق التقنية الدقيقة بين ماكينات وصناعات الـ CNC في مصر."
+                : "Engineered specifically to solve the inefficiencies of generic job boards, addressing the precise technical variances across CNC machines and industries."}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
+            
+            <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/40 transition-all text-start shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-black text-lg mb-4">
+                01
+              </div>
+              <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">
+                {isAr ? "التقسيم بالصناعة أولاً" : "Industry-First Architecture"}
+              </h3>
+              <p className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
+                {isAr 
+                  ? "تصنيف دقيق يغطي 11 قطاعاً حيوياً (الإسطمبات، المستلزمات الطبية، الطيران، السيارات، البترول والغاز، تشكيل الصاج، وغيرها) لضمان توافق بيئة العمل."
+                  : "Structured classification covering 11 critical sectors (Molds & Dies, Medical, Aerospace, Automotive, Oil & Gas, Sheet Metal, etc.) ensuring work environment alignment."}
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/40 transition-all text-start shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-black text-lg mb-4">
+                02
+              </div>
+              <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">
+                {isAr ? "حرية كتابة المسمى والماكينات" : "Free-Text Machine & Title Flexibility"}
+              </h3>
+              <p className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
+                {isAr 
+                  ? "بدون حصر المستخدم في قوائم ضيقة؛ يمكن للمرشح وصاحب العمل كتابة المسميات والماكينات وأنظمة الكنترول بحرية تامة تعكس واقع الورش والمصانع."
+                  : "No rigid predefined restrictions; candidates and employers freely define exact machine brands, controller variants (Fanuc, Siemens, Haas), and tooling setups."}
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/40 transition-all text-start shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-black text-lg mb-4">
+                03
+              </div>
+              <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">
+                {isAr ? "ترشيح استباقي بموافقة الكفاءة" : "Direct Nomination & Candidate Consent"}
+              </h3>
+              <p className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
+                {isAr 
+                  ? "تقوم المنصة بمطابقة احتياجات الشركات وترشيح الكفاءات مباشرة حتى دون تقديم مسبق، بعد التواصل مع المرشح والتأكد من استعداده وموافقته."
+                  : "Direct matching and proactive referral even without prior job application, conducted only after candidate consent is secured."}
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* 4. Pricing / الباقات والأسعار المخصصة لمصر */}
       <section id="pricing" className="py-20 sm:py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">

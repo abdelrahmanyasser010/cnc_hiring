@@ -10,12 +10,12 @@ import TalentFilters from "@/components/dashboard/TalentFilters";
 import TalentCard from "@/components/dashboard/TalentCard";
 import Pagination from "@/components/shared/Pagination";
 import { TalentHeader } from "@/components/dashboard/TalentHeader";
-
-const MOCK_DATE = new Date("2026-06-26T12:00:00Z");
+import ReferralRequestSection from "@/components/dashboard/ReferralRequestSection";
 
 interface PageProps {
   searchParams: Promise<{
     role?: string;
+    industry?: string;
     governorate?: string;
     control?: string;
     query?: string;
@@ -27,6 +27,11 @@ export type CandidateData = {
   id: string;
   name: string | null;
   role: "TECHNICIAN" | "ENGINEER";
+  industry?: string | null;
+  jobTitle?: string | null;
+  machinesFreeText?: string | null;
+  skillsSummary?: string | null;
+  cvUrl?: string | null;
   governorate: string;
   city: string;
   experienceYears: number;
@@ -42,6 +47,7 @@ export default async function TalentPage({ searchParams }: PageProps) {
   const params = await searchParams;
 
   const role = params.role || "";
+  const industry = params.industry || "";
   const governorate = params.governorate || "";
   const control = params.control || "";
   const query = params.query || "";
@@ -56,6 +62,7 @@ export default async function TalentPage({ searchParams }: PageProps) {
   try {
     const result = await candidateRepo.searchCandidates({
       candidateType: (role === "TECHNICIAN" || role === "ENGINEER") ? role : undefined,
+      industry: industry || undefined,
       governorate: governorate || undefined,
       control: control || undefined,
       query: query || undefined,
@@ -74,7 +81,12 @@ export default async function TalentPage({ searchParams }: PageProps) {
         id: "mock-1",
         name: "أحمد مرسي الشرقاوي",
         role: "TECHNICIAN" as const,
-        governorate: "الشرقية",
+        industry: "قطع الغيار والتشغيل العام",
+        jobTitle: "فني مخرطة وفريزة CNC",
+        machinesFreeText: "مخرطة دوسان Fanuc، فريزة 3 محاور",
+        skillsSummary: "قراءة رسومات هندسية ومعايرة أدوات القطع",
+        cvUrl: null,
+        governorate: "الشرقية (العاشر من رمضان)",
         city: "العاشر من رمضان",
         experienceYears: 6,
         expectedSalary: 10500,
@@ -88,10 +100,15 @@ export default async function TalentPage({ searchParams }: PageProps) {
         id: "mock-2",
         name: "م. حسام محمود الجيزاوي",
         role: "ENGINEER" as const,
+        industry: "الصناعات والمستلزمات الطبية",
+        jobTitle: "مهندس برمجة CAM وتشغيل دقيق",
+        machinesFreeText: "ماكينات خراطة سويسرية Swiss-type، مركز تشغيل 5 محاور",
+        skillsSummary: "برمجة أطراف ومفاصل صناعية بدقة ميكرونية",
+        cvUrl: "https://drive.google.com",
         governorate: "الجيزة",
         city: "6 أكتوبر",
         experienceYears: 8,
-        expectedSalary: 14500,
+        expectedSalary: 16500,
         reliabilityScore: 95,
         preferredControl: ["FANUC", "SIEMENS", "HEIDENHAIN"] as string[],
         specializations: ["Mastercam", "SolidWorks"],
@@ -100,93 +117,71 @@ export default async function TalentPage({ searchParams }: PageProps) {
       },
       {
         id: "mock-3",
-        name: "شريف جلال البساتيني",
+        name: "سامح إبراهيم عبد العال",
         role: "TECHNICIAN" as const,
-        governorate: "القاهرة",
-        city: "البساتين",
+        industry: "الإسطمبات والفرم",
+        jobTitle: "سِتَابَر فريزة CNC إسطمبات حقن",
+        machinesFreeText: "فريزة Hartford كنترول هاس، ماكينة سلك وشرارة",
+        skillsSummary: "تشغيل صلب معالج وصلد حتى 55 HRC",
+        cvUrl: null,
+        governorate: "القليوبية (العبور)",
+        city: "مدينة العبور",
         experienceYears: 4,
-        expectedSalary: 8500,
-        reliabilityScore: 88,
-        preferredControl: ["FANUC"] as string[],
+        expectedSalary: 9500,
+        reliabilityScore: 92,
+        preferredControl: ["HAAS", "FANUC"] as string[],
         specializations: [],
         machineTypes: ["فريزة CNC"],
-        phoneNumber: "01122334455",
+        phoneNumber: "01123456789",
       },
       {
         id: "mock-4",
-        name: "م. محمود عبد الوهاب",
-        role: "ENGINEER" as const,
+        name: "إبراهيم خليل النحاس",
+        role: "TECHNICIAN" as const,
+        industry: "صناعة الطيران",
+        jobTitle: "فني تشغيل معادن خاصة وتيتانيوم",
+        machinesFreeText: "مراكز تشغيل متقدمة 4 محاور DMG MORI",
+        skillsSummary: "تشغيل سبائك الطيران Inconel و Titanium",
+        cvUrl: null,
         governorate: "القاهرة",
-        city: "مصر الجديدة",
-        experienceYears: 5,
-        expectedSalary: 12000,
-        reliabilityScore: 97,
-        preferredControl: ["SIEMENS", "HAAS"] as string[],
-        specializations: ["AutoCAD", "Fusion 360", "SolidWorks"],
-        machineTypes: [],
-        phoneNumber: "01555667788",
-      },
-      {
-        id: "mock-5",
-        name: "سعيد علي حسن",
-        role: "TECHNICIAN" as const,
-        governorate: "الإسكندرية",
-        city: "برج العرب",
-        experienceYears: 10,
-        expectedSalary: 13000,
+        city: "حلوان",
+        experienceYears: 9,
+        expectedSalary: 15000,
         reliabilityScore: 99,
-        preferredControl: ["FANUC", "MAZATROL"] as string[],
+        preferredControl: ["SIEMENS", "HEIDENHAIN"] as string[],
         specializations: [],
-        machineTypes: ["مخرطة CNC", "راوتر ليزر/بلازما"],
-        phoneNumber: "01009988776",
+        machineTypes: ["فريزة CNC", "مخرطة CNC"],
+        phoneNumber: "01098765432",
       },
-      {
-        id: "mock-6",
-        name: "ياسر كمال المنوفي",
-        role: "TECHNICIAN" as const,
-        governorate: "المنوفية",
-        city: "السادات",
-        experienceYears: 3,
-        expectedSalary: 7500,
-        reliabilityScore: 82,
-        preferredControl: ["HAAS"] as string[],
-        specializations: [],
-        machineTypes: ["ثناية CNC", "مقص CNC"],
-        phoneNumber: "01223344556",
-      }
-    ].map(c => ({
-      ...c,
-      phoneNumber: c.phoneNumber.length >= 7 ? `${c.phoneNumber.slice(0, 3)}••••${c.phoneNumber.slice(-4)}` : c.phoneNumber,
-      isAvailable: true,
-      createdAt: MOCK_DATE,
-      updatedAt: MOCK_DATE,
-    }));
+    ];
 
-    // تصفية البيانات التجريبية محلياً
-    let filteredMock = allMockCandidates;
-
+    let filtered = allMockCandidates;
     if (role) {
-      filteredMock = filteredMock.filter((c) => c.role === role);
+      filtered = filtered.filter(c => c.role === role);
+    }
+    if (industry) {
+      filtered = filtered.filter(c => c.industry === industry);
     }
     if (governorate) {
-      filteredMock = filteredMock.filter((c) => c.governorate === governorate);
+      filtered = filtered.filter(c => c.governorate.includes(governorate));
     }
     if (control) {
-      filteredMock = filteredMock.filter((c) => c.preferredControl.includes(control));
+      filtered = filtered.filter(c => c.preferredControl.includes(control));
     }
     if (query) {
       const q = query.toLowerCase();
-      filteredMock = filteredMock.filter(
-        (c) =>
-          c.name.toLowerCase().includes(q) ||
-          c.city.toLowerCase().includes(q) ||
-          c.governorate.toLowerCase().includes(q)
+      filtered = filtered.filter(c => 
+        c.name.toLowerCase().includes(q) || 
+        c.city.toLowerCase().includes(q) ||
+        (c.industry && c.industry.toLowerCase().includes(q)) ||
+        (c.jobTitle && c.jobTitle.toLowerCase().includes(q)) ||
+        (c.machinesFreeText && c.machinesFreeText.toLowerCase().includes(q))
       );
     }
 
-    totalCount = filteredMock.length;
+    totalCount = filtered.length;
     totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
-    candidates = filteredMock.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+    candidates = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
   }
 
   return (
@@ -194,6 +189,9 @@ export default async function TalentPage({ searchParams }: PageProps) {
       
       {/* رأس الصفحة الديناميكي (عربي / إنجليزي) */}
       <TalentHeader />
+
+      {/* خدمة طلب ترشيح كفاءة مخصصة من إدارة المنصة */}
+      <ReferralRequestSection />
 
       {/* تنبيه بيئة التطوير المحلية */}
       {isMockData && (
@@ -205,6 +203,7 @@ export default async function TalentPage({ searchParams }: PageProps) {
       {/* مكون البحث والفلاتر */}
       <TalentFilters
         currentRole={role}
+        currentIndustry={industry}
         currentGovernorate={governorate}
         currentControl={control}
         currentQuery={query}

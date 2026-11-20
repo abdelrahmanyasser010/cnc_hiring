@@ -12,6 +12,11 @@ export class PrismaCandidateRepository implements ICandidateRepository {
       select: {
         id: true,
         isAvailable: true,
+        industry: true,
+        jobTitle: true,
+        machinesFreeText: true,
+        skillsSummary: true,
+        cvUrl: true,
         governorate: true,
         city: true,
         experienceYears: true,
@@ -31,6 +36,11 @@ export class PrismaCandidateRepository implements ICandidateRepository {
     return {
       id: res.id,
       isAvailable: res.isAvailable,
+      industry: res.industry,
+      jobTitle: res.jobTitle,
+      machinesFreeText: res.machinesFreeText,
+      skillsSummary: res.skillsSummary,
+      cvUrl: res.cvUrl,
       governorate: res.governorate,
       city: res.city,
       experienceYears: res.experienceYears,
@@ -78,6 +88,7 @@ export class PrismaCandidateRepository implements ICandidateRepository {
   async searchCandidates(
     filters: {
       candidateType?: "TECHNICIAN" | "ENGINEER";
+      industry?: string;
       governorate?: string;
       city?: string;
       machineTypes?: string[];
@@ -94,6 +105,9 @@ export class PrismaCandidateRepository implements ICandidateRepository {
 
     if (filters.candidateType) {
       where.candidateType = filters.candidateType;
+    }
+    if (filters.industry) {
+      where.industry = filters.industry;
     }
     if (filters.governorate) {
       where.governorate = filters.governorate;
@@ -134,6 +148,9 @@ export class PrismaCandidateRepository implements ICandidateRepository {
       where.OR = [
         { city: { contains: filters.query, mode: "insensitive" } },
         { governorate: { contains: filters.query, mode: "insensitive" } },
+        { industry: { contains: filters.query, mode: "insensitive" } },
+        { jobTitle: { contains: filters.query, mode: "insensitive" } },
+        { machinesFreeText: { contains: filters.query, mode: "insensitive" } },
         { user: { name: { contains: filters.query, mode: "insensitive" } } },
       ];
     }
@@ -145,6 +162,11 @@ export class PrismaCandidateRepository implements ICandidateRepository {
         select: {
           id: true,
           candidateType: true,
+          industry: true,
+          jobTitle: true,
+          machinesFreeText: true,
+          skillsSummary: true,
+          cvUrl: true,
           governorate: true,
           city: true,
           experienceYears: true,
@@ -188,6 +210,11 @@ export class PrismaCandidateRepository implements ICandidateRepository {
         id: c.id,
         name: c.user.name,
         role: c.candidateType,
+        industry: c.industry,
+        jobTitle: c.jobTitle,
+        machinesFreeText: c.machinesFreeText,
+        skillsSummary: c.skillsSummary,
+        cvUrl: c.cvUrl,
         governorate: c.governorate,
         city: c.city,
         experienceYears: c.experienceYears,

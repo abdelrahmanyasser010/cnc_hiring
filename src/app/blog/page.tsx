@@ -22,7 +22,7 @@ const SEED_POSTS = [
     excerpt: "دليل عملي شامل لمهندسي الإنتاج وفنيي تشغيل الـ CNC لاختيار خامات وسرعات التغذية وزوايا العدة المثالية لتشغيل الستانلس ستيل ومقاومة الحرارة الناتجة.",
     coverImage: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=600&auto=format&fit=crop",
     createdAt: new Date("2026-06-26T12:00:00Z"),
-    author: { name: "م. أحمد الشافعي" },
+    author: { name: "م. أحمد الشافعي (خبير تشغيل)" },
   },
   {
     id: "post-seed-2",
@@ -40,25 +40,59 @@ const SEED_POSTS = [
     excerpt: "دليل إرشادي للفنيين المبتدئين حول كيفية ضبط قيم تعويض الطول والقطر للعدة (H & D offsets) والتأكد من نقطة الصفر للقطعة بشكل آمن.",
     coverImage: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=600&auto=format&fit=crop",
     createdAt: new Date("2026-06-21T12:00:00Z"),
-    author: { name: "أدمن المنصة" },
+    author: { name: "م. طارق الهواري" },
+  },
+  {
+    id: "post-seed-4",
+    title: "مقارنة شاملة بين برامج التصميم والبرمجة CAM: Mastercam مقابل SolidCAM في مصر",
+    slug: "mastercam-vs-solidcam-cnc-software-comparison",
+    excerpt: "تحليل نقطي لمميزات وعيوب أشهر برامج الـ CAM المستخدمة في الورش المصرية، وأيهما أفضل لتشغيل قوالب الاسطمبات مقابل الأجزاء الدقيقة.",
+    coverImage: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?q=80&w=600&auto=format&fit=crop",
+    createdAt: new Date("2026-06-18T12:00:00Z"),
+    author: { name: "م. سارة محمود (تصميم CAD/CAM)" },
+  },
+  {
+    id: "post-seed-5",
+    title: "دليل أجور ورواتب فنيي ومهندسي الـ CNC في المناطق الصناعية بمصر لعام 2026",
+    slug: "cnc-machinist-salaries-egyptian-industrial-zones-2026",
+    excerpt: "دراسة تفصيلية لمتوسط الرواتب في العاشر من رمضان، 6 أكتوبر، والعبور حسب سنوات الخبرة (فني مشغل، مبرمج، مهندس تصميم، ومشرف صيانة).",
+    coverImage: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=600&auto=format&fit=crop",
+    createdAt: new Date("2026-06-15T12:00:00Z"),
+    author: { name: "فريق أبحاث hireCNC" },
+  },
+  {
+    id: "post-seed-6",
+    title: "الصيانة الوقائية اليومية والأسبوعية لماكينات الـ CNC لتفادي الأعطال وتوقف الإنتاج",
+    slug: "daily-weekly-preventive-maintenance-for-cnc-machines",
+    excerpt: "جدول عملي للمراجعة اليومية (فحص مستويات الزيوت، تنظيف الفلاتر، معايرة ضغط الهيدروليك) للحفاظ على العمر الافتراضي ودقة الماكينة.",
+    coverImage: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=600&auto=format&fit=crop",
+    createdAt: new Date("2026-06-10T12:00:00Z"),
+    author: { name: "م. عصام حجازي (صيانة هيدروليك)" },
   },
 ];
 
 export default async function PublicBlogPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let posts: any[] = [];
-  let isMockData = false;
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const rawPosts = await blogRepo.findAllPublished() as any[];
-    posts = rawPosts.map((p) => ({
+    const dbPosts = rawPosts ? rawPosts.map((p) => ({
       ...p,
       author: { name: p.author?.name ?? p.author?.email ?? "مستخدم مجهول" },
-    }));
+    })) : [];
+
+    // دمج المقالات المنشورة في قاعدة البيانات مع المقالات المرجعية لضمان ثراء المدونة دائماً
+    const combined = [...dbPosts];
+    SEED_POSTS.forEach(seed => {
+      if (!combined.some(p => p.slug === seed.slug)) {
+        combined.push(seed);
+      }
+    });
+    posts = combined;
   } catch (error) {
     console.warn("Database failed to load public posts, displaying seed posts.", error);
-    isMockData = true;
     posts = SEED_POSTS;
   }
 
@@ -78,12 +112,6 @@ export default async function PublicBlogPage() {
           <p className="text-sm md:text-base text-foreground/60 leading-relaxed">
             مقالات وشروحات برمجية وعملية متخصصة لدعم الفنيين والمهندسين وأصحاب المصانع في السوق المصري لرفع كفاءة الإنتاج.
           </p>
-          
-          {isMockData && (
-            <div className="bg-amber-500/10 border border-amber-500/20 text-amber-600 rounded-xl px-4 py-2 text-xs font-bold inline-block">
-              ⚙️ تنبيه: يتم عرض مقالات تجريبية لعدم إمكانية الاتصال بقاعدة البيانات حالياً.
-            </div>
-          )}
         </div>
 
         {/* عرض المقالات كشبكة (Grid) */}

@@ -100,4 +100,19 @@ export const EN_DICTIONARY = {
     unauthorized: "Sorry, this action requires additional permissions.",
     loading: "Loading...",
   },
+
+  // 8. Referral & Direct Matching
+  referral: {
+    sectionTitle: "Request Tailored CNC Technical Nomination",
+    sectionSubtitle: "Specify your required machinery and engineering skills, and our team will match and nominate suitable candidates directly.",
+    requestBtn: "Request Nomination +",
+    industryLabel: "Industry (Alphabetical):",
+    jobTitleLabel: "Target Job Title:",
+    machinesLabel: "Machines & Control Systems:",
+    minExpLabel: "Minimum Experience (Years):",
+    locationLabel: "Preferred Location:",
+    salaryLabel: "Proposed Budget / Salary:",
+    notesLabel: "Additional Requirements / Shift Info:",
+    submitBtn: "Submit Nomination Request",
+  },
 } as const;

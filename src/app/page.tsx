@@ -6,12 +6,14 @@ import React from "react";
 import { PublicNavbar } from "@/components/shared/PublicNavbar";
 import { LandingHero } from "@/components/shared/LandingHero";
 import { LandingContent } from "@/components/shared/LandingContent";
+import SocialProofSection from "@/components/shared/SocialProofSection";
 
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-primary selection:text-white">
       <PublicNavbar />
       <LandingHero />
+      <SocialProofSection />
       <LandingContent />
     </div>
   );

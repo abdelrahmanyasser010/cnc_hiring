@@ -4,6 +4,11 @@
 export interface CandidateProfileRecord {
   id: string;
   isAvailable: boolean;
+  industry?: string | null;
+  jobTitle?: string | null;
+  machinesFreeText?: string | null;
+  skillsSummary?: string | null;
+  cvUrl?: string | null;
   governorate: string;
   city: string;
   experienceYears: number;
@@ -18,6 +23,11 @@ export interface CandidateProfileRecord {
 export interface CandidateSearchResult {
   id: string;
   candidateType: "TECHNICIAN" | "ENGINEER";
+  industry?: string | null;
+  jobTitle?: string | null;
+  machinesFreeText?: string | null;
+  skillsSummary?: string | null;
+  cvUrl?: string | null;
   governorate: string;
   city: string;
   experienceYears: number;
@@ -34,10 +44,13 @@ export interface ICandidateRepository {
   getRegistrationLookups(): Promise<{ machines: string[]; softwares: string[] }>;
   searchCandidates(filters: {
     candidateType?: "TECHNICIAN" | "ENGINEER";
+    industry?: string;
     governorate?: string;
     city?: string;
     machineTypes?: string[];
     specializations?: string[];
+    query?: string;
+    control?: string;
   }, skip: number, take: number): Promise<{ candidates: CandidateSearchResult[]; totalCount: number }>;
   findPhoneNumberById(candidateId: string): Promise<string | null>;
 }
