@@ -149,7 +149,7 @@ export function FeaturedJobsSection() {
           <div className="space-y-3">
             <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary px-3 py-1 rounded-full text-xs font-bold">
               <Briefcase className="w-4 h-4" />
-              <span>{isAr ? "شواغر التشغيل الصناعي النشطة" : "Active Machine Shop Openings"}</span>
+              <span>{isAr ? "وظائف CNC النشطة بالمصانع" : "Active CNC Machine Shop Roles"}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-foreground tracking-tight">
               {isAr ? "وظائف ماكينات الـ CNC المطلوبة في مصر الآن" : "Featured CNC Machinist & Programming Roles"}

@@ -392,10 +392,10 @@ export default function CandidateDashboardClientView({ data }: { data: Candidate
               </div>
 
               <Link
-                href="/#jobs"
+                href="/jobs"
                 className="text-xs font-bold text-primary hover:text-primary/80 inline-flex items-center gap-1 self-start sm:self-auto"
               >
-                <span>تصفح شواغر التشغيل</span>
+                <span>تصفح وظائف CNC</span>
                 <ArrowLeft className="w-3.5 h-3.5 rtl:rotate-0 ltr:rotate-180" />
               </Link>
             </div>
@@ -477,18 +477,18 @@ export default function CandidateDashboardClientView({ data }: { data: Candidate
                 </div>
                 <div className="max-w-md mx-auto space-y-1">
                   <h3 className="text-base font-bold text-foreground">
-                    لم تتقدم لأي شواغر تشغيل بعد
+                    لم تتقدم لأي وظيفة بعد
                   </h3>
                   <p className="text-xs text-foreground/60 leading-relaxed">
-                    تصفح شواغر مخارط وفرايز الـ CNC المتاحة في العاشر من رمضان و6 أكتوبر وبرج العرب، وقدّم مباشرة بضغطة زر.
+                    تصفح وظائف مخارط وفرايز الـ CNC المتاحة في العاشر من رمضان و6 أكتوبر وبرج العرب، وقدّم مباشرة بضغطة زر.
                   </p>
                 </div>
                 <Link
-                  href="/#jobs"
+                  href="/jobs"
                   className="inline-flex items-center gap-2 bg-primary text-white font-bold text-xs px-5 py-2.5 rounded-xl hover:bg-primary/90 transition-all shadow-md shadow-primary/20"
                 >
                   <Briefcase className="w-4 h-4" />
-                  <span>تصفح شواغر التشغيل وقدّم الآن</span>
+                  <span>تصفح وظائف CNC وقدّم الآن</span>
                 </Link>
               </div>
             )}
@@ -503,7 +503,7 @@ export default function CandidateDashboardClientView({ data }: { data: Candidate
                 </div>
                 <div>
                   <h3 className="text-sm sm:text-base font-bold text-foreground">
-                    شواغر تشغيل موصى بها تناسب ماكيناتك ومهاراتك
+                    وظائف موصى بها تناسب ماكيناتك وخبرتك
                   </h3>
                   <p className="text-xs text-foreground/60">
                     مستخلصة تلقائياً طبقاً لنوع الماكينة ونظام الكنترول المسجل في ملفك الفني
@@ -511,7 +511,7 @@ export default function CandidateDashboardClientView({ data }: { data: Candidate
                 </div>
               </div>
               <Link
-                href="/#jobs"
+                href="/jobs"
                 className="text-xs font-bold text-primary hover:underline hidden sm:inline-block"
               >
                 عرض كل الوظائف ←

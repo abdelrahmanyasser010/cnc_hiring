@@ -4,6 +4,7 @@
 import React from "react";
 import Link from "next/link";
 import { PublicNavbar } from "@/components/shared/PublicNavbar";
+import { PublicFooter } from "@/components/shared/PublicFooter";
 import { ShieldCheck, Lock, FileText, ArrowRight } from "lucide-react";
 
 export const metadata = {
@@ -88,6 +89,7 @@ export default function PrivacyPage() {
         </div>
 
       </main>
+      <PublicFooter />
     </div>
   );
 }

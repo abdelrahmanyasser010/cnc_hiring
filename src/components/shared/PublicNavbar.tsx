@@ -26,7 +26,7 @@ export function PublicNavbar() {
   };
 
   const navLinks = [
-    { label: isAr ? "شواغر التشغيل" : "Find Jobs", href: "/#jobs" },
+    { label: isAr ? "وظائف CNC" : "Find Jobs", href: "/jobs" },
     { label: isAr ? "دليل المصانع" : "Companies", href: "/companies" },
     { label: isAr ? "باقات التوظيف" : "Pricing", href: "/#pricing" },
     { label: isAr ? "المدونة" : "Blog", href: "/blog" },

@@ -386,10 +386,10 @@ export default function SocialProofSection({
                   {/* Card Bottom: Active Requisitions Count + Interactive CTA */}
                   <div className="pt-3.5 mt-3.5 border-t border-border/60 flex items-center justify-between text-xs font-bold text-primary">
                     <span className="text-foreground/60 font-semibold text-[11px]">
-                      {company.activeJobs} {isAr ? "شواغر تشغيل نشطة" : "Active Requisitions"}
+                      {company.activeJobs} {isAr ? "وظائف CNC متاحة" : "Active Requisitions"}
                     </span>
                     <span className="inline-flex items-center gap-1 group-hover:underline">
-                      <span>{isAr ? "تصفح الشواغر" : "Explore"}</span>
+                      <span>{isAr ? "استعراض الوظائف" : "Explore"}</span>
                       {isAr ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
                     </span>
                   </div>
@@ -467,7 +467,7 @@ export default function SocialProofSection({
                       href="/companies"
                       className="w-full text-center py-2 px-3 rounded-xl bg-secondary/10 hover:bg-primary hover:text-white text-primary text-xs font-bold transition-colors flex items-center justify-center gap-1.5 mt-1 border border-border"
                     >
-                      <span>{isAr ? "عرض الشواغر والملف الفني للمصنع" : "View Plant Requisitions"}</span>
+                      <span>{isAr ? "عرض وظائف والملف الفني للمصنع" : "View Plant Requisitions"}</span>
                       {isAr ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
                     </Link>
                   </div>

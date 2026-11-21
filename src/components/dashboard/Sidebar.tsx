@@ -40,7 +40,7 @@ export function Sidebar({ onItemClick }: SidebarProps) {
     },
     {
       title: t.nav.myJobs,
-      path: "/jobs",
+      path: "/jobs?view=manage",
       icon: Briefcase,
     },
     {

@@ -8,6 +8,7 @@ import React from "react";
 import { employerRepo } from "@/infrastructure/container";
 import { CompaniesClientView, EmployerWithJobs } from "./CompaniesClientView";
 import { PublicNavbar } from "@/components/shared/PublicNavbar";
+import { PublicFooter } from "@/components/shared/PublicFooter";
 
 interface PageProps {
   searchParams: Promise<{
@@ -172,6 +173,7 @@ export default async function CompaniesPage({ searchParams }: PageProps) {
       <main className="flex-1">
         <CompaniesClientView initialCompanies={companies} />
       </main>
+      <PublicFooter />
     </div>
   );
 }

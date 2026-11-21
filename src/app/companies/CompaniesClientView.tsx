@@ -210,15 +210,15 @@ export function CompaniesClientView({ initialCompanies }: CompaniesClientViewPro
                     </div>
                   ) : (
                     <div className="text-xs text-foreground/40 italic py-1">
-                      {isAr ? "لا توجد شواغر معلنة حالياً لهذا المصنع." : "No current public openings."}
+                      {isAr ? "لا توجد وظائف معلنة حالياً لهذا المصنع." : "No current public openings."}
                     </div>
                   )}
                   {/* Card Action Link */}
                   <Link
-                    href={company.jobs.length > 0 ? `/jobs/${company.jobs[0].id}` : `/#jobs`}
+                    href={company.jobs.length > 0 ? `/jobs/${company.jobs[0].id}` : `/jobs`}
                     className="w-full mt-3 py-2.5 px-4 bg-primary/10 hover:bg-primary text-primary hover:text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 border border-primary/20 hover:shadow-sm"
                   >
-                    <span>{isAr ? "استعراض شواغر المصنع والتقديم" : "View Openings & Apply"}</span>
+                    <span>{isAr ? "استعراض وظائف المصنع والتقديم" : "View Openings & Apply"}</span>
                     {isAr ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
                   </Link>
                 </div>

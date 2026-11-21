@@ -27,7 +27,7 @@ export function CandidateNavbar({ userName, userEmail }: CandidateNavbarProps) {
   const navLinks = [
     { label: "لوحة التحكم", href: "/candidate/dashboard", icon: LayoutDashboard },
     { label: "ملفي الفني", href: "/candidate/profile", icon: User },
-    { label: "شواغر التشغيل", href: "/#jobs", icon: Briefcase },
+    { label: "وظائف CNC", href: "/jobs", icon: Briefcase },
     { label: "دليل المصانع", href: "/companies", icon: Building2 },
     { label: "المدونة", href: "/blog", icon: BookOpen },
   ];

@@ -8,6 +8,7 @@ import React from "react";
 import { blogRepo } from "@/infrastructure/container";
 import { BlogClientView, BlogPostItem } from "./BlogClientView";
 import { PublicNavbar } from "@/components/shared/PublicNavbar";
+import { PublicFooter } from "@/components/shared/PublicFooter";
 
 export const metadata = {
   title: "مدونة تشغيل وبرمجة الـ CNC في مصر | HIREX CNC",
@@ -105,6 +106,7 @@ export default async function PublicBlogPage() {
       <main className="flex-1">
         <BlogClientView initialPosts={posts} />
       </main>
+      <PublicFooter />
     </div>
   );
 }
