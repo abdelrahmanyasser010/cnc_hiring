@@ -1,9 +1,24 @@
 // src/components/shared/SocialProofSection.tsx
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
-import { Star, ShieldCheck, Award, Users, CheckCircle, Quote, Building2, TrendingUp, MapPin, ArrowLeft, ArrowRight, Wrench } from "lucide-react";
+import { 
+  Star, 
+  ShieldCheck, 
+  Award, 
+  Users, 
+  CheckCircle, 
+  Quote, 
+  Building2, 
+  TrendingUp, 
+  MapPin, 
+  ArrowLeft, 
+  ArrowRight, 
+  Wrench,
+  ChevronLeft,
+  ChevronRight
+} from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export interface SocialProofSectionProps {
@@ -124,8 +139,8 @@ const TESTIMONIALS = [
     locationAr: "العاشر من رمضان",
     locationEn: "10th of Ramadan",
     rating: 5,
-    contentAr: "المنصة أثبتت جدارة استثنائية في فرز وتوفير مبرمجي مخارط وفرايز CNC ذوي خبرة موثقة. نظام الترشيح القائم على الصناعة ونوع الكنترول وفر علينا أسابيع من المقابلات غير المجدية، وعينا 3 فنيين محترفين خلال أسبوع واحد.",
-    contentEn: "The platform demonstrated outstanding capability in evaluating and vetting CNC lathe and milling programmers. Matching by specific industry and controller types saved us weeks of unproductive interviews, hiring 3 specialists within one week.",
+    contentAr: "المنصة أثبتت جدارة استثنائية في فرز وتوفير مبرمجي مخارط وفرايز CNC ذوي خبرة موثقة. نظام الترشيح القائم على نوع الماكينة والكنترول وفر علينا أسابيع من المقابلات غير المجدية.",
+    contentEn: "The platform demonstrated outstanding capability in vetting CNC lathe and milling programmers. Matching by specific machine type and controller saved us weeks of unproductive interviews.",
     avatar: "ط",
     dateAr: "منذ أسبوعين",
     dateEn: "2 weeks ago",
@@ -191,6 +206,16 @@ export default function SocialProofSection({
 }: SocialProofSectionProps) {
   const { lang } = useLanguage();
   const isAr = lang === "ar";
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollHorizontally = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = isAr 
+        ? (direction === "left" ? 340 : -340)
+        : (direction === "left" ? -340 : 340);
+      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
 
   const displayTitle = title || (isAr 
     ? "ثقة كبرى المنشآت الصناعية والمصانع الهندسية في مصر" 
@@ -203,13 +228,13 @@ export default function SocialProofSection({
   return (
     <section 
       dir={isAr ? "rtl" : "ltr"} 
-      className={`py-16 sm:py-20 bg-gradient-to-b from-slate-50/70 via-white to-slate-50 dark:from-slate-950/60 dark:via-slate-900/80 dark:to-slate-950/60 border-y border-border/60 ${className}`}
+      className={`py-14 sm:py-16 bg-gradient-to-b from-slate-50/70 via-white to-slate-50 dark:from-slate-950/60 dark:via-slate-900/80 dark:to-slate-950/60 border-y border-border/60 ${className}`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
         
         {/* 1. Header & High-Level Metrics */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs font-bold border border-primary/20 shadow-sm">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs font-bold border border-primary/20">
             <ShieldCheck className="w-4 h-4" />
             <span>{isAr ? "شركاء التوظيف والتشغيل المعتمدون" : "Verified Industrial Machining Partners"}</span>
           </div>
@@ -223,9 +248,9 @@ export default function SocialProofSection({
           </p>
 
           {showStats && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6">
-              <div className="bg-card border border-border/80 rounded-2xl p-5 shadow-sm text-center">
-                <div className="flex items-center justify-center gap-2 text-primary font-black text-2xl sm:text-3xl mb-1">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
+              <div className="bg-card border border-border/80 rounded-2xl p-4 text-center">
+                <div className="flex items-center justify-center gap-2 text-primary font-black text-2xl mb-1">
                   <span>+150</span>
                   <Building2 className="w-5 h-5 opacity-80" />
                 </div>
@@ -234,8 +259,8 @@ export default function SocialProofSection({
                 </div>
               </div>
               
-              <div className="bg-card border border-border/80 rounded-2xl p-5 shadow-sm text-center">
-                <div className="flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400 font-black text-2xl sm:text-3xl mb-1">
+              <div className="bg-card border border-border/80 rounded-2xl p-4 text-center">
+                <div className="flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400 font-black text-2xl mb-1">
                   <span>+1,200</span>
                   <Users className="w-5 h-5 opacity-80" />
                 </div>
@@ -244,8 +269,8 @@ export default function SocialProofSection({
                 </div>
               </div>
 
-              <div className="bg-card border border-border/80 rounded-2xl p-5 shadow-sm text-center">
-                <div className="flex items-center justify-center gap-2 text-amber-500 font-black text-2xl sm:text-3xl mb-1">
+              <div className="bg-card border border-border/80 rounded-2xl p-4 text-center">
+                <div className="flex items-center justify-center gap-2 text-amber-500 font-black text-2xl mb-1">
                   <span>98%</span>
                   <Award className="w-5 h-5 opacity-80" />
                 </div>
@@ -254,8 +279,8 @@ export default function SocialProofSection({
                 </div>
               </div>
 
-              <div className="bg-card border border-border/80 rounded-2xl p-5 shadow-sm text-center">
-                <div className="flex items-center justify-center gap-2 text-sky-600 dark:text-sky-400 font-black text-2xl sm:text-3xl mb-1">
+              <div className="bg-card border border-border/80 rounded-2xl p-4 text-center">
+                <div className="flex items-center justify-center gap-2 text-sky-600 dark:text-sky-400 font-black text-2xl mb-1">
                   <span>48h</span>
                   <TrendingUp className="w-5 h-5 opacity-80" />
                 </div>
@@ -267,9 +292,9 @@ export default function SocialProofSection({
           )}
         </div>
 
-        {/* 2. Prominent Industrial Companies & Facilities (4 cards per row, spacious, legible & clickable) */}
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-border/60 pb-3">
+        {/* 2. Prominent Industrial Companies (Single Horizontal Scrollable Row for Laptop and Mobile) */}
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-border/60 pb-3">
             <div>
               <span className="text-xs font-bold text-primary uppercase tracking-wider bg-primary/10 px-3 py-1 rounded-full">
                 {isAr ? "دليل المصانع الهندسية الشريكة" : "Partner Facilities Directory"}
@@ -278,17 +303,44 @@ export default function SocialProofSection({
                 {isAr ? "أبرز المنشآت الهندسية والمصانع الشريكة" : "Featured Engineering & Machining Facilities"}
               </h3>
             </div>
-            <Link 
-              href="/companies" 
-              className="text-xs sm:text-sm font-bold text-primary hover:text-primary/80 inline-flex items-center gap-1.5 transition-colors"
-            >
-              <span>{isAr ? "عرض كافة المصانع المعتمدة (+150 مصنع)" : "View all verified facilities (+150)"}</span>
-              {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-            </Link>
+
+            {/* Scroll Navigation Controls + View All Link */}
+            <div className="flex items-center gap-3 self-end sm:self-auto">
+              <Link 
+                href="/companies" 
+                className="text-xs sm:text-sm font-bold text-primary hover:text-primary/80 inline-flex items-center gap-1 transition-colors"
+              >
+                <span>{isAr ? "عرض الكل (+150 مصنع)" : "View all (+150)"}</span>
+                {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+              </Link>
+
+              <div className="flex items-center gap-1 bg-card border border-border rounded-xl p-1 shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => scrollHorizontally("left")}
+                  aria-label="التمرير لليمين"
+                  className="p-1.5 rounded-lg hover:bg-secondary/15 text-foreground transition-colors"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollHorizontally("right")}
+                  aria-label="التمرير لليسار"
+                  className="p-1.5 rounded-lg hover:bg-secondary/15 text-foreground transition-colors"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
           </div>
           
-          {/* Responsive 4-column spacious grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          {/* Single Row Horizontal Scrolling Container (Smooth & Clean) */}
+          <div 
+            ref={scrollContainerRef}
+            className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory scroll-smooth"
+            style={{ scrollbarWidth: "thin" }}
+          >
             {TRUSTED_COMPANIES.map((company, index) => {
               const name = isAr ? company.nameAr : company.nameEn;
               const zone = isAr ? company.zoneAr : company.zoneEn;
@@ -299,12 +351,12 @@ export default function SocialProofSection({
                 <Link
                   key={index}
                   href="/companies"
-                  className="bg-card hover:bg-card/90 border border-border hover:border-primary/50 rounded-2xl p-5 flex flex-col justify-between transition-all duration-200 shadow-sm hover:shadow-md group relative overflow-hidden text-start"
+                  className="w-[280px] sm:w-[320px] shrink-0 snap-start bg-card hover:bg-card/90 border border-border hover:border-primary/50 rounded-2xl p-5 flex flex-col justify-between transition-colors shadow-sm text-start group"
                 >
-                  <div className="space-y-3.5">
+                  <div className="space-y-3">
                     {/* Top Row: Initials Badge + Verified Status */}
                     <div className="flex items-center justify-between gap-2">
-                      <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 text-sky-400 flex items-center justify-center font-mono font-black text-xs shadow-sm">
+                      <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 text-sky-400 flex items-center justify-center font-mono font-black text-xs">
                         {company.initials}
                       </div>
                       <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-800/50">
@@ -313,12 +365,12 @@ export default function SocialProofSection({
                       </span>
                     </div>
 
-                    {/* Company Name (Full, legible, no line-clamp cutoffs) */}
+                    {/* Company Name */}
                     <div>
-                      <h4 className="text-sm sm:text-base font-bold text-foreground group-hover:text-primary transition-colors leading-snug">
+                      <h4 className="text-sm font-bold text-foreground group-hover:text-primary transition-colors leading-snug">
                         {name}
                       </h4>
-                      <p className="text-xs text-foreground/60 flex items-center gap-1.5 mt-1.5 font-medium">
+                      <p className="text-xs text-foreground/60 flex items-center gap-1 mt-1 font-medium">
                         <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
                         <span>{zone}</span>
                       </p>
@@ -327,18 +379,18 @@ export default function SocialProofSection({
                     {/* Machine & Specialty Focus */}
                     <div className="text-xs text-foreground/75 bg-secondary/10 dark:bg-slate-900/60 p-2.5 rounded-xl border border-border/60 flex items-center gap-2">
                       <Wrench className="w-3.5 h-3.5 text-primary shrink-0" />
-                      <span className="font-medium">{specialty}</span>
+                      <span className="font-medium truncate">{specialty}</span>
                     </div>
                   </div>
 
                   {/* Card Bottom: Active Requisitions Count + Interactive CTA */}
-                  <div className="pt-4 mt-4 border-t border-border/60 flex items-center justify-between text-xs font-bold text-primary">
+                  <div className="pt-3.5 mt-3.5 border-t border-border/60 flex items-center justify-between text-xs font-bold text-primary">
                     <span className="text-foreground/60 font-semibold text-[11px]">
                       {company.activeJobs} {isAr ? "شواغر تشغيل نشطة" : "Active Requisitions"}
                     </span>
                     <span className="inline-flex items-center gap-1 group-hover:underline">
                       <span>{isAr ? "تصفح الشواغر" : "Explore"}</span>
-                      {isAr ? <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" /> : <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />}
+                      {isAr ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
                     </span>
                   </div>
                 </Link>
@@ -347,8 +399,8 @@ export default function SocialProofSection({
           </div>
         </div>
 
-        {/* 3. Authentic Testimonials Grid (Large, high-contrast typography & actionable links) */}
-        <div className="space-y-8 pt-4">
+        {/* 3. Authentic Testimonials Grid */}
+        <div className="space-y-8 pt-2">
           <div className="text-center max-w-2xl mx-auto">
             <span className="text-xs font-bold text-primary uppercase tracking-wider bg-primary/10 px-3.5 py-1 rounded-full">
               {isAr ? "تقييمات قادة الإنتاج والهندسة" : "Industrial Leadership Feedback"}
@@ -373,26 +425,25 @@ export default function SocialProofSection({
               return (
                 <div 
                   key={t.id}
-                  className="bg-card border border-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-5 text-start relative group hover:border-primary/50"
+                  className="bg-card border border-border rounded-2xl p-6 shadow-sm hover:border-primary/50 transition-colors flex flex-col justify-between space-y-4 text-start relative group"
                 >
-                  <Quote className="w-8 h-8 text-primary/15 absolute top-5 end-5 group-hover:text-primary/25 transition-colors pointer-events-none" />
+                  <Quote className="w-7 h-7 text-primary/15 absolute top-5 end-5 pointer-events-none" />
                   
-                  <div className="space-y-3.5">
+                  <div className="space-y-3">
                     <div className="flex items-center gap-1">
                       {[...Array(t.rating)].map((_, i) => (
                         <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                       ))}
                     </div>
                     
-                    {/* Clear, bold, readable quote text */}
                     <p className="text-sm text-foreground font-medium leading-relaxed">
                       &quot;{content}&quot;
                     </p>
                   </div>
 
-                  <div className="space-y-3 pt-4 border-t border-border/60">
+                  <div className="space-y-3 pt-3.5 border-t border-border/60">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-sky-700 text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-sm">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-sky-700 text-white font-bold text-sm flex items-center justify-center shrink-0">
                         {t.avatar}
                       </div>
                       <div className="min-w-0 flex-1">
@@ -412,10 +463,9 @@ export default function SocialProofSection({
                       </span>
                     </div>
 
-                    {/* Actionable Link to the factory profile */}
                     <Link
                       href="/companies"
-                      className="w-full text-center py-2 px-3 rounded-xl bg-secondary/10 hover:bg-primary hover:text-white text-primary text-xs font-bold transition-all flex items-center justify-center gap-1.5 mt-2 border border-border hover:border-primary"
+                      className="w-full text-center py-2 px-3 rounded-xl bg-secondary/10 hover:bg-primary hover:text-white text-primary text-xs font-bold transition-colors flex items-center justify-center gap-1.5 mt-1 border border-border"
                     >
                       <span>{isAr ? "عرض الشواغر والملف الفني للمصنع" : "View Plant Requisitions"}</span>
                       {isAr ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}

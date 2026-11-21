@@ -77,7 +77,7 @@ export default async function AdminBlogPage() {
           </div>
           <h1 className="text-xl md:text-2xl font-bold text-foreground/90 flex items-center gap-2 mt-1">
             <BookOpen className="w-6 h-6 text-primary" />
-            <span>إدارة مقالات المدونة المعرفية</span>
+            <span>إدارة مقالات المدونة</span>
           </h1>
         </div>
 

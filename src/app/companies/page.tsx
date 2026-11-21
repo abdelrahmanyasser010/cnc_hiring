@@ -7,6 +7,7 @@ export const dynamic = "force-dynamic";
 import React from "react";
 import { employerRepo } from "@/infrastructure/container";
 import { CompaniesClientView, EmployerWithJobs } from "./CompaniesClientView";
+import { PublicNavbar } from "@/components/shared/PublicNavbar";
 
 interface PageProps {
   searchParams: Promise<{
@@ -165,5 +166,12 @@ export default async function CompaniesPage({ searchParams }: PageProps) {
     companies = filtered;
   }
 
-  return <CompaniesClientView initialCompanies={companies} />;
+  return (
+    <div className="min-h-screen flex flex-col bg-background">
+      <PublicNavbar />
+      <main className="flex-1">
+        <CompaniesClientView initialCompanies={companies} />
+      </main>
+    </div>
+  );
 }

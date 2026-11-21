@@ -14,101 +14,64 @@ export function LandingContent() {
 
   return (
     <>
-      {/* 3. Metrics Section (إحصائيات المنصة) */}
-      <section id="metrics" className="py-16 border-y border-border bg-secondary/5">
+      {/* عن المنصة - حل واقعي لأزمة التوظيف الصناعي والتشغيل في مصر */}
+      <section id="about" className="py-16 sm:py-20 bg-background border-b border-border/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
-            
-            <div className="flex flex-col gap-1 p-4 rounded-xl bg-card/50 border border-border/50">
-              <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary">5,000+</span>
-              <span className="text-xs sm:text-sm text-foreground/70 font-medium">
-                {isAr ? "فني ومهندس ومبرمج CNC مسجل" : "Registered CNC Specialists & Programmers"}
-              </span>
-            </div>
-            
-            <div className="flex flex-col gap-1 p-4 rounded-xl bg-card/50 border border-border/50">
-              <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary">150+</span>
-              <span className="text-xs sm:text-sm text-foreground/70 font-medium">
-                {isAr ? "مصنع وورشة مشتركين" : "Subscribed Factories & Workshops"}
-              </span>
-            </div>
-            
-            <div className="flex flex-col gap-1 p-4 rounded-xl bg-card/50 border border-border/50">
-              <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary">450+</span>
-              <span className="text-xs sm:text-sm text-foreground/70 font-medium">
-                {isAr ? "مقابلة مجدولة وناجحة" : "Successful Scheduled Interviews"}
-              </span>
-            </div>
-            
-            <div className="flex flex-col gap-1 p-4 rounded-xl bg-card/50 border border-border/50">
-              <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary">96%</span>
-              <span className="text-xs sm:text-sm text-foreground/70 font-medium">
-                {isAr ? "نسبة حضور المقابلات والالتزام" : "Interview Attendance & Reliability Rate"}
-              </span>
-            </div>
-            
-          </div>
-        </div>
-      </section>
-
-      {/* منهجية العمل والربط الصناعي (Pillars from Brief) */}
-      <section id="about" className="py-20 bg-background border-b border-border/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <span className="text-primary text-xs sm:text-sm font-bold tracking-wider uppercase bg-primary/10 px-3 py-1 rounded-full">
-              {isAr ? "منظومة الربط والترشيح الصناعي التخصصي" : "Specialized Industrial Referral Methodology"}
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-14">
+            <span className="text-primary text-xs sm:text-sm font-bold tracking-wider uppercase bg-primary/10 px-3.5 py-1 rounded-full">
+              {isAr ? "عن المنصة ورؤيتها الصناعية" : "About HIREX CNC"}
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-foreground mt-3">
-              {isAr ? "الفرز الفني والترشيح المباشر لكوادر التشغيل الميكانيكي والـ CNC" : "Precise Technical Evaluation & Direct Referrals for CNC Machining"}
+              {isAr ? "حل أزمة التوظيف الفني لمصانع وورش الـ CNC في مصر" : "Engineering Staffing Built for Machine Shops Across Egypt"}
             </h2>
-            <p className="text-xs sm:text-sm md:text-base text-foreground/65 mt-3 leading-relaxed">
+            <p className="text-xs sm:text-sm md:text-base text-foreground/70 mt-3 leading-relaxed">
               {isAr 
-                ? "منظومة رقمية متخصصة تهدف لتلبية الاحتياجات التشغيلية للمصانع والورش الهندسية في مصر، بمراعاة المعايير الفنية لأنظمة التحكم (CNC Controllers) وتطبيقات الصناعات التحويلية."
-                : "An engineering-first platform tailored to production workshops and factories across Egypt, aligned with controller standards and sector-specific machining requirements."}
+                ? "بدلاً من إهدار الأسابيع في مقابلات عشوائية أو دفع عمولات توظيف مبالغ فيها، نوفر للمنشآت الهندسية وصولاً مباشراً لكوادر الـ CNC المفحوصة عملياً طبقاً لنوع الماكينة ونظام الكنترول."
+                : "Eliminating weeks of unproductive interviews and costly recruiter fees with direct access to machine-tested CNC specialists."}
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
             
-            <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/40 transition-all text-start shadow-sm">
+            <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors text-start shadow-sm">
               <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-black text-lg mb-4">
                 01
               </div>
               <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">
-                {isAr ? "التقسيم بالصناعة أولاً" : "Industry-First Architecture"}
+                {isAr ? "مطابقة دقيقة لنوع الماكينة والكنترول" : "Rigorous Controller & Machine Matching"}
               </h3>
               <p className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
                 {isAr 
-                  ? "تصنيف دقيق يغطي 11 قطاعاً حيوياً (الإسطمبات، المستلزمات الطبية، الطيران، السيارات، البترول والغاز، تشكيل الصاج، وغيرها) لضمان توافق بيئة العمل."
-                  : "Structured classification covering 11 critical sectors (Molds & Dies, Medical, Aerospace, Automotive, Oil & Gas, Sheet Metal, etc.) ensuring work environment alignment."}
+                  ? "تصنيف الكوادر طبقاً لماكينات التشغيل الفعلية (خراطة، تفريز 3 إلى 5 محاور، سلك) وأنظمة الكنترول (Fanuc, Siemens, Heidenhain, Haas) مع التأكد من إتقان قراءة الرسومات الهندسية وتحديد نقاط الصفر (Offsets)."
+                  : "Specialists matched by actual machine setups and controllers with verified competency in engineering drawings and zero-point work offsets."}
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/40 transition-all text-start shadow-sm">
+            <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors text-start shadow-sm">
               <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-black text-lg mb-4">
                 02
               </div>
               <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">
-                {isAr ? "مرونة توصيف الماكينات والمهام" : "Free-Text Machine & Title Flexibility"}
+                {isAr ? "اشتراك شهري شفاف بدون عمولات توظيف (0%)" : "Flat Subscription — Zero Placement Fees"}
               </h3>
               <p className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
                 {isAr 
-                  ? "حرية تامة في تدوين المسميات الدقيقة، طرازات الماكينات، وأنظمة الكنترول (Fanuc، Siemens، Heidenhain) لتطابق واقع بيئة الإنتاج الفعلية دون قيود جامدة."
-                  : "Complete flexibility for defining exact machine models, controller variants (Fanuc, Siemens, Heidenhain), and machining operations reflecting production reality."}
+                  ? "لا نقتطع أي نسبة من رواتب الفنيين ولا نفرض أي عمولات توظيف متكررة على المصنع. باقة شهرية واضحة تمنحك وصولاً كاملاً لقاعدة الكفاءات واستقلالية تامة في تعيين فريقك الإنتاجي."
+                  : "No contingency placement fee percentages from candidate salaries or shop budgets. A transparent monthly plan granting full hiring independence."}
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/40 transition-all text-start shadow-sm">
+            <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors text-start shadow-sm">
               <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-black text-lg mb-4">
                 03
               </div>
               <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">
-                {isAr ? "الترشيح المباشر بموافقة مسبقة" : "Direct Nomination & Candidate Consent"}
+                {isAr ? "تغطية ميدانية لكبرى المناطق الصناعية" : "Direct Industrial Hubs Coverage"}
               </h3>
               <p className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
                 {isAr 
-                  ? "إدارة المنصة تطابق متطلبات المنشأة وترشح الكفاءات استباقياً، ولا تتم مشاركة بيانات الاتصال إلا بعد التنسيق المسبق مع المرشح والتأكد من ملاءمته وجاهزيته."
-                  : "Proactive candidate matching and nomination; contact details are shared only after candidate consultation and verified readiness."}
+                  ? "شبكة كوادر متمركزة في العاشر من رمضان، 6 أكتوبر، العبور، برج العرب، وقويسنا، مما يضمن التزام الكادر بالحضور وسهولة انتقاله لمقر المصنع واستقراره المهني."
+                  : "Machinists mapped directly across 10th of Ramadan, 6th of October, Obour, Borg El Arab, and Quesna for seamless commute and reliable plant attendance."}
               </p>
             </div>
 
@@ -311,7 +274,7 @@ export function LandingContent() {
               <a href="#about" className="hover:text-primary transition-colors">{isAr ? "عن المنصة" : "About Platform"}</a>
               <a href="#pricing" className="hover:text-primary transition-colors">{isAr ? "الباقات والأسعار" : "Pricing & Plans"}</a>
               <Link href="/companies" className="hover:text-primary transition-colors">{isAr ? "دليل الشركات" : "Factory Directory"}</Link>
-              <Link href="/blog" className="hover:text-primary transition-colors">{isAr ? "المدونة المعرفية" : "Knowledge Blog"}</Link>
+              <Link href="/blog" className="hover:text-primary transition-colors">{isAr ? "المدونة" : "Blog"}</Link>
               <Link href="/login" className="hover:text-primary transition-colors">{isAr ? "دخول المصانع" : "Employer Login"}</Link>
             </div>
           </div>

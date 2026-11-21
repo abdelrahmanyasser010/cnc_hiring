@@ -29,7 +29,7 @@ export function CandidateNavbar({ userName, userEmail }: CandidateNavbarProps) {
     { label: "ملفي الفني", href: "/candidate/profile", icon: User },
     { label: "شواغر التشغيل", href: "/#jobs", icon: Briefcase },
     { label: "دليل المصانع", href: "/companies", icon: Building2 },
-    { label: "المدونة المعرفية", href: "/blog", icon: BookOpen },
+    { label: "المدونة", href: "/blog", icon: BookOpen },
   ];
 
   return (

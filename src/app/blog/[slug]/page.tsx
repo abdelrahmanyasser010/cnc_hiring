@@ -11,6 +11,7 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import BlogSidebar from "@/components/shared/BlogSidebar";
+import { PublicNavbar } from "@/components/shared/PublicNavbar";
 import { ArrowRight, Calendar, User, BookOpen } from "lucide-react";
 
 // استيراد ستايلات تلوين الأكواد البرمجية (مثل أكواد الـ G-code)
@@ -308,19 +309,21 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950/40 py-12 text-right font-sans" dir="rtl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* رابط العودة للمقالات */}
-        <div className="mb-6">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-foreground/50 hover:text-primary transition-colors cursor-pointer"
-          >
-            <ArrowRight className="w-4 h-4" />
-            <span>الرجوع لجميع المقالات المعرفية</span>
-          </Link>
-        </div>
+    <div className="min-h-screen flex flex-col bg-background" dir="rtl">
+      <PublicNavbar />
+      <div className="flex-1 bg-slate-50 dark:bg-slate-950/40 py-10 text-right font-sans">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* رابط العودة للمقالات */}
+          <div className="mb-6">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-foreground/60 hover:text-primary transition-colors cursor-pointer"
+            >
+              <ArrowRight className="w-4 h-4" />
+              <span>الرجوع لجميع المقالات</span>
+            </Link>
+          </div>
 
         {/* تقسيم الشاشة: المقال والعمود الجانبي */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -377,5 +380,6 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
 
       </div>
     </div>
-  );
+  </div>
+);
 }

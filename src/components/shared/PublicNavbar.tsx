@@ -22,7 +22,7 @@ export function PublicNavbar() {
     { label: lang === "ar" ? "دليل المصانع" : "Our Companies", href: "/companies" },
     { label: lang === "ar" ? "لأصحاب المصانع" : "For Employers", href: "/#pricing" },
     { label: lang === "ar" ? "للكوادر والفنيين" : "For Applicants", href: "/#jobs" },
-    { label: lang === "ar" ? "المدونة المعرفية" : "Blog", href: "/blog" },
+    { label: lang === "ar" ? "المدونة" : "Blog", href: "/blog" },
     { label: lang === "ar" ? "عن المنصة" : "About", href: "/#about" },
   ];
 

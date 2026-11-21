@@ -68,7 +68,7 @@ export function BlogClientView({ initialPosts }: BlogClientViewProps) {
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary px-3.5 py-1.5 rounded-full text-xs font-bold">
             <BookOpen className="w-4 h-4" />
-            <span>{isAr ? "المدونة المعرفية المتخصصة لتشغيل الـ CNC" : "Knowledge & Field Intelligence for CNC Machining"}</span>
+            <span>{isAr ? "مدونة تشغيل وبرمجة الـ CNC في مصر" : "Field Intelligence & Articles for CNC Machining"}</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground tracking-tight">
             {isAr ? "أبحاث التشغيل ودراسات حالة المصانع" : "Shop Floor Insights & Machine Studies"}

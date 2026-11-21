@@ -25,8 +25,6 @@ export function LandingHero() {
       
       {/* Deep Industrial Gradients preserving Brand Colors */}
       <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-900/80 pointer-events-none" />
-      <div className="absolute -top-32 start-1/4 w-96 h-96 bg-primary/25 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-32 end-10 w-96 h-96 bg-sky-500/15 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -35,11 +33,11 @@ export function LandingHero() {
           <div className="lg:col-span-7 flex flex-col gap-5 sm:gap-6 text-start">
             
             {/* Pill Badge */}
-            <div className="inline-flex items-center gap-2 bg-primary/20 border border-primary/40 text-sky-300 text-xs font-semibold px-3.5 py-1.5 rounded-full w-fit backdrop-blur-md">
-              <span className="flex h-2 w-2 rounded-full bg-sky-400 animate-pulse"></span>
+            <div className="inline-flex items-center gap-2 bg-slate-900/90 border border-slate-800 text-sky-400 text-xs font-semibold px-3.5 py-1.5 rounded-full w-fit">
+              <span className="flex h-2 w-2 rounded-full bg-sky-400"></span>
               <span>
                 {isAr 
-                  ? "المنظومة الصناعية المعتمدة لتوظيف كوادر الـ CNC في مصر" 
+                  ? "المنظومة الصناعية المتخصصة لتوظيف كوادر الـ CNC في مصر" 
                   : "Egypt's Dedicated CNC & Precision Machining Staffing Network"}
               </span>
             </div>
@@ -71,13 +69,13 @@ export function LandingHero() {
               }
             </p>
             
-            {/* Dual Marketplace Action (Only 2 Primary Funnels) */}
+            {/* Dual Marketplace Action (Only 2 Primary Funnels - Crisp & Solid, No Fuzzy Glow) */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4 mt-2">
               
               {/* Machinist Action (Primary Solid Cyan/Blue) */}
               <Link 
                 href="/register/candidate" 
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary hover:bg-primary/90 text-white text-sm sm:text-base font-bold rounded-xl shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5 active:translate-y-0 text-center"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary hover:bg-primary/90 text-white text-sm sm:text-base font-bold rounded-xl transition-colors text-center"
               >
                 <span>{isAr ? "سجل كفني تشغيل / مبرمج CNC" : "Machinists — Search & Register"}</span>
                 {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
@@ -86,7 +84,7 @@ export function LandingHero() {
               {/* Factory / Machine Shop Action (High-Contrast Solid White) */}
               <Link 
                 href="/register" 
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white hover:bg-slate-100 text-slate-950 text-sm sm:text-base font-bold rounded-xl shadow-lg shadow-black/20 transition-all hover:-translate-y-0.5 active:translate-y-0 text-center"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white hover:bg-slate-100 text-slate-950 text-sm sm:text-base font-bold rounded-xl transition-colors text-center"
               >
                 <span>{isAr ? "وظّف كوادر لمصنعك" : "Machine Shops — Hire Machinists"}</span>
               </Link>
@@ -108,7 +106,7 @@ export function LandingHero() {
             <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-800/80 max-w-xl text-slate-300 text-xs">
               <div>
                 <div className="font-bold text-base text-white font-mono">1,400+</div>
-                <div className="text-slate-400 text-[11px]">{isAr ? "فني ومبرمج معتمد" : "Verified Machinists"}</div>
+                <div className="text-slate-400 text-[11px]">{isAr ? "فني ومبرمج مسجل" : "Registered Machinists"}</div>
               </div>
               <div>
                 <div className="font-bold text-base text-white font-mono">180+</div>
@@ -122,22 +120,21 @@ export function LandingHero() {
 
           </div>
           
-          {/* Right Column: Live Verified Industrial Talent Stream (5 cols on lg) */}
+          {/* Right Column: Verified Industrial Talent Showcase (5 cols on lg - Solid & Crisp) */}
           <div className="lg:col-span-5 relative">
-            <div className="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-2xl backdrop-blur-xl relative">
+            <div className="w-full bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl relative">
               
               {/* Authentic Header with Live Status Dot */}
               <div className="flex items-center justify-between border-b border-slate-800 pb-3.5 mb-4">
                 <div className="flex items-center gap-2.5">
                   <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                    <span className="inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                   </span>
                   <span className="text-xs font-bold text-white tracking-wide">
-                    {isAr ? "رادار الكفاءات الفنية المعتمدة" : "Live Verified CNC Stream"}
+                    {isAr ? "أحدث الكفاءات المنضمة لبنك التوظيف" : "Recently Joined CNC Specialists"}
                   </span>
                 </div>
-                <span className="text-[11px] text-sky-400 bg-sky-950/80 border border-sky-800/60 px-2.5 py-0.5 rounded-full font-medium">
+                <span className="text-[11px] text-sky-400 bg-slate-950 border border-slate-800 px-2.5 py-0.5 rounded-full font-medium">
                   {isAr ? "المناطق الصناعية • مصر" : "Egypt Industrial Hubs"}
                 </span>
               </div>
@@ -146,7 +143,7 @@ export function LandingHero() {
               <div className="space-y-3">
                 
                 {/* Candidate 1 */}
-                <div className="flex items-center gap-3 p-3 bg-slate-950/70 border border-slate-800/80 rounded-xl hover:border-slate-700 transition-colors">
+                <div className="flex items-center gap-3 p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-slate-700 transition-colors">
                   <div className="w-10 h-10 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center font-bold text-sky-300 text-xs flex-shrink-0 font-mono">
                     CNC
                   </div>
@@ -166,7 +163,7 @@ export function LandingHero() {
                 </div>
 
                 {/* Candidate 2 */}
-                <div className="flex items-center gap-3 p-3 bg-slate-950/70 border border-slate-800/80 rounded-xl hover:border-slate-700 transition-colors">
+                <div className="flex items-center gap-3 p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-slate-700 transition-colors">
                   <div className="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-500/30 flex items-center justify-center font-bold text-cyan-300 text-xs flex-shrink-0 font-mono">
                     5-AX
                   </div>
@@ -186,7 +183,7 @@ export function LandingHero() {
                 </div>
 
                 {/* Candidate 3 */}
-                <div className="flex items-center gap-3 p-3 bg-slate-950/70 border border-slate-800/80 rounded-xl hover:border-slate-700 transition-colors">
+                <div className="flex items-center gap-3 p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-slate-700 transition-colors">
                   <div className="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center font-bold text-indigo-300 text-xs flex-shrink-0 font-mono">
                     CAM
                   </div>
@@ -201,7 +198,7 @@ export function LandingHero() {
                     </div>
                   </div>
                   <span className="bg-blue-950 text-blue-400 border border-blue-800/60 text-[11px] px-2 py-0.5 rounded-full font-medium flex-shrink-0">
-                    {isAr ? "معتمد ISO" : "ISO Verified"}
+                    {isAr ? "موثق الخبرة" : "Verified Exp"}
                   </span>
                 </div>
               </div>
@@ -210,9 +207,9 @@ export function LandingHero() {
               <div className="mt-4 pt-3.5 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
                 <span className="inline-flex items-center gap-1.5">
                   <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  <span>{isAr ? "ضمان الحضور والجاهزية الفنية" : "Verified Attendance & Trade Test"}</span>
+                  <span>{isAr ? "فحص عملي لأنظمة الكنترول والـ G-code قبل المقابلة" : "Practical machine control & G-code vetting"}</span>
                 </span>
-                <span className="font-mono text-emerald-400 font-bold">98.8%</span>
+                <span className="font-mono text-emerald-400 font-bold">100%</span>
               </div>
               
             </div>

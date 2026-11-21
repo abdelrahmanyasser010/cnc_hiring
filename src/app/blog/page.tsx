@@ -7,9 +7,10 @@ export const dynamic = "force-dynamic";
 import React from "react";
 import { blogRepo } from "@/infrastructure/container";
 import { BlogClientView, BlogPostItem } from "./BlogClientView";
+import { PublicNavbar } from "@/components/shared/PublicNavbar";
 
 export const metadata = {
-  title: "المدونة المعرفية لفنيي ومهندسي الـ CNC في مصر | HIREX CNC",
+  title: "مدونة تشغيل وبرمجة الـ CNC في مصر | HIREX CNC",
   description: "مقالات، شروحات، ونصائح تقنية وعملية حول تشغيل وبرمجة ماكينات المخارط والفرايز الـ CNC وكيفية صيانة الماكينات وكتابة الـ G-code.",
 };
 
@@ -98,5 +99,12 @@ export default async function PublicBlogPage() {
     posts = SEED_POSTS;
   }
 
-  return <BlogClientView initialPosts={posts} />;
+  return (
+    <div className="min-h-screen flex flex-col bg-background">
+      <PublicNavbar />
+      <main className="flex-1">
+        <BlogClientView initialPosts={posts} />
+      </main>
+    </div>
+  );
 }
