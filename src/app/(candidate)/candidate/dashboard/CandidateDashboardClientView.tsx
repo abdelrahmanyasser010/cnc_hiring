@@ -26,6 +26,7 @@ import {
   AlertCircle
 } from "lucide-react";
 import { updateCandidateAvailability } from "@/app/actions/candidate";
+import { WORK_SHIFTS } from "@/lib/constants";
 
 export interface CandidateApplicationItem {
   id: string;
@@ -58,6 +59,7 @@ export interface CandidateDashboardData {
     city?: string | null;
     experienceYears: number;
     machinesFreeText?: string | null;
+    preferredShift?: string | null;
     skillsSummary?: string | null;
     cvUrl?: string | null;
     completeness: number;
@@ -305,6 +307,15 @@ export default function CandidateDashboardClientView({ data }: { data: Candidate
                     {candidate.governorate ? `${candidate.governorate} - ${candidate.city}` : "المناطق الصناعية الرئيسية"}
                   </span>
                 </div>
+
+                {candidate.preferredShift && (
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className="text-foreground/50 shrink-0">⏱️ الوردية المفضلة:</span>
+                    <span className="font-bold text-foreground truncate">
+                      {WORK_SHIFTS.find((s) => s.id === candidate.preferredShift)?.ar || candidate.preferredShift}
+                    </span>
+                  </div>
+                )}
 
                 {candidate.machinesFreeText && (
                   <div className="flex items-center gap-2 text-[11px] text-primary bg-primary/10 px-2.5 py-1 rounded-lg font-medium truncate">

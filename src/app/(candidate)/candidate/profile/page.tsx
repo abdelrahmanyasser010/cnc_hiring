@@ -5,8 +5,9 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { candidateLogoutAction } from "@/app/actions/candidate";
 import Link from "next/link";
-import { LogOut, User, MapPin, Briefcase, Phone, LayoutDashboard, ArrowRight } from "lucide-react";
+import { LogOut, User, MapPin, Briefcase, Phone, LayoutDashboard, ArrowRight, Clock } from "lucide-react";
 import AvailabilityToggle from "./AvailabilityToggle";
+import { WORK_SHIFTS } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
 
@@ -81,6 +82,15 @@ export default async function CandidateProfilePage() {
                   <div className="text-sm text-foreground/50 mb-1">الخبرة الميدانية</div>
                   <div className="font-bold flex items-center gap-2">
                     <Briefcase className="w-4 h-4 text-primary" /> {candidate.experienceYears} سنوات
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm text-foreground/50 mb-1">نظام الوردية المفضل</div>
+                  <div className="font-bold flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-primary" /> 
+                    {candidate.preferredShift 
+                      ? (WORK_SHIFTS.find((s) => s.id === candidate.preferredShift)?.ar || candidate.preferredShift) 
+                      : "مرن / أي وردية"}
                   </div>
                 </div>
                 {candidate.machinesFreeText && (

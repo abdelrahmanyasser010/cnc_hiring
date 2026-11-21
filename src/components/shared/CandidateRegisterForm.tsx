@@ -28,7 +28,7 @@ import {
   Clock
 } from "lucide-react";
 import Link from "next/link";
-import { CNC_INDUSTRIES, EGYPTIAN_GOVERNORATES } from "@/lib/constants";
+import { CNC_INDUSTRIES, EGYPTIAN_GOVERNORATES, WORK_SHIFTS } from "@/lib/constants";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export function CandidateRegisterForm() {
@@ -38,6 +38,7 @@ export function CandidateRegisterForm() {
   const [role, setRole] = useState<"TECHNICIAN" | "ENGINEER">("TECHNICIAN");
   const [selectedIndustry, setSelectedIndustry] = useState<string>("");
   const [machinesInput, setMachinesInput] = useState<string>("");
+  const [selectedShift, setSelectedShift] = useState<string>("FLEXIBLE");
 
   // ربط إجراء السيرفر (Server Action) وإدارة حالات الخطأ والنجاح
   const [state, formAction, isPending] = useActionState(registerCandidateAction, null);
@@ -377,7 +378,51 @@ export function CandidateRegisterForm() {
         </div>
       </div>
 
-      {/* 9. ملخص المهارات والسيرة الذاتية (CV اختياري تماماً - مناسب للفني) */}
+      {/* 9. نظام الوردية وساعات العمل المفضلة */}
+      <div className="flex flex-col gap-2.5">
+        <label className="text-xs font-bold text-foreground/85 flex items-center justify-between">
+          <span className="flex items-center gap-1.5">
+            <Clock className="w-3.5 h-3.5 text-primary" />
+            <span>{isAr ? "نظام الورديات وساعات العمل المفضلة" : "Preferred Shift & Working Hours"}</span>
+            <span className="text-red-500">*</span>
+          </span>
+          <span className="text-[10px] text-primary/80 font-normal">{isAr ? "لمطابقة احتياجات المصنع" : "For Shift Matching"}</span>
+        </label>
+
+        <input type="hidden" name="preferredShift" value={selectedShift} />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+          {WORK_SHIFTS.map((shift) => {
+            const isSelected = selectedShift === shift.id;
+            return (
+              <button
+                key={shift.id}
+                type="button"
+                onClick={() => setSelectedShift(shift.id)}
+                className={`p-3 rounded-xl border text-start transition-all cursor-pointer flex flex-col justify-between gap-1.5 ${
+                  isSelected
+                    ? "bg-primary/5 border-primary shadow-xs ring-1 ring-primary/40"
+                    : "bg-background border-border hover:border-border/80 hover:bg-secondary/5"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className={`text-xs font-bold ${isSelected ? "text-primary" : "text-foreground"}`}>
+                    {isAr ? shift.ar : shift.en}
+                  </span>
+                  <div className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${isSelected ? "border-primary bg-primary" : "border-foreground/30"}`}>
+                    {isSelected && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
+                  </div>
+                </div>
+                <p className="text-[10px] text-foreground/60 leading-normal">
+                  {isAr ? shift.descAr : shift.descEn}
+                </p>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* 10. ملخص المهارات والسيرة الذاتية (CV اختياري تماماً - مناسب للفني) */}
       <div className="p-5 bg-secondary/10 border border-border rounded-2xl space-y-3.5">
         <div className="flex items-center justify-between">
           <label className="text-xs font-bold text-foreground/90 flex items-center gap-1.5">

@@ -185,6 +185,7 @@ model CandidateProfile {
   jobTitle         String?       // المسمى الوظيفي كتابة حرة (مثل: فني مخرطة Fanuc 4 محاور، مبرمج CAM)
   machinesFreeText String?       // الماكينات كتابة حرة (DMG MORI, Haas VF-2, مخرطة دوسان، إلخ)
   skillsSummary    String?       // المهارات الفنية الإضافية كتابة حرة
+  preferredShift   String?       // نظام الوردية المفضل (صباحية، مسائية، مرن، إلخ)
 
   candidateType    CandidateType @default(TECHNICIAN)
   governorate      String

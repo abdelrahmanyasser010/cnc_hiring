@@ -11,9 +11,10 @@ import {
   Phone, 
   Factory,
   Wrench,
-  FileText
+  FileText,
+  Clock
 } from "lucide-react";
-import { CONTROL_LABELS } from "@/lib/constants";
+import { CONTROL_LABELS, WORK_SHIFTS } from "@/lib/constants";
 import { revealCandidatePhoneAction } from "@/app/(dashboard)/talent/actions";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
@@ -25,6 +26,7 @@ interface CandidateData {
   jobTitle?: string | null;
   machinesFreeText?: string | null;
   skillsSummary?: string | null;
+  preferredShift?: string | null;
   cvUrl?: string | null;
   governorate: string;
   city: string;
@@ -125,6 +127,19 @@ export default function TalentCard({ candidate }: TalentCardProps) {
           <Calendar className="w-3.5 h-3.5 text-foreground/40 shrink-0" />
           <span>{isAr ? "الخبرة الميدانية:" : "Experience:"} <strong className="text-foreground">{candidate.experienceYears} {isAr ? "سنوات" : "years"}</strong></span>
         </div>
+
+        {/* الوردية وساعات العمل المفضلة */}
+        {candidate.preferredShift && (
+          <div className="flex items-center gap-2">
+            <Clock className="w-3.5 h-3.5 text-foreground/40 shrink-0" />
+            <span>
+              {isAr ? "الوردية المفضلة:" : "Preferred Shift:"}{" "}
+              <strong className="text-foreground">
+                {WORK_SHIFTS.find((s) => s.id === candidate.preferredShift)?.[isAr ? "ar" : "en"] || candidate.preferredShift}
+              </strong>
+            </span>
+          </div>
+        )}
 
         {/* الماكينات (كتابة حرة) */}
         {candidate.machinesFreeText && (

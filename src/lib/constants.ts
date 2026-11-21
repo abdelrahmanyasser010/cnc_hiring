@@ -160,3 +160,52 @@ export const SOFTWARE_SPECIALIZATIONS = [
   "SolidWorks",
   "أخرى"
 ];
+
+// -----------------------------------------------------------------------------
+// 4. أنظمة الورديات وساعات العمل (Work Shifts)
+// -----------------------------------------------------------------------------
+export interface ShiftItem {
+  id: string;
+  ar: string;
+  en: string;
+  descAr: string;
+  descEn: string;
+}
+
+export const WORK_SHIFTS: ShiftItem[] = [
+  { 
+    id: "MORNING", 
+    ar: "وردية صباحية", 
+    en: "Morning Shift", 
+    descAr: "دوام نهاري ثابت (مثال: 8 ص - 4 م)", 
+    descEn: "Standard daytime shift (e.g. 8 AM - 4 PM)" 
+  },
+  { 
+    id: "EVENING", 
+    ar: "وردية مسائية / ليلية", 
+    en: "Evening / Night Shift", 
+    descAr: "ورديات مسائية لمصانع الورديتين أو الليلية", 
+    descEn: "Evening or overnight shift for 24/7 facilities" 
+  },
+  { 
+    id: "ROTATING", 
+    ar: "ورديات متغيرة (نظام تناوب)", 
+    en: "Rotating Shifts", 
+    descAr: "جاهز للتبديل بين الورديات وفق جدول المصنع", 
+    descEn: "Open to rotating shift schedules" 
+  },
+  { 
+    id: "FLEXIBLE", 
+    ar: "تفرغ كامل / مرن (أي وردية)", 
+    en: "Flexible / Any Shift", 
+    descAr: "تفرغ تام وجاهزية لأي نظام ورديات تختاره الإدارة", 
+    descEn: "Full availability for any shift schedule" 
+  },
+  { 
+    id: "PART_TIME", 
+    ar: "دوام جزئي / إضافي (بالساعة أو القطعة)", 
+    en: "Part-time / Extra Hours", 
+    descAr: "عمل إضافي مسائي بجانب عمل آخر أو بالقطعة", 
+    descEn: "Part-time or piecework alongside other commitments" 
+  },
+];

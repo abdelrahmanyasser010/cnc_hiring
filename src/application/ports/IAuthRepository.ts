@@ -25,6 +25,7 @@ export interface CandidateRegistrationData {
   jobTitle?: string;
   machinesFreeText?: string;
   skillsSummary?: string;
+  preferredShift?: string;
   cvUrl?: string;
   governorate: string;
   city: string;

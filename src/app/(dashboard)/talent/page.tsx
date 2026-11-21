@@ -31,6 +31,7 @@ export type CandidateData = {
   jobTitle?: string | null;
   machinesFreeText?: string | null;
   skillsSummary?: string | null;
+  preferredShift?: string | null;
   cvUrl?: string | null;
   governorate: string;
   city: string;
@@ -85,6 +86,7 @@ export default async function TalentPage({ searchParams }: PageProps) {
         jobTitle: "فني مخرطة وفريزة CNC",
         machinesFreeText: "مخرطة دوسان Fanuc، فريزة 3 محاور",
         skillsSummary: "قراءة رسومات هندسية ومعايرة أدوات القطع",
+        preferredShift: "MORNING",
         cvUrl: null,
         governorate: "الشرقية (العاشر من رمضان)",
         city: "العاشر من رمضان",
@@ -104,6 +106,7 @@ export default async function TalentPage({ searchParams }: PageProps) {
         jobTitle: "مهندس برمجة CAM وتشغيل دقيق",
         machinesFreeText: "ماكينات خراطة سويسرية Swiss-type، مركز تشغيل 5 محاور",
         skillsSummary: "برمجة أطراف ومفاصل صناعية بدقة ميكرونية",
+        preferredShift: "FLEXIBLE",
         cvUrl: "https://drive.google.com",
         governorate: "الجيزة",
         city: "6 أكتوبر",
@@ -123,6 +126,7 @@ export default async function TalentPage({ searchParams }: PageProps) {
         jobTitle: "فني ضبط وتشغيل فريزة CNC إسطمبات حقن",
         machinesFreeText: "فريزة Hartford كنترول هاس، ماكينة سلك وشرارة",
         skillsSummary: "تشغيل صلب معالج وصلد حتى 55 HRC",
+        preferredShift: "ROTATING",
         cvUrl: null,
         governorate: "القليوبية (العبور)",
         city: "مدينة العبور",
@@ -142,6 +146,7 @@ export default async function TalentPage({ searchParams }: PageProps) {
         jobTitle: "فني تشغيل معادن خاصة وتيتانيوم",
         machinesFreeText: "مراكز تشغيل متقدمة 4 محاور DMG MORI",
         skillsSummary: "تشغيل سبائك الطيران Inconel و Titanium",
+        preferredShift: "EVENING",
         cvUrl: null,
         governorate: "القاهرة",
         city: "حلوان",

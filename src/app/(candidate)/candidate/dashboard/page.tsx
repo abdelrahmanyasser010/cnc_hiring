@@ -40,7 +40,8 @@ export default async function CandidateDashboardPage() {
   if (candidate.city) completeness += 10;
   if (candidate.experienceYears > 0) completeness += 10;
   if (candidate.machinesFreeText) completeness += 15;
-  if (candidate.skillsSummary) completeness += 10;
+  if (candidate.preferredShift) completeness += 5;
+  if (candidate.skillsSummary) completeness += 5;
   if (candidate.cvUrl) completeness += 5;
 
   // 2. جلب طلبات التوظيف الفعلية
@@ -103,6 +104,7 @@ export default async function CandidateDashboardPage() {
       city: candidate.city,
       experienceYears: candidate.experienceYears,
       machinesFreeText: candidate.machinesFreeText,
+      preferredShift: candidate.preferredShift,
       skillsSummary: candidate.skillsSummary,
       cvUrl: candidate.cvUrl,
       completeness,

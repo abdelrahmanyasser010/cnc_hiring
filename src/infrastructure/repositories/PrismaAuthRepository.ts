@@ -91,6 +91,7 @@ export class PrismaAuthRepository implements IAuthRepository {
               jobTitle: data.jobTitle,
               machinesFreeText: data.machinesFreeText,
               skillsSummary: data.skillsSummary,
+              preferredShift: data.preferredShift,
               cvUrl: data.cvUrl,
               governorate: data.governorate,
               city: data.city,

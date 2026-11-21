@@ -8,6 +8,7 @@ export interface CandidateProfileRecord {
   jobTitle?: string | null;
   machinesFreeText?: string | null;
   skillsSummary?: string | null;
+  preferredShift?: string | null;
   cvUrl?: string | null;
   governorate: string;
   city: string;
@@ -27,6 +28,7 @@ export interface CandidateSearchResult {
   jobTitle?: string | null;
   machinesFreeText?: string | null;
   skillsSummary?: string | null;
+  preferredShift?: string | null;
   cvUrl?: string | null;
   governorate: string;
   city: string;
