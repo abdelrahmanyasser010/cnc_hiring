@@ -123,7 +123,7 @@ export function BlogClientView({ initialPosts }: BlogClientViewProps) {
                   <span>{isAr ? "دراسة ميدانية مميزة" : "Featured Field Report"}</span>
                 </div>
                 <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-snug">
-                  {featuredPost.title}
+                  <bdi>{featuredPost.title}</bdi>
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
                   {featuredPost.excerpt}
@@ -226,7 +226,7 @@ export function BlogClientView({ initialPosts }: BlogClientViewProps) {
                   {/* Title and Excerpt */}
                   <div className="space-y-2 flex-grow">
                     <h3 className="font-bold text-base text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-snug">
-                      {post.title}
+                      <bdi>{post.title}</bdi>
                     </h3>
                     <p className="text-xs text-foreground/60 leading-relaxed line-clamp-3">
                       {post.excerpt}

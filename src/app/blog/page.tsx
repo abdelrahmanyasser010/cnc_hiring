@@ -47,7 +47,7 @@ const SEED_POSTS: BlogPostItem[] = [
     title: "مقارنة شاملة بين برامج التصميم والبرمجة CAM: Mastercam مقابل SolidCAM في مصر",
     slug: "mastercam-vs-solidcam-cnc-software-comparison",
     excerpt: "تحليل نقطي لمميزات وعيوب أشهر برامج الـ CAM المستخدمة في الورش المصرية، وأيهما أفضل لتشغيل قوالب الاسطمبات مقابل الأجزاء الدقيقة.",
-    coverImage: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?q=80&w=800&auto=format&fit=crop",
+    coverImage: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=800&auto=format&fit=crop",
     createdAt: new Date("2026-06-18T12:00:00Z"),
     author: { name: "م. سارة محمود (تصميم CAD/CAM)" },
   },

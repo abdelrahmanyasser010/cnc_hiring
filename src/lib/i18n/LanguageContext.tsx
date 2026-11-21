@@ -21,8 +21,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("hirecnc_locale") as Locale | null;
       if (saved === "ar" || saved === "en") return saved;
-      const browserLang = navigator.language || (navigator as unknown as { userLanguage?: string }).userLanguage || "";
-      return browserLang.toLowerCase().startsWith("en") ? "en" : "ar";
+      return "ar"; // Default to Arabic for Egyptian industrial manufacturing platform
     }
     return "ar";
   });

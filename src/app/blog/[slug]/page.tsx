@@ -339,7 +339,7 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
               </div>
               
               <h1 className="text-2xl md:text-3xl font-extrabold text-foreground leading-tight">
-                {post.title}
+                <bdi>{post.title}</bdi>
               </h1>
 
               {/* الكاتب والتاريخ */}

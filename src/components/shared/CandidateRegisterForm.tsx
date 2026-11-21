@@ -90,6 +90,21 @@ export function CandidateRegisterForm() {
   return (
     <form action={formAction} className="space-y-6 text-start">
       
+      {/* Dynamic Bilingual Header */}
+      <div className="text-center space-y-2 mb-6">
+        <div className="inline-flex items-center justify-center p-2 bg-primary/10 text-primary rounded-xl font-mono font-bold text-xs tracking-wider">
+          HIREX CNC
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-black text-foreground">
+          {isAr ? "تسجيل الكوادر الفنية ومشغلي ماكينات CNC" : "CNC Technician & Machinist Registration"}
+        </h1>
+        <p className="text-xs sm:text-sm text-foreground/70 max-w-md mx-auto leading-relaxed">
+          {isAr 
+            ? "سجل بياناتك الفنية وخبراتك العملية لتصلك فرص التوظيف والمقابلات من المصانع الهندسية مباشرة وبدون وسطاء."
+            : "Register your technical skills and machinery experience to receive direct interview requests from certified engineering facilities."}
+        </p>
+      </div>
+
       {/* 1. Global Errors */}
       {state?.error && (
         <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 rounded-xl text-xs font-semibold">

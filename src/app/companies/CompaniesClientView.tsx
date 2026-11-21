@@ -153,12 +153,12 @@ export function CompaniesClientView({ initialCompanies }: CompaniesClientViewPro
               >
                 {/* Header & Logo */}
                 <div className="flex items-start gap-4">
-                  <div className="w-13 h-13 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-base flex-shrink-0 font-mono shadow-sm">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-base flex-shrink-0 shadow-xs">
                     {company.logoUrl ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={company.logoUrl} alt={company.companyName} className="w-full h-full object-cover rounded-2xl" />
+                      <img src={company.logoUrl} alt={company.companyName} className="w-full h-full object-cover rounded-xl" />
                     ) : (
-                      getInitials(company.companyName)
+                      <Building2 className="w-6 h-6 text-primary" />
                     )}
                   </div>
 
@@ -213,6 +213,14 @@ export function CompaniesClientView({ initialCompanies }: CompaniesClientViewPro
                       {isAr ? "لا توجد شواغر معلنة حالياً لهذا المصنع." : "No current public openings."}
                     </div>
                   )}
+                  {/* Card Action Link */}
+                  <Link
+                    href={company.jobs.length > 0 ? `/jobs/${company.jobs[0].id}` : `/#jobs`}
+                    className="w-full mt-3 py-2.5 px-4 bg-primary/10 hover:bg-primary text-primary hover:text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 border border-primary/20 hover:shadow-sm"
+                  >
+                    <span>{isAr ? "استعراض شواغر المصنع والتقديم" : "View Openings & Apply"}</span>
+                    {isAr ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
+                  </Link>
                 </div>
 
               </div>

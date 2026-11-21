@@ -335,11 +335,11 @@ export default function SocialProofSection({
             </div>
           </div>
           
-          {/* Single Row Horizontal Scrolling Container (Smooth & Clean) */}
+          {/* Single Row Horizontal Scrolling Container (Smooth & Clean - Scrollbar Hidden) */}
           <div 
             ref={scrollContainerRef}
-            className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory scroll-smooth"
-            style={{ scrollbarWidth: "thin" }}
+            className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto pb-3 pt-1 snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {TRUSTED_COMPANIES.map((company, index) => {
               const name = isAr ? company.nameAr : company.nameEn;
