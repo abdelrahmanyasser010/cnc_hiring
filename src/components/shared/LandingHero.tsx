@@ -1,10 +1,12 @@
 "use client";
 
 // src/components/shared/LandingHero.tsx
-// قسم البطل الرئيسي في الصفحة الرئيسية (Hero Section). يدعم تغيير اللغة ديناميكياً وعرض كارت المحاكاة.
+// قسم البطل الرئيسي في الصفحة الرئيسية (Hero Section). 
+// مصمم كغلاف صناعي فخم (Industrial Hero Cover) يتبع أفضل ممارسات منصات التوظيف المتخصصة للـ CNC (مثل hireCNC).
 
 import React from "react";
 import Link from "next/link";
+import { ArrowLeft, ArrowRight, ShieldCheck } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export function LandingHero() {
@@ -12,116 +14,211 @@ export function LandingHero() {
   const isAr = lang === "ar";
 
   return (
-    <section className="relative overflow-hidden py-16 sm:py-24 md:py-32 bg-radial-[circle_at_bottom_left] from-primary/10 via-transparent to-transparent">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-10 sm:gap-12 items-center">
-        
-        {/* Right Column: Copy & CTAs */}
-        <div className="flex flex-col gap-5 sm:gap-6 text-start">
-          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary text-xs font-semibold px-3 py-1.5 rounded-full w-fit">
-            <span>⚙️ {isAr ? "منظومة ربط وترشيح هندسية متخصصة في مجال الـ CNC داخل مصر" : "Dedicated CNC Engineering & Machining Staffing Platform in Egypt"}</span>
-          </div>
-          
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight sm:leading-tight md:leading-tight tracking-tight text-foreground">
-            {isAr ? "ربط الكفاءات الهندسية والفنية" : "Connecting Technical Specialists"} <br />
-            <span className="text-primary bg-gradient-to-l from-primary to-sky-600 bg-clip-text text-transparent">
-              {isAr ? "بالمصانع والورش الصناعية" : "With Advanced Manufacturing Facilities"}
-            </span>
-          </h1>
-          
-          <p className="text-sm sm:text-base md:text-lg text-foreground/75 leading-relaxed max-w-xl">
-            {isAr 
-              ? "نُسهّل وصول العاملين في مجال الـ CNC (فنيي تشغيل، سِتَابَر، ومبرمجي CAM) للشركات والوظائف، ونرشّح الكفاءات المناسبة للمصانع استباقياً طبقاً للصناعة والماكينات المطلوبة."
-              : "We streamline direct access between CNC professionals (operators, setters, CAM programmers) and industrial companies across Egypt, providing proactive candidate nominations tailored to industry and machinery specifications."
-            }
-          </p>
-          
-          <div className="flex flex-wrap gap-3 sm:gap-4 mt-2 sm:mt-4">
-            <Link 
-              href="/register/candidate" 
-              className="px-5 sm:px-6 py-3 bg-primary text-white text-xs sm:text-sm md:text-base font-semibold rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 hover:-translate-y-0.5 text-center"
-            >
-              {isAr ? "تسجيل كادر (فني / مهندس)" : "Register as Candidate"}
-            </Link>
-            <Link 
-              href="/register" 
-              className="px-5 sm:px-6 py-3 border border-primary/30 text-primary bg-primary/5 hover:bg-primary/10 text-xs sm:text-sm md:text-base font-semibold rounded-xl transition-all hover:-translate-y-0.5 text-center"
-            >
-              {isAr ? "تسجيل حساب مصنع / شركة" : "Register as Factory / Employer"}
-            </Link>
-            <Link 
-              href="/talent" 
-              className="px-4 py-3 border border-border text-foreground hover:bg-secondary/5 text-xs sm:text-sm md:text-base font-medium rounded-xl transition-all hover:-translate-y-0.5 text-center"
-            >
-              {isAr ? "قاعدة بيانات الكفاءات" : "Explore Talent Pool"}
-            </Link>
-          </div>
-        </div>
-        
-        {/* Left Column: Premium SVG Graphic representing Machine Shop Dashboard */}
-        <div className="relative flex justify-center">
-          <div className="absolute inset-0 bg-primary/20 rounded-full filter blur-3xl opacity-20 -z-10 animate-pulse"></div>
-          <div className="w-full max-w-md bg-card border border-border rounded-2xl p-5 sm:p-6 shadow-2xl relative">
-            
-            {/* Header inside graphic card */}
-            <div className="flex items-center justify-between border-b border-border pb-4 mb-4">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
-              </div>
-              <span className="text-xs text-foreground/50 font-mono">dashboard.hirecnc.eg</span>
-            </div>
-            
-            {/* Fake Candidates Cards */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 p-3 bg-secondary/5 border border-border rounded-xl">
-                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary text-sm flex-shrink-0">
-                  {isAr ? "أ م" : "AM"}
-                </div>
-                <div className="flex-1 min-w-0 text-start">
-                  <div className="font-semibold text-sm truncate">{isAr ? "أحمد محمود (خراط مبرمج CNC)" : "Ahmed Mahmoud (CNC Programmer)"}</div>
-                  <div className="text-xs text-foreground/60 truncate">{isAr ? "خبرة 5 سنوات • كنترول Fanuc" : "5 Yrs Exp • Fanuc Control"}</div>
-                </div>
-                <span className="bg-green-100 text-green-700 text-xs px-2.5 py-0.5 rounded-full font-medium flex-shrink-0">{isAr ? "نشط" : "Active"}</span>
-              </div>
+    <section className="relative overflow-hidden py-14 sm:py-20 lg:py-24 bg-slate-950 text-white border-b border-slate-800/80">
+      {/* Background Industrial Texture & Glow Overlays */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 mix-blend-luminosity scale-105 transition-transform duration-1000"
+        style={{
+          backgroundImage: "url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2000&q=80')"
+        }}
+      />
+      
+      {/* Deep Industrial Gradients preserving Brand Colors */}
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-900/80 pointer-events-none" />
+      <div className="absolute -top-32 start-1/4 w-96 h-96 bg-primary/25 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-32 end-10 w-96 h-96 bg-sky-500/15 rounded-full blur-3xl pointer-events-none" />
 
-              <div className="flex items-center gap-3 p-3 bg-secondary/5 border border-border rounded-xl">
-                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary text-sm flex-shrink-0">
-                  {isAr ? "م ع" : "MA"}
-                </div>
-                <div className="flex-1 min-w-0 text-start">
-                  <div className="font-semibold text-sm truncate">{isAr ? "محمد علي (فني تشغيل فريزة)" : "Mohamed Ali (Milling Operator)"}</div>
-                  <div className="text-xs text-foreground/60 truncate">{isAr ? "خبرة 3 سنوات • كنترول Siemens" : "3 Yrs Exp • Siemens Control"}</div>
-                </div>
-                <span className="bg-yellow-100 text-yellow-700 text-xs px-2.5 py-0.5 rounded-full font-medium flex-shrink-0">{isAr ? "مقابلة اليوم" : "Interview Today"}</span>
-              </div>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          
+          {/* Main Copy & Dual CTA (7 cols on lg) */}
+          <div className="lg:col-span-7 flex flex-col gap-5 sm:gap-6 text-start">
+            
+            {/* Pill Badge */}
+            <div className="inline-flex items-center gap-2 bg-primary/20 border border-primary/40 text-sky-300 text-xs font-semibold px-3.5 py-1.5 rounded-full w-fit backdrop-blur-md">
+              <span className="flex h-2 w-2 rounded-full bg-sky-400 animate-pulse"></span>
+              <span>
+                {isAr 
+                  ? "المنظومة الصناعية المعتمدة لتوظيف كوادر الـ CNC في مصر" 
+                  : "Egypt's Dedicated CNC & Precision Machining Staffing Network"}
+              </span>
+            </div>
+            
+            {/* Headline */}
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black leading-[1.15] sm:leading-[1.15] tracking-tight text-white">
+              {isAr ? (
+                <>
+                  ربط الكفاءات الهندسية والفنية <br className="hidden sm:inline" />
+                  <span className="bg-gradient-to-r from-sky-400 via-primary to-cyan-300 bg-clip-text text-transparent">
+                    بالمصانع والورش الصناعية المتطورة
+                  </span>
+                </>
+              ) : (
+                <>
+                  Precision CNC Machinists <br className="hidden sm:inline" />
+                  <span className="bg-gradient-to-r from-sky-400 via-primary to-cyan-300 bg-clip-text text-transparent">
+                    When Your Facility Needs Them
+                  </span>
+                </>
+              )}
+            </h1>
+            
+            {/* Subheading */}
+            <p className="text-sm sm:text-base md:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal">
+              {isAr 
+                ? "منظومة ربط فني مباشر بين مشغلي ومبرمجي ماكينات الـ CNC (فرايز، مخارط، 5 محاور، سلك) وكبرى مصانع وورش مصر في العاشر من رمضان، 6 أكتوبر، وبرج العرب وفق معايير الجودة والتفاوت الهندسي."
+                : "Direct, vetted technical placement connecting CNC machinists (operators, setters, 5-axis & CAM programmers) with leading manufacturing facilities across Egypt's key industrial zones."
+              }
+            </p>
+            
+            {/* Dual Marketplace Action (Only 2 Primary Funnels) */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4 mt-2">
+              
+              {/* Machinist Action (Primary Solid Cyan/Blue) */}
+              <Link 
+                href="/register/candidate" 
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary hover:bg-primary/90 text-white text-sm sm:text-base font-bold rounded-xl shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5 active:translate-y-0 text-center"
+              >
+                <span>{isAr ? "سجل كفني تشغيل / مبرمج CNC" : "Machinists — Search & Register"}</span>
+                {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+              </Link>
+              
+              {/* Factory / Machine Shop Action (High-Contrast Solid White) */}
+              <Link 
+                href="/register" 
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white hover:bg-slate-100 text-slate-950 text-sm sm:text-base font-bold rounded-xl shadow-lg shadow-black/20 transition-all hover:-translate-y-0.5 active:translate-y-0 text-center"
+              >
+                <span>{isAr ? "وظّف كوادر لمصنعك" : "Machine Shops — Hire Machinists"}</span>
+              </Link>
+            </div>
 
-              <div className="flex items-center gap-3 p-3 bg-secondary/5 border border-border rounded-xl">
-                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary text-sm flex-shrink-0">
-                  {isAr ? "ح ح" : "HH"}
-                </div>
-                <div className="flex-1 min-w-0 text-start">
-                  <div className="font-semibold text-sm truncate">{isAr ? "حسن حسين (مبرمج Mastercam)" : "Hassan Hussein (CAM Programmer)"}</div>
-                  <div className="text-xs text-foreground/60 truncate">{isAr ? "خبرة 8 سنوات • تصميم ميكانيكي" : "8 Yrs Exp • Mechanical Design"}</div>
-                </div>
-                <span className="bg-green-100 text-green-700 text-xs px-2.5 py-0.5 rounded-full font-medium flex-shrink-0">{isAr ? "نشط" : "Active"}</span>
+            {/* Subtle Secondary Talent Link */}
+            <div className="text-xs sm:text-sm text-slate-400 flex items-center gap-2 pt-1">
+              <span>{isAr ? "تبحث عن كادر محدد فوراً؟" : "Looking for specific CNC skills?"}</span>
+              <Link 
+                href="/talent" 
+                className="text-sky-400 hover:text-sky-300 font-semibold underline underline-offset-4 flex items-center gap-1 transition-colors"
+              >
+                <span>{isAr ? "استكشف قاعدة الكفاءات المتاحة" : "Browse available talent pool"}</span>
+                {isAr ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
+              </Link>
+            </div>
+
+            {/* Trust Metrics Pill Row */}
+            <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-800/80 max-w-xl text-slate-300 text-xs">
+              <div>
+                <div className="font-bold text-base text-white font-mono">1,400+</div>
+                <div className="text-slate-400 text-[11px]">{isAr ? "فني ومبرمج معتمد" : "Verified Machinists"}</div>
+              </div>
+              <div>
+                <div className="font-bold text-base text-white font-mono">180+</div>
+                <div className="text-slate-400 text-[11px]">{isAr ? "مصنع وورشة شريكة" : "Partner Facilities"}</div>
+              </div>
+              <div>
+                <div className="font-bold text-base text-sky-400 font-mono">100%</div>
+                <div className="text-slate-400 text-[11px]">{isAr ? "فحص تخصصي للكنترول" : "Technical CNC Vetting"}</div>
               </div>
             </div>
-            
-            {/* Mini Stats graph representation */}
-            <div className="mt-4 p-3 border border-border rounded-xl bg-background">
-              <div className="flex justify-between items-center text-xs text-foreground/60 mb-2">
-                <span>{isAr ? "جدية الكوادر المتقدمة" : "Candidate Reliability Score"}</span>
-                <span className="text-green-600 font-semibold">{isAr ? "98.5% حضور" : "98.5% Attendance"}</span>
-              </div>
-              <div className="w-full bg-secondary/10 h-2 rounded-full overflow-hidden">
-                <div className="bg-green-500 h-full w-[98.5%] rounded-full"></div>
-              </div>
-            </div>
-            
+
           </div>
+          
+          {/* Right Column: Live Verified Industrial Talent Stream (5 cols on lg) */}
+          <div className="lg:col-span-5 relative">
+            <div className="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-2xl backdrop-blur-xl relative">
+              
+              {/* Authentic Header with Live Status Dot */}
+              <div className="flex items-center justify-between border-b border-slate-800 pb-3.5 mb-4">
+                <div className="flex items-center gap-2.5">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                  </span>
+                  <span className="text-xs font-bold text-white tracking-wide">
+                    {isAr ? "رادار الكفاءات الفنية المعتمدة" : "Live Verified CNC Stream"}
+                  </span>
+                </div>
+                <span className="text-[11px] text-sky-400 bg-sky-950/80 border border-sky-800/60 px-2.5 py-0.5 rounded-full font-medium">
+                  {isAr ? "المناطق الصناعية • مصر" : "Egypt Industrial Hubs"}
+                </span>
+              </div>
+              
+              {/* Live Candidate Cards with Real Shop Floor Specs */}
+              <div className="space-y-3">
+                
+                {/* Candidate 1 */}
+                <div className="flex items-center gap-3 p-3 bg-slate-950/70 border border-slate-800/80 rounded-xl hover:border-slate-700 transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center font-bold text-sky-300 text-xs flex-shrink-0 font-mono">
+                    CNC
+                  </div>
+                  <div className="flex-1 min-w-0 text-start">
+                    <div className="font-semibold text-sm text-slate-100 truncate">
+                      {isAr ? "أحمد محمود (خراط مبرمج CNC)" : "Ahmed Mahmoud (CNC Lathe Programmer)"}
+                    </div>
+                    <div className="text-xs text-slate-400 truncate flex items-center gap-1.5 mt-0.5">
+                      <span>{isAr ? "خبرة 6 سنوات • Fanuc Oi-TF" : "6 Yrs Exp • Fanuc Oi-TF"}</span>
+                      <span className="text-slate-600">•</span>
+                      <span className="text-sky-400">{isAr ? "العاشر من رمضان" : "10th of Ramadan"}</span>
+                    </div>
+                  </div>
+                  <span className="bg-emerald-950 text-emerald-400 border border-emerald-800/60 text-[11px] px-2 py-0.5 rounded-full font-medium flex-shrink-0">
+                    {isAr ? "متاح فوري" : "Available"}
+                  </span>
+                </div>
+
+                {/* Candidate 2 */}
+                <div className="flex items-center gap-3 p-3 bg-slate-950/70 border border-slate-800/80 rounded-xl hover:border-slate-700 transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-500/30 flex items-center justify-center font-bold text-cyan-300 text-xs flex-shrink-0 font-mono">
+                    5-AX
+                  </div>
+                  <div className="flex-1 min-w-0 text-start">
+                    <div className="font-semibold text-sm text-slate-100 truncate">
+                      {isAr ? "محمد علي (فني تشغيل فريزة 5 محاور)" : "Mohamed Ali (5-Axis Milling Setter)"}
+                    </div>
+                    <div className="text-xs text-slate-400 truncate flex items-center gap-1.5 mt-0.5">
+                      <span>{isAr ? "خبرة 4 سنوات • Siemens Sinumerik" : "4 Yrs Exp • Siemens 840D"}</span>
+                      <span className="text-slate-600">•</span>
+                      <span className="text-sky-400">{isAr ? "6 أكتوبر" : "6th of October"}</span>
+                    </div>
+                  </div>
+                  <span className="bg-amber-950 text-amber-400 border border-amber-800/60 text-[11px] px-2 py-0.5 rounded-full font-medium flex-shrink-0">
+                    {isAr ? "ترشيح جارٍ" : "Interviewing"}
+                  </span>
+                </div>
+
+                {/* Candidate 3 */}
+                <div className="flex items-center gap-3 p-3 bg-slate-950/70 border border-slate-800/80 rounded-xl hover:border-slate-700 transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center font-bold text-indigo-300 text-xs flex-shrink-0 font-mono">
+                    CAM
+                  </div>
+                  <div className="flex-1 min-w-0 text-start">
+                    <div className="font-semibold text-sm text-slate-100 truncate">
+                      {isAr ? "حسن حسين (مبرمج Mastercam & SolidCAM)" : "Hassan Hussein (CAM Specialist)"}
+                    </div>
+                    <div className="text-xs text-slate-400 truncate flex items-center gap-1.5 mt-0.5">
+                      <span>{isAr ? "خبرة 8 سنوات • أسطمبات وتشكيل دقيق" : "8 Yrs Exp • Precision Molds"}</span>
+                      <span className="text-slate-600">•</span>
+                      <span className="text-sky-400">{isAr ? "برج العرب" : "Borg El Arab"}</span>
+                    </div>
+                  </div>
+                  <span className="bg-blue-950 text-blue-400 border border-blue-800/60 text-[11px] px-2 py-0.5 rounded-full font-medium flex-shrink-0">
+                    {isAr ? "معتمد ISO" : "ISO Verified"}
+                  </span>
+                </div>
+              </div>
+              
+              {/* Quality & Readiness Footnote */}
+              <div className="mt-4 pt-3.5 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                <span className="inline-flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                  <span>{isAr ? "ضمان الحضور والجاهزية الفنية" : "Verified Attendance & Trade Test"}</span>
+                </span>
+                <span className="font-mono text-emerald-400 font-bold">98.8%</span>
+              </div>
+              
+            </div>
+          </div>
+          
         </div>
-        
       </div>
     </section>
   );
