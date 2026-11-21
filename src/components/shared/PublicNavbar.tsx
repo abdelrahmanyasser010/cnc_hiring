@@ -18,11 +18,11 @@ export function PublicNavbar() {
   };
 
   const navLinks = [
-    { label: lang === "ar" ? "عن المنصة" : "About", href: "/#about" },
-    { label: lang === "ar" ? "إحصائياتنا" : "Metrics", href: "/#metrics" },
-    { label: lang === "ar" ? "الباقات والأسعار" : "Pricing", href: "/#pricing" },
-    { label: lang === "ar" ? "دليل الشركات" : "Factories", href: "/companies" },
+    { label: lang === "ar" ? "شواغر التشغيل" : "CNC Jobs", href: "/#jobs" },
+    { label: lang === "ar" ? "دليل المصانع" : "Factories", href: "/companies" },
     { label: lang === "ar" ? "المدونة المعرفية" : "Blog", href: "/blog" },
+    { label: lang === "ar" ? "الباقات والأسعار" : "Pricing", href: "/#pricing" },
+    { label: lang === "ar" ? "عن المنصة" : "About", href: "/#about" },
   ];
 
   return (

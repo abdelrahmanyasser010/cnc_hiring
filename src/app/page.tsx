@@ -1,10 +1,11 @@
 // src/app/page.tsx
 // هذا هو الملف الرئيسي للصفحة الرئيسية للموقع (Landing Page).
-// تم ربط الصفحة بمكونات العرض الديناميكية (PublicNavbar, LandingHero, LandingContent) لدعم التبديل اللغوي السريع وقائمة الموبايل الذكية.
+// تم ربط الصفحة بمكونات العرض الديناميكية (PublicNavbar, LandingHero, SocialProofSection, FeaturedJobsSection, LandingContent).
 
 import React from "react";
 import { PublicNavbar } from "@/components/shared/PublicNavbar";
 import { LandingHero } from "@/components/shared/LandingHero";
+import { FeaturedJobsSection } from "@/components/shared/FeaturedJobsSection";
 import { LandingContent } from "@/components/shared/LandingContent";
 import SocialProofSection from "@/components/shared/SocialProofSection";
 
@@ -14,6 +15,7 @@ export default function Home() {
       <PublicNavbar />
       <LandingHero />
       <SocialProofSection />
+      <FeaturedJobsSection />
       <LandingContent />
     </div>
   );

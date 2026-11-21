@@ -121,16 +121,16 @@ export function LandingContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
           
           <div className="flex flex-col items-center gap-3 mb-12 sm:mb-16">
-            <span className="text-primary text-xs sm:text-sm font-semibold tracking-wide uppercase">
-              {isAr ? "خطط الاشتراكات والتعاقد المؤسسي" : "Enterprise & Subscription Plans"}
+            <span className="text-primary text-xs sm:text-sm font-bold tracking-wide uppercase bg-primary/10 px-3.5 py-1 rounded-full">
+              {isAr ? "اشتراك شفاف وثابت • بدون عمولات نسب مئوية" : "Flat Rate Subscriptions • Zero Placement Fees"}
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground">
-              {isAr ? "باقات المنشآت الصناعية والورش الإنتاجية" : "Industrial Plants & Production Workshops Plans"}
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-foreground tracking-tight">
+              {isAr ? "باقات المنشآت الصناعية والورش الإنتاجية" : "Machine Shop & Manufacturing Facility Plans"}
             </h2>
-            <p className="text-xs sm:text-sm md:text-base text-foreground/60 max-w-xl">
+            <p className="text-xs sm:text-sm md:text-base text-foreground/70 max-w-2xl leading-relaxed">
               {isAr 
-                ? "اختر الخطة التشغيلية الملائمة لحجم منشأتك لتفعيل نشر الوظائف والوصول المباشر لقاعدة بيانات الكفاءات الهندسية والفنية المعتمدة."
-                : "Select the operational plan matching your facility scale to unlock job publishing and direct access to our verified technical talent pool."
+                ? "باقات اشتراك تشغيلية واضحة بدون عمولات توظيف خفية أو اقتطاع نسب من رواتب الفنيين. اختر الخطة المناسبة لحجم مصنعك."
+                : "Transparent flat-rate plans with zero contingency placement percentage fees. Select the hiring model tailored to your shop's capacity."
               }
             </p>
           </div>
@@ -139,14 +139,20 @@ export function LandingContent() {
             
             {/* Card 1: Bronze */}
             <div className="flex flex-col bg-card border border-border rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all relative text-start">
+              <div className="text-xs italic text-foreground/60 bg-secondary/5 border-s-2 border-primary/40 ps-3 py-2 rounded-e-lg mb-4 font-serif">
+                {isAr 
+                  ? "«نحتاج تعيين فنيين بشكل محدد ودوري بأقل تكلفة دون التزام باقات سنوية ضخمة»" 
+                  : "\"We need cost-effective, periodic hiring without heavy annual commitments\""}
+              </div>
+
               <h3 className="text-lg sm:text-xl font-bold mb-2 text-foreground">
-                {isAr ? "الباقة الأساسية (الورش الإنتاجية)" : "Basic Plan (Production Workshops)"}
+                {isAr ? "الباقة الأساسية (الورش الإنتاجية)" : "Basic Plan (Job Shops)"}
               </h3>
               <p className="text-xs sm:text-sm text-foreground/60 mb-6">
-                {isAr ? "مخصصة للورش والمنشآت ذات متطلبات التوظيف المحددة." : "Designed for workshops with periodic technical staffing needs."}
+                {isAr ? "مخصصة للورش والمنشآت ذات متطلبات التوظيف الدورية المحددة." : "Designed for machine shops with periodic technical staffing needs."}
               </p>
               <div className="flex items-baseline gap-1.5 mb-8">
-                <span className="text-3xl sm:text-4xl font-black text-foreground">900</span>
+                <span className="text-3xl sm:text-4xl font-black text-foreground font-mono">900</span>
                 <span className="text-xs sm:text-sm text-foreground/60 font-semibold">{isAr ? "جنيه مصري / شهرياً" : "EGP / month"}</span>
               </div>
               
@@ -182,17 +188,23 @@ export function LandingContent() {
             {/* Card 2: Silver (Popular) */}
             <div className="flex flex-col bg-card border-2 border-primary rounded-2xl p-6 sm:p-8 hover:shadow-2xl transition-all relative text-start shadow-lg shadow-primary/5">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white text-[11px] sm:text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider">
-                {isAr ? "الأكثر ملاءمة للمصانع" : "Most Recommended"}
+                {isAr ? "الأكثر ملاءمة للمصانع" : "Most Popular for Plants"}
               </div>
               
+              <div className="text-xs italic text-foreground/60 bg-primary/5 border-s-2 border-primary ps-3 py-2 rounded-e-lg mb-4 mt-2 font-serif">
+                {isAr 
+                  ? "«نحتاج تدفقاً مستمراً من الكوادر الفنية لمصنعنا دون دفع عمولات 20% و25% عن كل تعيين»" 
+                  : "\"We need an ongoing pipeline of vetted machinists without paying 20-25% contingency placement fees\""}
+              </div>
+
               <h3 className="text-lg sm:text-xl font-bold mb-2 text-foreground">
-                {isAr ? "الباقة المتقدمة (المصانع المتوسطة)" : "Advanced Plan (Medium Manufacturing Plants)"}
+                {isAr ? "الباقة المتقدمة (المصانع المتوسطة)" : "Advanced Plan (Production Plants)"}
               </h3>
               <p className="text-xs sm:text-sm text-foreground/60 mb-6">
-                {isAr ? "للمصانع الإنتاجية التي تتطلب استمراراً في تدفق وتعيين الكوادر الفنية." : "For production plants requiring continuous talent acquisition and technical pipeline."}
+                {isAr ? "للمصانع الإنتاجية التي تتطلب استمراراً في تدفق وتعيين الكوادر الفنية." : "For production facilities requiring continuous talent acquisition and technical pipeline."}
               </p>
               <div className="flex items-baseline gap-1.5 mb-8">
-                <span className="text-3xl sm:text-4xl font-black text-foreground">2,500</span>
+                <span className="text-3xl sm:text-4xl font-black text-foreground font-mono">2,500</span>
                 <span className="text-xs sm:text-sm text-foreground/60 font-semibold">{isAr ? "جنيه مصري / شهرياً" : "EGP / month"}</span>
               </div>
               
@@ -227,14 +239,20 @@ export function LandingContent() {
 
             {/* Card 3: Gold */}
             <div className="flex flex-col bg-card border border-border rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all relative text-start">
+              <div className="text-xs italic text-foreground/60 bg-secondary/5 border-s-2 border-primary/40 ps-3 py-2 rounded-e-lg mb-4 font-serif">
+                {isAr 
+                  ? "«مجمع صناعي كبير يحتاج وصولاً غير محدود لقاعدة الكوادر وأولوية في الترشيح المباشر»" 
+                  : "\"Large enterprise facility requiring full database access and direct priority recruitment\""}
+              </div>
+
               <h3 className="text-lg sm:text-xl font-bold mb-2 text-foreground">
-                {isAr ? "الباقة الشاملة (المجمعات الصناعية والشركات الكبرى)" : "Enterprise Plan (Industrial Complexes & Large Enterprises)"}
+                {isAr ? "الباقة الشاملة (المجمعات الصناعية والشركات الكبرى)" : "Enterprise Plan (Industrial Complexes)"}
               </h3>
               <p className="text-xs sm:text-sm text-foreground/60 mb-6">
                 {isAr ? "حل مؤسسي شامل يتيح الوصول الكامل لقاعدة البيانات وخدمات الدعم المباشر." : "Comprehensive institutional solution offering unrestricted talent access and dedicated support."}
               </p>
               <div className="flex items-baseline gap-1.5 mb-8">
-                <span className="text-3xl sm:text-4xl font-black text-foreground">6,000</span>
+                <span className="text-3xl sm:text-4xl font-black text-foreground font-mono">6,000</span>
                 <span className="text-xs sm:text-sm text-foreground/60 font-semibold">{isAr ? "جنيه مصري / شهرياً" : "EGP / month"}</span>
               </div>
               
