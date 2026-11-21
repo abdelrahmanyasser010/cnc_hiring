@@ -168,18 +168,18 @@ G02 X30.0 Y10.0 R10.0 F120.0
   * ممتاز جداً لأجزاء الإنتاج الكمي (Production Parts).
 * **العيوب:** يتطلب أجهزة كمبيوتر بمواصفات عالية ورامات قوية للتعامل مع التجميعات الكبيرة.
 
-## الخلاصة وتوصية hireCNC:
+## الخلاصة وتوصية HIREX CNC:
 إذا كان مصنعك متخصصاً في **اسطمبات البلاستيك والصاج**، فإن **Mastercam** هو خيارك الأقوى. أما إذا كنت تصمم وتنتج **أجزاء ميكانيكية وتجميعات معقدة** داخل SolidWorks، فإن **SolidCAM** سيوفر عليك وقتاً خيالياً في البرمجة.
     `,
   },
   "cnc-machinist-salaries-egyptian-industrial-zones-2026": {
     title: "دليل أجور ورواتب فنيي ومهندسي الـ CNC في المناطق الصناعية بمصر لعام 2026",
     excerpt: "دراسة تفصيلية لمتوسط الرواتب في العاشر من رمضان، 6 أكتوبر، والعبور حسب سنوات الخبرة (فني مشغل، مبرمج، مهندس تصميم، ومشرف صيانة).",
-    author: "فريق أبحاث hireCNC",
+    author: "فريق أبحاث HIREX CNC",
     content: `
 # متوسط رواتب وأجور عمالة الـ CNC في السوق المصري 2026
 
-مع التوسع الهائل في التصنيع المحلي وزيادة الطلب على التصدير، تشهد أجور الكوادر الفنية الماهرة في مجال الـ CNC ارتفاعاً ملحوظاً. نقدم في هذا التقرير متوسطات الرواتب الشهرية بناءً على بيانات التوظيف الفعلية في منصة **hireCNC**.
+مع التوسع الهائل في التصنيع المحلي وزيادة الطلب على التصدير، تشهد أجور الكوادر الفنية الماهرة في مجال الـ CNC ارتفاعاً ملحوظاً. نقدم في هذا التقرير متوسطات الرواتب الشهرية بناءً على بيانات التوظيف الفعلية في منصة **HIREX CNC**.
 
 ## جدول الرواتب التقديرية حسب المسمى الوظيفي والخبرة:
 
@@ -237,24 +237,24 @@ export async function generateMetadata({ params }: PageProps) {
     const seedArticle = SEED_ARTICLES_MAP[slug];
     if (seedArticle) {
       return {
-        title: `${seedArticle.title} | hireCNC Egypt`,
+        title: `${seedArticle.title} | HIREX CNC Egypt`,
         description: seedArticle.excerpt,
       };
     }
     return {
-      title: "مقال غير موجود | hireCNC Egypt",
+      title: "مقال غير موجود | HIREX CNC Egypt",
       description: "المقال المطلوب قراءته غير متوفر أو تم حذفه.",
     };
   }
 
   return {
-    title: `${post.title} | hireCNC Egypt`,
+    title: `${post.title} | HIREX CNC Egypt`,
     description: post.excerpt,
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: "article",
-      url: `https://hirecnc.eg/blog/${post.slug}`,
+      url: `https://hirexcnc.eg/blog/${post.slug}`,
       images: post.coverImage ? [{ url: post.coverImage, alt: post.title }] : [],
     },
     twitter: {

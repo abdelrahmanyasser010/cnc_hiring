@@ -14,7 +14,7 @@ function MockCheckoutContent() {
   const orderId = searchParams.get("orderId") || "chk_mock_123456";
   const amount = searchParams.get("amount") || "2500";
   const currency = searchParams.get("currency") || "EGP";
-  const description = searchParams.get("description") || "ترقية اشتراك منصة hireCNC - الباقة الاحترافية";
+  const description = searchParams.get("description") || "ترقية اشتراك منصة HIREX CNC - الباقة الاحترافية";
   const planId = searchParams.get("planId") || "pro";
 
   const [paymentMethod, setPaymentMethod] = useState<"card" | "wallet" | "fawry">("card");

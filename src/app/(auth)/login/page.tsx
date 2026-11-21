@@ -94,7 +94,7 @@ function LoginContent() {
       const role = session?.user?.role;
 
       if (role === "CANDIDATE") {
-        router.push("/candidate/profile");
+        router.push("/candidate/dashboard");
       } else if (role === "SUPER_ADMIN") {
         router.push("/dashboard");
       } else {

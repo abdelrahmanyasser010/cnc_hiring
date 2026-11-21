@@ -65,7 +65,7 @@ export default function BlogSidebar() {
 
       {/* تنبيه سريع عن المنصة */}
       <div className="bg-secondary/5 border border-border rounded-xl p-4 text-[10px] text-foreground/50 leading-relaxed">
-        <strong>💡 منصة hireCNC Egypt:</strong> هي النظام الإداري والتوظيفي الأول بمصر المخصص لقطاع تشغيل المعادن والماكينات المبرمجة بالكمبيوتر.
+        <strong>💡 منصة HIREX CNC مصر:</strong> هي المنظومة الهندسية والتوظيفية المتخصصة لقطاع تشغيل المعادن والماكينات المبرمجة بالكمبيوتر.
       </div>
 
     </div>

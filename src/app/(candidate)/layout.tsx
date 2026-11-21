@@ -1,23 +1,21 @@
 import React from "react";
-import Link from "next/link";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
+import { CandidateNavbar } from "./CandidateNavbar";
 
-export default function CandidateLayout({
+export default async function CandidateLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
+
   return (
     <div className="min-h-screen bg-background" dir="rtl">
-      {/* Header بسيط للكادر */}
-      <header className="border-b border-border bg-card">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="font-black text-xl text-primary flex items-center gap-2">
-            ⚙️ hireCNC
-            <span className="text-sm font-normal text-foreground/50 hidden sm:inline-block">بوابة الكوادر</span>
-          </Link>
-        </div>
-      </header>
-
+      <CandidateNavbar 
+        userName={session?.user?.name} 
+        userEmail={session?.user?.email} 
+      />
       <main>{children}</main>
     </div>
   );

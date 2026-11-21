@@ -85,11 +85,11 @@ export function Sidebar({ onItemClick }: SidebarProps) {
       
       {/* Brand Header */}
       <div className="h-16 flex items-center gap-3 px-6 border-b border-slate-800/50">
-        <div className="bg-primary text-white p-1.5 rounded-lg">
+        <div className="bg-primary text-white p-1.5 rounded-lg shadow-sm">
           <Cpu className="w-5 h-5" />
         </div>
-        <span className="font-extrabold text-lg tracking-wider text-slate-50">
-          hireCNC <span className="text-primary text-sm font-semibold">{lang === "ar" ? "مصر" : "Egypt"}</span>
+        <span className="font-black text-lg tracking-wider text-slate-50">
+          HIREX <span className="text-primary text-sm font-bold">CNC</span>
         </span>
       </div>
 

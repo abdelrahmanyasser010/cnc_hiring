@@ -4,7 +4,8 @@ import { candidateRepo } from "@/infrastructure/container";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { candidateLogoutAction } from "@/app/actions/candidate";
-import { LogOut, User, MapPin, Briefcase, Phone } from "lucide-react";
+import Link from "next/link";
+import { LogOut, User, MapPin, Briefcase, Phone, LayoutDashboard, ArrowRight } from "lucide-react";
 import AvailabilityToggle from "./AvailabilityToggle";
 
 export const dynamic = "force-dynamic";
@@ -23,11 +24,20 @@ export default async function CandidateProfilePage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto py-10 px-4">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-black">الملف الشخصي</h1>
+    <div className="max-w-4xl mx-auto py-10 px-4 space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <Link 
+            href="/candidate/dashboard"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary/80 transition-colors mb-1"
+          >
+            <ArrowRight className="w-3.5 h-3.5 rtl:rotate-0 ltr:rotate-180" />
+            <span>العودة إلى لوحة التحكم (Dashboard)</span>
+          </Link>
+          <h1 className="text-2xl sm:text-3xl font-black text-foreground">الملف الفني والسيرة الذاتية</h1>
+        </div>
         <form action={candidateLogoutAction}>
-          <button type="submit" className="flex items-center gap-2 text-red-500 hover:text-red-600 font-bold bg-red-50 hover:bg-red-100 px-4 py-2 rounded-xl transition-all">
+          <button type="submit" className="flex items-center gap-2 text-red-500 hover:text-red-600 font-bold bg-red-50 hover:bg-red-100 px-4 py-2 rounded-xl transition-all text-xs">
             <LogOut className="w-4 h-4" />
             تسجيل الخروج
           </button>

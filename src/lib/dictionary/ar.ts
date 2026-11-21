@@ -1,5 +1,5 @@
 // src/lib/dictionary/ar.ts
-// القاموس المركزي الموحد لمنصة hireCNC مصر - الإصدار المُمصر مهنياً وصناعياً
+// القاموس المركزي الموحد لمنصة HIREX CNC مصر - الإصدار المُمصر مهنياً وصناعياً
 // Authentic Egyptian CNC Industrial & B2B SaaS Vocabulary Dictionary
 
 export const AR_DICTIONARY = {

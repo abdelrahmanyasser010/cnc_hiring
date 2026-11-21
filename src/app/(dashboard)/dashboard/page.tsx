@@ -49,6 +49,10 @@ export default async function DashboardPage() {
   }
 
   const user = session.user as { role?: string; id?: string; name?: string };
+  if (user.role === "CANDIDATE") {
+    redirect("/candidate/dashboard");
+  }
+
   const isAdmin = user.role === "SUPER_ADMIN";
 
   let stats: StatItem[] = [];

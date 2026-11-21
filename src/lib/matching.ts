@@ -114,8 +114,8 @@ export async function runJobMatching(job: JobForMatching): Promise<void> {
 للتقديم الفوري اضغط الرابط:
 ${jobUrl}
 
-منصة hireCNC Egypt ⚙️
-أول منصة متخصصة في توظيف كوادر التشغيل بمصر`;
+منصة HIREX CNC مصر ⚙️
+المنظومة الهندسية المعتمدة لتوظيف كوادر التشغيل بمصر`;
 
       try {
         const result = await notificationService.sendWhatsApp({ to: phone, message });

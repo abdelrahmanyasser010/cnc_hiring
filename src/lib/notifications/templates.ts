@@ -1,5 +1,5 @@
 // src/lib/notifications/templates.ts
-// محرك قوالب الرسائل العربية لمنصة hireCNC Egypt.
+// محرك قوالب الرسائل العربية لمنصة HIREX CNC مصر.
 // يحتوي على القوالب النصية المعتمدة للواتساب والتواصل المباشر.
 
 export const Templates = {

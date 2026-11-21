@@ -10,7 +10,7 @@ import { ShieldAlert } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "إدارة الباقات والأسعار | hireCNC مصر (للمديرين فقط)",
+  title: "إدارة الباقات والأسعار | HIREX CNC مصر (للمديرين فقط)",
   description: "لوحة التحكم الحصرية لمدير النظام لتعديل أسعار الباقات وحصص التوظيف بشكل ديناميكي.",
 };
 

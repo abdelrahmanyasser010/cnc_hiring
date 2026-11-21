@@ -38,7 +38,7 @@ export class PaymentService {
       idempotencyKey,
       customerEmail,
       customerPhone: customerPhone || "+201000000000",
-      description: `ترقية اشتراك منصة hireCNC - ${checkoutRecord.planName}`,
+      description: `ترقية اشتراك منصة HIREX CNC - ${checkoutRecord.planName}`,
       metadata: {
         employerId,
         planId,

@@ -336,8 +336,8 @@ export function LandingContent() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-8 pt-8 border-t border-border/10 text-center text-xs text-secondary-foreground/50">
           {isAr 
-            ? `جميع الحقوق محفوظة © ${new Date().getFullYear()} hireCNC Egypt. تم التطوير هندسياً بمقاييس عالية.`
-            : `All rights reserved © ${new Date().getFullYear()} hireCNC Egypt. Engineered to high industry standards.`
+            ? `جميع الحقوق محفوظة © ${new Date().getFullYear()} HIREX CNC مصر. منصة التوظيف الهندسي والتشغيلي المعتمدة.`
+            : `All rights reserved © ${new Date().getFullYear()} HIREX CNC Egypt. Precision Machining & Engineering Staffing Platform.`
           }
         </div>
       </footer>

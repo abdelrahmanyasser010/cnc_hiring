@@ -5,7 +5,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Globe, Cpu } from "lucide-react";
+import { Menu, X, Globe, Cpu, LogIn } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
@@ -19,9 +19,10 @@ export function PublicNavbar() {
 
   const navLinks = [
     { label: lang === "ar" ? "شواغر التشغيل" : "CNC Jobs", href: "/#jobs" },
-    { label: lang === "ar" ? "دليل المصانع" : "Factories", href: "/companies" },
+    { label: lang === "ar" ? "دليل المصانع" : "Our Companies", href: "/companies" },
+    { label: lang === "ar" ? "لأصحاب المصانع" : "For Employers", href: "/#pricing" },
+    { label: lang === "ar" ? "للكوادر والفنيين" : "For Applicants", href: "/#jobs" },
     { label: lang === "ar" ? "المدونة المعرفية" : "Blog", href: "/blog" },
-    { label: lang === "ar" ? "الباقات والأسعار" : "Pricing", href: "/#pricing" },
     { label: lang === "ar" ? "عن المنصة" : "About", href: "/#about" },
   ];
 
@@ -31,15 +32,15 @@ export function PublicNavbar() {
         
         {/* Logo & Desktop Nav Links */}
         <div className="flex items-center gap-6 md:gap-8">
-          <Link href="/" className="flex items-center gap-2 font-bold text-lg sm:text-xl text-primary">
-            <div className="bg-primary text-white p-1.5 rounded-lg flex items-center justify-center">
+          <Link href="/" className="flex items-center gap-2 font-black text-lg sm:text-xl text-primary tracking-tight">
+            <div className="bg-primary text-white p-1.5 rounded-lg flex items-center justify-center shadow-sm">
               <Cpu className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <span>hireCNC <span className="text-foreground text-xs sm:text-sm font-semibold">{lang === "ar" ? "مصر" : "Egypt"}</span></span>
+            <span>HIREX <span className="text-foreground text-xs sm:text-sm font-bold">CNC</span></span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-5 lg:gap-6 text-sm font-medium text-foreground/80">
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-6 text-sm font-medium text-foreground/80">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -58,15 +59,10 @@ export function PublicNavbar() {
 
           <Link 
             href="/login" 
-            className="text-xs sm:text-sm font-medium text-foreground/80 hover:text-primary transition-colors px-2 py-1"
+            className="px-4 py-2 text-xs sm:text-sm font-bold bg-primary text-white rounded-xl hover:bg-primary/90 transition-all shadow-md shadow-primary/20 hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2"
           >
-            {lang === "ar" ? "دخول أصحاب العمل" : "Employer Login"}
-          </Link>
-          <Link 
-            href="/register" 
-            className="px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-medium bg-primary text-white rounded-xl hover:bg-primary/90 transition-all shadow-md shadow-primary/20 hover:-translate-y-0.5 active:translate-y-0"
-          >
-            {lang === "ar" ? "أعلن عن وظيفة +" : "Post a Job +"}
+            <LogIn className="w-4 h-4" />
+            <span>{lang === "ar" ? "تسجيل الدخول / حساب جديد" : "Sign In / Register"}</span>
           </Link>
         </div>
 
@@ -112,16 +108,10 @@ export function PublicNavbar() {
             <Link 
               href="/login" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full text-center py-2.5 px-4 rounded-xl border border-border text-sm font-medium text-foreground hover:bg-secondary/5 transition-colors"
+              className="w-full text-center py-2.5 px-4 rounded-xl bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2"
             >
-              {lang === "ar" ? "دخول أصحاب العمل" : "Employer Login"}
-            </Link>
-            <Link 
-              href="/register" 
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full text-center py-2.5 px-4 rounded-xl bg-primary text-white text-sm font-medium hover:bg-primary/90 transition-all shadow-md shadow-primary/20"
-            >
-              {lang === "ar" ? "أعلن عن وظيفة +" : "Post a Job +"}
+              <LogIn className="w-4 h-4" />
+              <span>{lang === "ar" ? "تسجيل الدخول / حساب جديد" : "Sign In / Register"}</span>
             </Link>
           </div>
         </div>

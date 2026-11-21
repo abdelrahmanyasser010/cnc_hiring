@@ -9,7 +9,7 @@ import { blogRepo } from "@/infrastructure/container";
 import { BlogClientView, BlogPostItem } from "./BlogClientView";
 
 export const metadata = {
-  title: "المدونة المعرفية لفنيي ومهندسي الـ CNC في مصر | hireCNC",
+  title: "المدونة المعرفية لفنيي ومهندسي الـ CNC في مصر | HIREX CNC",
   description: "مقالات، شروحات، ونصائح تقنية وعملية حول تشغيل وبرمجة ماكينات المخارط والفرايز الـ CNC وكيفية صيانة الماكينات وكتابة الـ G-code.",
 };
 
