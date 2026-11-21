@@ -120,7 +120,7 @@ export default async function TalentPage({ searchParams }: PageProps) {
         name: "سامح إبراهيم عبد العال",
         role: "TECHNICIAN" as const,
         industry: "الإسطمبات والفرم",
-        jobTitle: "سِتَابَر فريزة CNC إسطمبات حقن",
+        jobTitle: "فني ضبط وتشغيل فريزة CNC إسطمبات حقن",
         machinesFreeText: "فريزة Hartford كنترول هاس، ماكينة سلك وشرارة",
         skillsSummary: "تشغيل صلب معالج وصلد حتى 55 HRC",
         cvUrl: null,

@@ -53,7 +53,7 @@ const FEATURED_JOBS: FeaturedJob[] = [
   {
     id: "job-feat-2",
     title: { 
-      ar: "مشغّل فريزة CNC 5 محاور وسِتَابَر محترف", 
+      ar: "مشغّل فريزة CNC 5 محاور وفني ضبط محترف", 
       en: "5-Axis CNC Milling Setter & Operator" 
     },
     company: { ar: "العربي جروب للصناعات الهندسية", en: "El-Araby Engineering Group" },

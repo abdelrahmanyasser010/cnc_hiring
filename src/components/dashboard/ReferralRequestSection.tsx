@@ -158,7 +158,7 @@ export default function ReferralRequestSection() {
                   <input
                     type="text"
                     name="jobTitle"
-                    placeholder={isAr ? "مثال: مبرمج CAM 5 محاور، سِتَابَر فريزة Haas" : "e.g. 5-Axis CAM Programmer, Lathe Setter"}
+                    placeholder={isAr ? "مثال: مبرمج CAM 5 محاور، فني ضبط فريزة Haas" : "e.g. 5-Axis CAM Programmer, Lathe Setup Technician"}
                     required
                     className="w-full px-3.5 py-2 rounded-xl border border-border bg-background focus:outline-none focus:border-primary/50 text-xs"
                   />

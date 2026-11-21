@@ -15,11 +15,11 @@ export default function CandidateRegisterPage() {
         {/* Header Title */}
         <div className="text-center space-y-2 mb-8">
           <div className="inline-flex items-center justify-center p-2.5 bg-primary/10 text-primary rounded-2xl mb-2 font-bold text-sm tracking-wide">
-            CNC CAREERS EGYPT
+            HIREX CNC
           </div>
-          <h1 className="text-2xl md:text-3xl font-black">تسجيل ملف مهني وفني (CNC Candidates)</h1>
-          <p className="text-xs md:text-sm text-foreground/60 max-w-md mx-auto">
-            منظومة ربط وترشيح متخصصة لربط فنيي ومهندسي ماكينات الـ CNC بالمصانع والشركات الصناعية في مصر.
+          <h1 className="text-2xl md:text-3xl font-black">تسجيل الكوادر الفنية ومشغلي ماكينات CNC</h1>
+          <p className="text-xs md:text-sm text-foreground/70 max-w-md mx-auto">
+            سجل بياناتك الفنية وخبراتك العملية لتصلك فرص التوظيف والمقابلات من المصانع الهندسية مباشرة وبدون وسطاء.
           </p>
         </div>
 

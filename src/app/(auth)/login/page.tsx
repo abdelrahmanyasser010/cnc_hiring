@@ -1,5 +1,5 @@
 // src/app/(auth)/login/page.tsx
-// صفحة تسجيل الدخول الموحدة للمنصة بتصميم Split Screen صناعي معبر (HIREX CNC).
+// صفحة تسجيل الدخول الموحدة لمنصة HIREX CNC بتصميم Split Screen صناعي معبر وخالٍ من التوهج.
 
 "use client";
 
@@ -67,15 +67,15 @@ function LoginContent() {
   return (
     <div dir={isAr ? "rtl" : "ltr"} className="min-h-screen grid grid-cols-1 lg:grid-cols-12 bg-background text-start">
       
-      {/* 1. Expressive Industrial Machining Image (Right side on Arabic RTL) */}
+      {/* 1. Real Industrial CNC Machining Photo (Right side on Arabic RTL) */}
       <div className="hidden lg:block lg:col-span-6 relative overflow-hidden bg-slate-950 order-1">
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80 scale-105"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-85"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1600&q=80')"
+            backgroundImage: "url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1600&q=80')"
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/20" />
         
         <div className="relative h-full flex flex-col justify-between p-12 text-white">
           {/* Top Logo */}
@@ -86,34 +86,27 @@ function LoginContent() {
             <span>HIREX <span className="text-sky-400 font-bold">CNC</span></span>
           </Link>
 
-          {/* Bottom Caption */}
-          <div className="space-y-4 max-w-lg">
-            <div className="inline-flex items-center gap-2 bg-slate-900/80 border border-slate-700/80 text-sky-400 text-xs font-bold px-3.5 py-1.5 rounded-full">
-              <span>{isAr ? "المنظومة الهندسية المعتمدة" : "Verified Industrial Machining Network"}</span>
+          {/* Minimalist Bottom Info */}
+          <div className="space-y-2 max-w-md">
+            <div className="inline-flex items-center gap-2 bg-slate-900/90 border border-slate-700/80 text-sky-400 text-xs font-bold px-3 py-1 rounded-full">
+              <span>{isAr ? "بوابة الدخول الموحدة للتشغيل والإنتاج" : "Unified Machining Access Portal"}</span>
             </div>
-            <h2 className="text-3xl font-black text-white leading-tight">
+            <p className="text-xs text-slate-300">
               {isAr 
-                ? "ربط الكفاءات الهندسية والفنية بالمصانع والورش المتطورة"
-                : "Connecting Technical Machining Specialists With Advanced Facilities"
-              }
-            </h2>
-            <p className="text-sm text-slate-300 leading-relaxed">
-              {isAr 
-                ? "منصة توظيف مخصصة لقطاع تشغيل المعادن والـ CNC في مصر، توفر الفرز الفني الدقيق وتلغي عمولات التوظيف المتكررة."
-                : "Dedicated recruitment platform for Egypt's precision machining sector with technical verification and zero percentage fees."
-              }
+                ? "دخول موحد لأصحاب المصانع ومديري التشغيل والكوادر الفنية المعتمدة."
+                : "Single sign-on for plant managers, machine shop owners, and certified CNC machinists."}
             </p>
           </div>
         </div>
       </div>
 
-      {/* 2. Login Form (Left side on Arabic RTL) */}
+      {/* 2. Login Form (Left side on Arabic RTL - Clean & Crisp) */}
       <div className="lg:col-span-6 flex items-center justify-center p-6 sm:p-12 order-2">
-        <div className="w-full max-w-md space-y-8">
+        <div className="w-full max-w-md space-y-7">
           
           {/* Header */}
-          <div className="space-y-3">
-            <Link href="/" className="flex items-center gap-2 font-black text-2xl text-primary lg:hidden">
+          <div className="space-y-2">
+            <Link href="/" className="flex items-center gap-2 font-black text-2xl text-primary lg:hidden mb-4">
               <div className="bg-primary text-white p-1.5 rounded-lg flex items-center justify-center">
                 <Cpu className="w-5 h-5" />
               </div>
@@ -124,7 +117,7 @@ function LoginContent() {
               {isAr ? "تسجيل الدخول" : "Sign In"}
             </h1>
             <p className="text-xs sm:text-sm text-foreground/60">
-              {isAr ? "أدخل بيانات حسابك للوصول إلى لوحة التحكم" : "Enter your credentials to access your dashboard"}
+              {isAr ? "أدخل بيانات حسابك المسجل للوصول إلى لوحة التحكم" : "Enter your registered credentials to access your dashboard"}
             </p>
           </div>
 
@@ -146,47 +139,38 @@ function LoginContent() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="phone" className="block text-xs font-bold text-foreground/80 mb-2">
-                {isAr ? "البريد الإلكتروني أو رقم الهاتف" : "Email Address or Phone Number"}
+              <label htmlFor="phone" className="flex items-center gap-2 text-xs font-bold text-foreground/80 mb-2">
+                <Mail className="w-4 h-4 text-primary" />
+                <span>{isAr ? "البريد الإلكتروني أو رقم الهاتف" : "Email Address or Phone Number"}</span>
               </label>
-              <div className="relative">
-                <div className={`absolute inset-y-0 ${isAr ? "right-0 pr-3.5" : "left-0 pl-3.5"} flex items-center pointer-events-none text-foreground/40`}>
-                  <Mail className="w-4 h-4" />
-                </div>
-                <input
-                  id="phone"
-                  type="text"
-                  placeholder={isAr ? "name@company.com (أو 010xxxxxxxx)" : "name@company.com (or 010xxxxxxxx)"}
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  className={`w-full ${isAr ? "pr-10 pl-3 text-right" : "pl-10 pr-3 text-left"} py-2.5 bg-card border border-border rounded-xl text-foreground text-sm placeholder:text-foreground/30 focus:outline-none focus:border-primary transition-colors`}
-                  dir="ltr"
-                  disabled={isLoading}
-                  required
-                />
-              </div>
+              <input
+                id="phone"
+                type="text"
+                placeholder={isAr ? "أدخل البريد أو رقم الهاتف المسجل" : "name@company.com or 010xxxxxxxx"}
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className="w-full px-4 py-3 bg-secondary/5 border border-border rounded-xl text-foreground text-sm font-medium placeholder:text-foreground/40 focus:outline-none focus:border-primary focus:bg-background transition-colors"
+                disabled={isLoading}
+                required
+              />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-xs font-bold text-foreground/80 mb-2">
-                {isAr ? "كلمة المرور" : "Password"}
+              <label htmlFor="password" className="flex items-center gap-2 text-xs font-bold text-foreground/80 mb-2">
+                <Lock className="w-4 h-4 text-primary" />
+                <span>{isAr ? "كلمة المرور" : "Password"}</span>
               </label>
-              <div className="relative">
-                <div className={`absolute inset-y-0 ${isAr ? "right-0 pr-3.5" : "left-0 pl-3.5"} flex items-center pointer-events-none text-foreground/40`}>
-                  <Lock className="w-4 h-4" />
-                </div>
-                <input
-                  id="password"
-                  type="password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className={`w-full ${isAr ? "pr-10 pl-3 text-right" : "pl-10 pr-3 text-left"} py-2.5 bg-card border border-border rounded-xl text-foreground text-sm placeholder:text-foreground/30 focus:outline-none focus:border-primary transition-colors`}
-                  dir="ltr"
-                  disabled={isLoading}
-                  required
-                />
-              </div>
+              <input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 bg-secondary/5 border border-border rounded-xl text-foreground text-sm font-medium placeholder:text-foreground/40 focus:outline-none focus:border-primary focus:bg-background transition-colors font-mono"
+                dir="ltr"
+                disabled={isLoading}
+                required
+              />
             </div>
 
             <button
@@ -197,22 +181,22 @@ function LoginContent() {
               {isLoading ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>{isAr ? "جاري تسجيل الدخول..." : "Signing in..."}</span>
+                  <span>{isAr ? "جاري التحقق من الحساب..." : "Signing in..."}</span>
                 </>
               ) : (
-                <span>{isAr ? "دخول الحساب" : "Sign In to Account"}</span>
+                <span>{isAr ? "دخول الحساب" : "Enter Dashboard"}</span>
               )}
             </button>
           </form>
 
           {/* Quick Sign In Divider */}
-          <div className="relative my-4">
+          <div className="relative my-2">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-border"></div>
             </div>
             <div className="relative flex justify-center text-xs">
               <span className="bg-background px-3 text-foreground/50 font-medium">
-                {isAr ? "أو المتابعة السريعة" : "Or continue with"}
+                {isAr ? "أو المتابعة السريعة" : "Or quick sign in"}
               </span>
             </div>
           </div>
@@ -233,30 +217,28 @@ function LoginContent() {
             <span>{isAr ? "الدخول بحساب Google" : "Continue with Google"}</span>
           </button>
 
-          {/* Signup Links */}
-          <div className="pt-4 border-t border-border/60 text-center space-y-2">
+          {/* Clean Candidate Registration Link */}
+          <div className="pt-4 border-t border-border/60 text-center space-y-1.5">
             <p className="text-xs text-foreground/60">
-              {isAr ? "ليس لديك حساب بعد؟" : "Don't have an account yet?"}
+              {isAr ? "فني أو مهندس تشغيل وتبحث عن عمل؟" : "Machinist or CAM programmer looking for work?"}
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-bold text-primary">
-              <Link href="/register" className="hover:underline">
-                {isAr ? "تسجيل حساب مصنع / شركة ←" : "Register as Machine Shop →"}
-              </Link>
-              <span className="text-foreground/30">•</span>
-              <Link href="/register/candidate" className="hover:underline">
-                {isAr ? "تسجيل كفني أو مهندس CNC ←" : "Register as Machinist →"}
-              </Link>
-            </div>
+            <Link 
+              href="/register/candidate" 
+              className="text-xs font-bold text-primary hover:underline inline-flex items-center gap-1"
+            >
+              <span>{isAr ? "سجل ملفك الفني والماكينات الآن مجاناً" : "Register your technical profile for free"}</span>
+              {isAr ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
+            </Link>
           </div>
 
           {/* Back to Home Link */}
-          <div className="text-center pt-2">
+          <div className="text-center pt-1">
             <Link 
               href="/" 
               className="inline-flex items-center gap-1.5 text-xs text-foreground/50 hover:text-primary transition-colors"
             >
               {isAr ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
-              <span>{isAr ? "الرجوع إلى الصفحة الرئيسية للمنصة" : "Back to Home"}</span>
+              <span>{isAr ? "الرجوع إلى الصفحة الرئيسية" : "Back to Home"}</span>
             </Link>
           </div>
 

@@ -8,8 +8,8 @@ export const AR_DICTIONARY = {
     superAdmin: "مدير المنصة العام",
     employer: "صاحب مصنع / ورشة",
     candidate: "فني أو مبرمج CNC",
-    technician: "فني تشغيل / سِتَابَر (Setter & Operator)",
-    engineer: "مهندس مبرمج (CAM Programmer)",
+    technician: "فني ضبط وتشغيل ماكينات (Setter & Operator)",
+    engineer: "مهندس إنتاج وبرمجة CAM (CAM Programmer)",
   },
 
   // 2. القائمة الرئيسية والشريط الجانبي (Navigation & Sidebar)
