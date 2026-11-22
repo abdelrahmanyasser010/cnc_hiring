@@ -106,6 +106,17 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
   const [selectedLocation, setSelectedLocation] = useState("ALL");
   const [selectedShift, setSelectedShift] = useState("ALL");
   const [onlyBookmarked, setOnlyBookmarked] = useState(false);
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+
+  // Active filters count for badge
+  const activeFiltersCount = useMemo(() => {
+    let count = 0;
+    if (selectedController !== "ALL") count++;
+    if (selectedLocation !== "ALL") count++;
+    if (selectedShift !== "ALL") count++;
+    if (onlyBookmarked) count++;
+    return count;
+  }, [selectedController, selectedLocation, selectedShift, onlyBookmarked]);
 
   // Bookmarks state with localStorage persistence
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
@@ -299,30 +310,61 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
             {/* Search and Filters Bar */}
             <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 shadow-xs space-y-4 text-start">
               
-              {/* Search Input */}
-              <div className="relative">
-                <Search className="w-5 h-5 text-foreground/40 absolute start-3.5 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={isAr 
-                    ? "ابحث بالمسمى الوظيفي، نوع الكنترول، الماكينة، أو اسم المصنع (مثال: مخرطة Fanuc، فريزة 5 محاور، سلك)..." 
-                    : "Search by title, controller, machine type, or plant (e.g. Fanuc lathe, 5-axis, Wire EDM)..."}
-                  className="w-full ps-11 pe-4 py-3 bg-secondary/10 border border-border rounded-xl text-xs sm:text-sm text-foreground placeholder:text-foreground/40 focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-                />
-                {searchQuery && (
-                  <button 
-                    onClick={() => setSearchQuery("")}
-                    className="absolute end-3.5 top-1/2 -translate-y-1/2 text-foreground/40 hover:text-foreground p-1"
+              {/* Search Input & Mobile Filter Toggle */}
+              <div className="space-y-3">
+                <div className="relative">
+                  <Search className="w-5 h-5 text-foreground/40 absolute start-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder={isAr 
+                      ? "ابحث بالماكينة، الكنترول، أو المنطقة الصناعية..." 
+                      : "Search by machine, controller, or zone..."}
+                    className="w-full ps-11 pe-4 py-3 bg-secondary/10 border border-border rounded-xl text-xs sm:text-sm text-foreground placeholder:text-foreground/40 focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                  />
+                  {searchQuery && (
+                    <button 
+                      onClick={() => setSearchQuery("")}
+                      className="absolute end-3.5 top-1/2 -translate-y-1/2 text-foreground/40 hover:text-foreground p-1"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Mobile Filter Toggle Button Bar */}
+                <div className="sm:hidden flex items-center justify-between gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
+                    className="flex-1 py-2.5 px-3.5 rounded-xl border border-border bg-secondary/10 text-foreground font-bold text-xs flex items-center justify-center gap-2 hover:bg-secondary/20 transition-all"
                   >
-                    <X className="w-4 h-4" />
+                    <SlidersHorizontal className="w-4 h-4 text-primary" />
+                    <span>{isAr ? "خيارات التصفية والفلاتر" : "Filter Openings"}</span>
+                    {activeFiltersCount > 0 && (
+                      <span className="bg-primary text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                        {activeFiltersCount}
+                      </span>
+                    )}
                   </button>
-                )}
+
+                  <button
+                    onClick={() => setOnlyBookmarked(!onlyBookmarked)}
+                    className={`py-2.5 px-3 rounded-xl border text-xs font-bold transition-all flex items-center gap-1.5 ${
+                      onlyBookmarked 
+                        ? "bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400" 
+                        : "bg-secondary/10 border-border text-foreground/70"
+                    }`}
+                  >
+                    <Bookmark className={`w-3.5 h-3.5 ${onlyBookmarked ? "fill-amber-500" : ""}`} />
+                    <span>({bookmarkedIds.length})</span>
+                  </button>
+                </div>
               </div>
 
-              {/* Filter Selects Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+              {/* Filter Selects Grid (collapsible on mobile, always grid on desktop) */}
+              <div className={`gap-3 text-xs ${isMobileFiltersOpen ? "grid grid-cols-1" : "hidden sm:grid sm:grid-cols-2 lg:grid-cols-4"}`}>
                 
                 {/* Controller Filter */}
                 <div className="space-y-1">
@@ -482,7 +524,7 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
                         {/* Job Title */}
                         <Link href={`/jobs/${job.id}`}>
                           <h2 className="text-base sm:text-lg font-black text-foreground hover:text-primary transition-colors cursor-pointer">
-                            {job.title}
+                            <bdi dir="auto">{job.title}</bdi>
                           </h2>
                         </Link>
 
@@ -516,11 +558,11 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
                       </div>
 
                       {/* Right/Left Action Buttons */}
-                      <div className="flex sm:flex-row md:flex-col lg:flex-row items-center gap-2.5 pt-4 md:pt-0 border-t md:border-t-0 border-border shrink-0">
+                      <div className="grid grid-cols-2 sm:flex sm:flex-row md:flex-col lg:flex-row items-center gap-2.5 pt-4 md:pt-0 border-t md:border-t-0 border-border shrink-0 w-full sm:w-auto">
                         
                         <button
                           onClick={(e) => handleOpenQuickApply(job, e)}
-                          className="flex-1 md:flex-initial flex items-center justify-center gap-1.5 px-4 py-2.5 bg-primary text-white font-bold rounded-xl text-xs hover:bg-primary/90 transition-all shadow-sm hover:-translate-y-0.5"
+                          className="flex items-center justify-center gap-1.5 px-3 sm:px-4 py-2.5 bg-primary text-white font-bold rounded-xl text-xs hover:bg-primary/90 transition-all shadow-sm hover:-translate-y-0.5"
                         >
                           <Send className="w-3.5 h-3.5 rtl:rotate-180" />
                           <span>{isAr ? "التقديم السريع" : "Quick Apply"}</span>
@@ -528,7 +570,7 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
 
                         <Link
                           href={`/jobs/${job.id}`}
-                          className="flex-1 md:flex-initial flex items-center justify-center gap-1.5 px-4 py-2.5 bg-secondary/10 hover:bg-secondary/20 text-foreground font-bold rounded-xl text-xs border border-border transition-all"
+                          className="flex items-center justify-center gap-1.5 px-3 sm:px-4 py-2.5 bg-secondary/10 hover:bg-secondary/20 text-foreground font-bold rounded-xl text-xs border border-border transition-all text-center"
                         >
                           <span>{isAr ? "تفاصيل الوظيفة" : "Details"}</span>
                           {isAr ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
@@ -610,8 +652,8 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
 
       {/* 3. Quick Apply Modal */}
       {applyingJob && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="bg-card border border-border rounded-2xl w-full max-w-lg p-6 shadow-2xl relative text-start space-y-5 animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/65 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="bg-card border border-border rounded-2xl w-full max-w-lg p-5 sm:p-6 shadow-2xl relative text-start space-y-4 sm:space-y-5 animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
             
             {/* Modal Header */}
             <div className="flex items-start justify-between border-b border-border pb-4">
@@ -619,8 +661,8 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
                 <span className="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-full">
                   {isAr ? "التقديم السريع المباشر" : "1-Click Direct Application"}
                 </span>
-                <h3 className="text-base sm:text-lg font-black text-foreground mt-1">
-                  {applyingJob.title}
+                <h3 className="text-base sm:text-lg font-black text-foreground mt-1.5">
+                  <bdi dir="auto">{applyingJob.title}</bdi>
                 </h3>
                 <p className="text-xs text-foreground/60">
                   {applyingJob.companyName || (isAr ? "مصنع معتمد بالسجل التجاري" : "Verified Plant")}

@@ -165,7 +165,7 @@ export function CompaniesClientView({ initialCompanies }: CompaniesClientViewPro
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5 flex-wrap">
                       <h3 className="font-bold text-sm sm:text-base text-foreground group-hover:text-primary transition-colors leading-snug">
-                        {company.companyName}
+                        <bdi dir="auto">{company.companyName}</bdi>
                       </h3>
                       {company.isVerified && (
                         <span title={isAr ? "منشأة معتمدة بالمنظومة" : "Verified Facility"}>

@@ -33,12 +33,12 @@ export function LandingHero() {
           <div className="lg:col-span-7 flex flex-col gap-5 sm:gap-6 text-start">
             
             {/* Pill Badge */}
-            <div className="inline-flex items-center gap-2 bg-slate-900/90 border border-slate-800 text-sky-400 text-xs font-semibold px-3.5 py-1.5 rounded-full w-fit">
-              <span className="flex h-2 w-2 rounded-full bg-sky-400"></span>
-              <span>
+            <div className="inline-flex items-center gap-2 bg-slate-900/90 border border-slate-800 text-sky-400 text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full max-w-full">
+              <span className="flex h-2 w-2 rounded-full bg-sky-400 shrink-0"></span>
+              <span className="truncate sm:whitespace-normal">
                 {isAr 
-                  ? "المنظومة الصناعية المتخصصة لتوظيف كوادر الـ CNC في مصر" 
-                  : "Egypt's Dedicated CNC & Precision Machining Staffing Network"}
+                  ? "المنظومة الصناعية المعتمدة لتوظيف كوادر الـ CNC بمصر" 
+                  : "Egypt's Dedicated CNC Staffing Network"}
               </span>
             </div>
             
@@ -103,18 +103,18 @@ export function LandingHero() {
             </div>
 
             {/* Trust Metrics Pill Row */}
-            <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-800/80 max-w-xl text-slate-300 text-xs">
-              <div>
-                <div className="font-bold text-base text-white font-mono">1,400+</div>
-                <div className="text-slate-400 text-[11px]">{isAr ? "فني ومبرمج مسجل" : "Registered Machinists"}</div>
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-4 border-t border-slate-800/80 max-w-xl text-slate-300 text-xs">
+              <div className="text-start">
+                <div className="font-bold text-sm sm:text-base text-white font-mono">1,400+</div>
+                <div className="text-slate-400 text-[10px] sm:text-[11px] leading-tight mt-0.5">{isAr ? "فني ومبرمج" : "Machinists"}</div>
               </div>
-              <div>
-                <div className="font-bold text-base text-white font-mono">180+</div>
-                <div className="text-slate-400 text-[11px]">{isAr ? "مصنع وورشة شريكة" : "Partner Facilities"}</div>
+              <div className="text-start">
+                <div className="font-bold text-sm sm:text-base text-white font-mono">180+</div>
+                <div className="text-slate-400 text-[10px] sm:text-[11px] leading-tight mt-0.5">{isAr ? "مصنع شريك" : "Facilities"}</div>
               </div>
-              <div>
-                <div className="font-bold text-base text-sky-400 font-mono">100%</div>
-                <div className="text-slate-400 text-[11px]">{isAr ? "فحص تخصصي للكنترول" : "Technical CNC Vetting"}</div>
+              <div className="text-start">
+                <div className="font-bold text-sm sm:text-base text-sky-400 font-mono">100%</div>
+                <div className="text-slate-400 text-[10px] sm:text-[11px] leading-tight mt-0.5">{isAr ? "فحص تخصصي" : "Vetted CNC"}</div>
               </div>
             </div>
 

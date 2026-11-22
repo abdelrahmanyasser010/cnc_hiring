@@ -260,7 +260,7 @@ export function FeaturedJobsSection() {
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
                   </div>
                   <h4 className="font-bold text-sm sm:text-base text-foreground group-hover:text-primary transition-colors leading-snug line-clamp-2">
-                    {isAr ? job.title.ar : job.title.en}
+                    <bdi dir="auto">{isAr ? job.title.ar : job.title.en}</bdi>
                   </h4>
                 </div>
 

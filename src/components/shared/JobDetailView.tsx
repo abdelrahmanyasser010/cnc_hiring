@@ -78,7 +78,7 @@ export default function JobDetailView({ job }: JobDetailViewProps) {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-3">
             <h1 className="text-2xl md:text-3xl font-black text-foreground">
-              {job.title}
+              <bdi dir="auto">{job.title}</bdi>
             </h1>
             
             <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs font-semibold text-foreground/60">
