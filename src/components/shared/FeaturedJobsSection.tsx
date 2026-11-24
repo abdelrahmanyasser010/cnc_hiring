@@ -245,12 +245,12 @@ export function FeaturedJobsSection() {
           </div>
         </div>
 
-        {/* 2. Featured Jobs Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* 2. Featured Jobs Grid / Mobile Swipe Slider (جنب بعض في Slider) */}
+        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto md:overflow-x-visible pb-4 pt-1 snap-x snap-mandatory scrollbar-none [&::-webkit-scrollbar]:hidden px-1">
           {filteredJobs.map((job) => (
             <div 
               key={job.id}
-              className="bg-card border border-border rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between space-y-4 group relative"
+              className="w-[85vw] max-w-[340px] md:w-auto shrink-0 snap-start bg-card border border-border rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between space-y-4 group relative"
             >
               {/* Header: Company & Urgent Badge */}
               <div className="flex items-start justify-between gap-3">
@@ -326,6 +326,11 @@ export function FeaturedJobsSection() {
 
             </div>
           ))}
+        </div>
+
+        {/* Mobile Swipe Hint */}
+        <div className="flex md:hidden items-center justify-center gap-1.5 text-xs text-foreground/50 pt-1">
+          <span>{isAr ? "← اسحب أفقياً لتصفح بقية وظائف الـ CNC →" : "← Swipe to explore more CNC jobs →"}</span>
         </div>
 
         {/* Bottom Machine Taxonomy Row (Like Browse CNC Jobs by Role in hirecnc.com) */}

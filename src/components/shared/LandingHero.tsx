@@ -69,24 +69,24 @@ export function LandingHero() {
               }
             </p>
             
-            {/* Dual Marketplace Action (Only 2 Primary Funnels - Crisp & Solid, No Fuzzy Glow) */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4 mt-2">
+            {/* Dual Marketplace Action - Clean, Solid & Touch-Optimized for Mobile */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mt-2 w-full max-w-md sm:max-w-none">
               
               {/* Machinist Action (Primary Solid Cyan/Blue) */}
               <Link 
                 href="/register/candidate" 
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary hover:bg-primary/90 text-white text-sm sm:text-base font-bold rounded-xl transition-colors text-center"
+                className="w-full sm:w-auto min-h-[50px] inline-flex items-center justify-center gap-2 px-5 py-3 sm:py-3.5 bg-primary hover:bg-primary/90 text-white text-sm sm:text-base font-bold rounded-xl transition-all shadow-md shadow-primary/25 text-center active:scale-[0.99]"
               >
-                <span>{isAr ? "سجل كفني تشغيل / مبرمج CNC" : "Machinists — Search & Register"}</span>
-                {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+                <span className="truncate">{isAr ? "سجل كفني أو مبرمج CNC" : "Register as Machinist"}</span>
+                {isAr ? <ArrowLeft className="w-4 h-4 shrink-0" /> : <ArrowRight className="w-4 h-4 shrink-0" />}
               </Link>
               
               {/* Factory / Machine Shop Action (High-Contrast Solid White) */}
               <Link 
                 href="/register" 
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white hover:bg-slate-100 text-slate-950 text-sm sm:text-base font-bold rounded-xl transition-colors text-center"
+                className="w-full sm:w-auto min-h-[50px] inline-flex items-center justify-center gap-2 px-5 py-3 sm:py-3.5 bg-white hover:bg-slate-100 text-slate-950 text-sm sm:text-base font-bold rounded-xl transition-all shadow-sm text-center active:scale-[0.99] border border-white"
               >
-                <span>{isAr ? "وظّف كوادر لمصنعك" : "Machine Shops — Hire Machinists"}</span>
+                <span className="truncate">{isAr ? "وظّف كفاءات لمصنعك" : "Hire CNC Machinists"}</span>
               </Link>
             </div>
 

@@ -6,7 +6,7 @@
 import React from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
-import { Check, Lock, MessageSquare } from "lucide-react";
+import { Check, Lock, MessageSquare, Cpu, ShieldCheck, MapPin, Building2, CheckCircle2, DollarSign } from "lucide-react";
 
 export function LandingContent() {
   const { lang } = useLanguage();
@@ -31,50 +31,80 @@ export function LandingContent() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
+          {/* 3 Pillars - Mobile Swipe Slider / Desktop Grid (جنب بعض في Slider على الموبايل) */}
+          <div className="flex md:grid md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 overflow-x-auto md:overflow-x-visible pb-4 pt-1 snap-x snap-mandatory scrollbar-none [&::-webkit-scrollbar]:hidden px-1">
             
-            <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors text-start shadow-sm">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-black text-lg mb-4">
-                01
+            {/* Pillar 1 */}
+            <div className="w-[85vw] max-w-[340px] md:w-auto shrink-0 snap-start p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all text-start shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                    <Cpu className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs font-mono font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-lg">
+                    01
+                  </span>
+                </div>
+                <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">
+                  {isAr ? "مطابقة دقيقة لنوع الماكينة والكنترول" : "Rigorous Controller & Machine Matching"}
+                </h3>
+                <p className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
+                  {isAr 
+                    ? "تصنيف الكوادر طبقاً لماكينات التشغيل الفعلية (خراطة، تفريز 3 إلى 5 محاور، سلك) وأنظمة الكنترول (Fanuc, Siemens, Heidenhain, Haas) مع التأكد من إتقان قراءة الرسومات الهندسية وتحديد نقاط الصفر (Offsets)."
+                    : "Specialists matched by actual machine setups and controllers with verified competency in engineering drawings and zero-point work offsets."}
+                </p>
               </div>
-              <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">
-                {isAr ? "مطابقة دقيقة لنوع الماكينة والكنترول" : "Rigorous Controller & Machine Matching"}
-              </h3>
-              <p className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
-                {isAr 
-                  ? "تصنيف الكوادر طبقاً لماكينات التشغيل الفعلية (خراطة، تفريز 3 إلى 5 محاور، سلك) وأنظمة الكنترول (Fanuc, Siemens, Heidenhain, Haas) مع التأكد من إتقان قراءة الرسومات الهندسية وتحديد نقاط الصفر (Offsets)."
-                  : "Specialists matched by actual machine setups and controllers with verified competency in engineering drawings and zero-point work offsets."}
-              </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors text-start shadow-sm">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-black text-lg mb-4">
-                02
+            {/* Pillar 2 */}
+            <div className="w-[85vw] max-w-[340px] md:w-auto shrink-0 snap-start p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all text-start shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                    <DollarSign className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs font-mono font-bold text-emerald-600 bg-emerald-500/10 px-2.5 py-1 rounded-lg">
+                    02
+                  </span>
+                </div>
+                <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">
+                  {isAr ? "اشتراك شهري شفاف بدون عمولات توظيف (0%)" : "Flat Subscription — Zero Placement Fees"}
+                </h3>
+                <p className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
+                  {isAr 
+                    ? "لا نقتطع أي نسبة من رواتب الفنيين ولا نفرض أي عمولات توظيف متكررة على المصنع. باقة شهرية واضحة تمنحك وصولاً كاملاً لقاعدة الكفاءات واستقلالية تامة في تعيين فريقك الإنتاجي."
+                    : "No contingency placement fee percentages from candidate salaries or shop budgets. A transparent monthly plan granting full hiring independence."}
+                </p>
               </div>
-              <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">
-                {isAr ? "اشتراك شهري شفاف بدون عمولات توظيف (0%)" : "Flat Subscription — Zero Placement Fees"}
-              </h3>
-              <p className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
-                {isAr 
-                  ? "لا نقتطع أي نسبة من رواتب الفنيين ولا نفرض أي عمولات توظيف متكررة على المصنع. باقة شهرية واضحة تمنحك وصولاً كاملاً لقاعدة الكفاءات واستقلالية تامة في تعيين فريقك الإنتاجي."
-                  : "No contingency placement fee percentages from candidate salaries or shop budgets. A transparent monthly plan granting full hiring independence."}
-              </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors text-start shadow-sm">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-black text-lg mb-4">
-                03
+            {/* Pillar 3 */}
+            <div className="w-[85vw] max-w-[340px] md:w-auto shrink-0 snap-start p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all text-start shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center">
+                    <MapPin className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs font-mono font-bold text-sky-600 bg-sky-500/10 px-2.5 py-1 rounded-lg">
+                    03
+                  </span>
+                </div>
+                <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">
+                  {isAr ? "تغطية ميدانية لكبرى المناطق الصناعية" : "Direct Industrial Hubs Coverage"}
+                </h3>
+                <p className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
+                  {isAr 
+                    ? "شبكة كوادر متمركزة في العاشر من رمضان، 6 أكتوبر، العبور، برج العرب، وقويسنا، مما يضمن التزام الكادر بالحضور وسهولة انتقاله لمقر المصنع واستقراره المهني."
+                    : "Machinists mapped directly across 10th of Ramadan, 6th of October, Obour, Borg El Arab, and Quesna for seamless commute and reliable plant attendance."}
+                </p>
               </div>
-              <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">
-                {isAr ? "تغطية ميدانية لكبرى المناطق الصناعية" : "Direct Industrial Hubs Coverage"}
-              </h3>
-              <p className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
-                {isAr 
-                  ? "شبكة كوادر متمركزة في العاشر من رمضان، 6 أكتوبر، العبور، برج العرب، وقويسنا، مما يضمن التزام الكادر بالحضور وسهولة انتقاله لمقر المصنع واستقراره المهني."
-                  : "Machinists mapped directly across 10th of Ramadan, 6th of October, Obour, Borg El Arab, and Quesna for seamless commute and reliable plant attendance."}
-              </p>
             </div>
 
+          </div>
+
+          {/* Mobile Swipe Hint */}
+          <div className="flex md:hidden items-center justify-center gap-1.5 text-xs text-foreground/50 pt-2">
+            <span>{isAr ? "← اسحب أفقياً لتصفح حلول المنصة →" : "← Swipe to explore our solutions →"}</span>
           </div>
         </div>
       </section>
@@ -98,10 +128,11 @@ export function LandingContent() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+          {/* Pricing Cards - Mobile Swipe Slider / Desktop Grid */}
+          <div className="flex md:grid md:grid-cols-3 gap-4 sm:gap-8 items-stretch overflow-x-auto md:overflow-x-visible pb-4 pt-1 snap-x snap-mandatory scrollbar-none [&::-webkit-scrollbar]:hidden px-1">
             
             {/* Card 1: Bronze */}
-            <div className="flex flex-col bg-card border border-border rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all relative text-start">
+            <div className="w-[88vw] max-w-[340px] md:w-auto shrink-0 snap-start flex flex-col bg-card border border-border rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all relative text-start">
               <div className="text-xs italic text-foreground/60 bg-secondary/5 border-s-2 border-primary/40 ps-3 py-2 rounded-e-lg mb-4 font-serif">
                 {isAr 
                   ? "«نحتاج تعيين فنيين بشكل محدد ودوري بأقل تكلفة دون التزام باقات سنوية ضخمة»" 
@@ -149,7 +180,7 @@ export function LandingContent() {
             </div>
 
             {/* Card 2: Silver (Popular) */}
-            <div className="flex flex-col bg-card border-2 border-primary rounded-2xl p-6 sm:p-8 hover:shadow-2xl transition-all relative text-start shadow-lg shadow-primary/5">
+            <div className="w-[88vw] max-w-[340px] md:w-auto shrink-0 snap-start flex flex-col bg-card border-2 border-primary rounded-2xl p-6 sm:p-8 hover:shadow-2xl transition-all relative text-start shadow-lg shadow-primary/5">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white text-[11px] sm:text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider">
                 {isAr ? "الأكثر ملاءمة للمصانع" : "Most Popular for Plants"}
               </div>
@@ -201,7 +232,7 @@ export function LandingContent() {
             </div>
 
             {/* Card 3: Gold */}
-            <div className="flex flex-col bg-card border border-border rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all relative text-start">
+            <div className="w-[88vw] max-w-[340px] md:w-auto shrink-0 snap-start flex flex-col bg-card border border-border rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all relative text-start">
               <div className="text-xs italic text-foreground/60 bg-secondary/5 border-s-2 border-primary/40 ps-3 py-2 rounded-e-lg mb-4 font-serif">
                 {isAr 
                   ? "«مجمع صناعي كبير يحتاج وصولاً غير محدود لقاعدة الكوادر وأولوية في الترشيح المباشر»" 
@@ -248,6 +279,11 @@ export function LandingContent() {
               </Link>
             </div>
 
+          </div>
+
+          {/* Mobile Swipe Hint */}
+          <div className="flex md:hidden items-center justify-center gap-1.5 text-xs text-foreground/50 pt-3">
+            <span>{isAr ? "← اسحب أفقياً للمقارنة بين الباقات →" : "← Swipe to compare plans →"}</span>
           </div>
         </div>
       </section>

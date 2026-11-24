@@ -147,41 +147,41 @@ export function PublicNavbar() {
 
       </div>
 
-      {/* Mobile Slide-Over Drawer with Backdrop (matching hirecnc.com) */}
+      {/* Mobile Slide-Over Drawer with Backdrop (High-Contrast & Solid) */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 sm:hidden">
           {/* Backdrop Overlay */}
           <div 
-            className="fixed inset-0 bg-black/65 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
             onClick={() => setIsMobileMenuOpen(false)}
             aria-hidden="true"
           />
 
-          {/* Slide-in Menu Panel */}
-          <div 
-            className="relative flex flex-col w-[82%] max-w-xs h-full bg-card border-e border-border p-5 z-50 shadow-2xl animate-in slide-in-from-start duration-250 justify-between text-start"
+          {/* Slide-in Menu Panel - Explicitly Solid & Fully Contrasting */}
+          <aside 
+            className="fixed top-0 bottom-0 start-0 z-50 w-[85%] max-w-xs h-full bg-slate-950 text-white border-e border-slate-800 p-5 flex flex-col justify-between shadow-[0_0_60px_rgba(0,0,0,0.9)] text-start overflow-y-auto"
             dir={isAr ? "rtl" : "ltr"}
           >
             {/* Drawer Header */}
             <div>
-              <div className="flex items-center justify-between border-b border-border pb-4 mb-5">
+              <div className="flex items-center justify-between border-b border-slate-800/80 pb-4 mb-5">
                 <Link 
                   href="/" 
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="flex items-center gap-2 font-black text-lg text-primary tracking-tight"
                 >
-                  <div className="bg-primary text-white p-1.5 rounded-lg flex items-center justify-center">
+                  <div className="bg-primary text-white p-1.5 rounded-lg flex items-center justify-center shadow-xs">
                     <Cpu className="w-4 h-4" />
                   </div>
                   <span className="flex items-center gap-1 font-mono">
-                    <span className="font-black text-foreground">HIREX</span>
+                    <span className="font-black text-white">HIREX</span>
                     <span className="text-primary font-bold">CNC</span>
                   </span>
                 </Link>
 
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 rounded-xl text-foreground/60 hover:text-foreground hover:bg-secondary/15 transition-colors"
+                  className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors flex items-center justify-center"
                   aria-label="إغلاق القائمة"
                 >
                   <X className="w-5 h-5" />
@@ -189,7 +189,7 @@ export function PublicNavbar() {
               </div>
 
               {/* Drawer Links */}
-              <nav className="flex flex-col space-y-1 font-semibold text-sm">
+              <nav className="flex flex-col space-y-1.5 font-semibold text-sm">
                 {navLinks.map((link) => {
                   const active = isLinkActive(link.href);
                   const Icon = link.icon;
@@ -198,20 +198,20 @@ export function PublicNavbar() {
                       key={link.href}
                       href={link.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`min-h-[46px] px-3.5 py-2.5 rounded-xl transition-all flex items-center justify-between ${
+                      className={`min-h-[48px] px-3.5 py-2.5 rounded-xl transition-all flex items-center justify-between ${
                         active 
-                          ? "text-primary bg-primary/10 font-bold border border-primary/20" 
-                          : "text-foreground/80 hover:bg-secondary/10 hover:text-foreground"
+                          ? "text-white bg-primary font-bold shadow-md shadow-primary/20" 
+                          : "text-slate-300 hover:bg-slate-900 hover:text-white border border-transparent hover:border-slate-800"
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <Icon className={`w-4 h-4 ${active ? "text-primary" : "text-foreground/50"}`} />
+                        <Icon className={`w-4 h-4 ${active ? "text-white" : "text-slate-400"}`} />
                         <span>{link.label}</span>
                       </div>
                       {isAr ? (
-                        <ChevronLeft className="w-4 h-4 text-foreground/30 rtl:block ltr:hidden" />
+                        <ChevronLeft className={`w-4 h-4 ${active ? "text-white" : "text-slate-500"} rtl:block ltr:hidden`} />
                       ) : (
-                        <ChevronRight className="w-4 h-4 text-foreground/30" />
+                        <ChevronRight className={`w-4 h-4 ${active ? "text-white" : "text-slate-500"}`} />
                       )}
                     </Link>
                   );
@@ -220,22 +220,22 @@ export function PublicNavbar() {
             </div>
 
             {/* Drawer Footer Actions */}
-            <div className="pt-4 border-t border-border flex flex-col gap-2.5">
+            <div className="pt-4 border-t border-slate-800/80 flex flex-col gap-2.5 mt-auto">
               <button
                 onClick={toggleLang}
-                className="w-full min-h-[42px] px-3.5 py-2 rounded-xl bg-secondary/10 border border-border text-foreground font-bold text-xs flex items-center justify-between"
+                className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 font-bold text-xs flex items-center justify-between hover:bg-slate-800 transition-colors"
               >
                 <span className="flex items-center gap-2">
-                  <Globe className="w-4 h-4 text-primary" />
+                  <Globe className="w-4 h-4 text-sky-400" />
                   <span>{isAr ? "اللغة / Language" : "Language / اللغة"}</span>
                 </span>
-                <span className="text-primary font-black">{isAr ? "English" : "عربي"}</span>
+                <span className="text-sky-400 font-mono font-black">{isAr ? "English" : "عربي"}</span>
               </button>
 
               <Link 
                 href="/jobs/new" 
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full min-h-[44px] text-center py-2.5 px-4 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary/95 transition-all shadow-sm flex items-center justify-center gap-2"
+                className="w-full min-h-[46px] text-center py-2.5 px-4 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary/95 transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2"
               >
                 <Plus className="w-4 h-4" />
                 <span>{isAr ? "أعلن عن وظيفة لمصنعك +" : "Post a Job +"}</span>
@@ -244,13 +244,13 @@ export function PublicNavbar() {
               <Link 
                 href="/login" 
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full min-h-[44px] text-center py-2.5 px-4 rounded-xl border border-border bg-card text-foreground text-xs font-bold hover:bg-secondary/10 transition-all flex items-center justify-center gap-2"
+                className="w-full min-h-[46px] text-center py-2.5 px-4 rounded-xl border border-slate-800 bg-slate-900 text-slate-200 text-xs font-bold hover:bg-slate-800 hover:text-white transition-all flex items-center justify-center gap-2"
               >
                 <LogIn className="w-4 h-4" />
                 <span>{isAr ? "تسجيل الدخول / حساب جديد" : "Sign In / Register"}</span>
               </Link>
             </div>
-          </div>
+          </aside>
         </div>
       )}
     </header>

@@ -413,7 +413,8 @@ export default function SocialProofSection({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Mobile Swipeable Slider / Desktop Grid (جنب بعض في Slider) */}
+          <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 overflow-x-auto md:overflow-x-visible pb-4 pt-1 snap-x snap-mandatory scrollbar-none [&::-webkit-scrollbar]:hidden px-1">
             {TESTIMONIALS.map((t) => {
               const author = isAr ? t.authorAr : t.authorEn;
               const role = isAr ? t.roleAr : t.roleEn;
@@ -425,7 +426,7 @@ export default function SocialProofSection({
               return (
                 <div 
                   key={t.id}
-                  className="bg-card border border-border rounded-2xl p-6 shadow-sm hover:border-primary/50 transition-colors flex flex-col justify-between space-y-4 text-start relative group"
+                  className="w-[85vw] max-w-[320px] md:w-auto shrink-0 snap-start bg-card border border-border rounded-2xl p-5 sm:p-6 shadow-sm hover:border-primary/50 transition-colors flex flex-col justify-between space-y-4 text-start relative group"
                 >
                   <Quote className="w-7 h-7 text-primary/15 absolute top-5 end-5 pointer-events-none" />
                   
@@ -475,6 +476,11 @@ export default function SocialProofSection({
                 </div>
               );
             })}
+          </div>
+
+          {/* Mobile Swipe Hint */}
+          <div className="flex md:hidden items-center justify-center gap-1.5 text-xs text-foreground/50 pt-1">
+            <span>{isAr ? "← اسحب أفقياً لتصفح بقية آراء المصانع →" : "← Swipe to explore more reviews →"}</span>
           </div>
         </div>
 
