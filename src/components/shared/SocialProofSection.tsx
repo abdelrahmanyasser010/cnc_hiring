@@ -356,7 +356,7 @@ export default function SocialProofSection({
                   <div className="space-y-3">
                     {/* Top Row: Initials Badge + Verified Status */}
                     <div className="flex items-center justify-between gap-2">
-                      <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 text-sky-400 flex items-center justify-center font-mono font-black text-xs">
+                      <div className="min-w-[42px] h-10 px-2 rounded-xl bg-slate-900 border border-slate-800 text-sky-400 flex items-center justify-center font-mono font-bold text-[11px] shrink-0">
                         {company.initials}
                       </div>
                       <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-800/50">

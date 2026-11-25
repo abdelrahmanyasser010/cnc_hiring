@@ -43,7 +43,7 @@ export function LandingHero() {
             </div>
             
             {/* Headline */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-5xl font-black leading-tight sm:leading-tight lg:leading-[1.18] tracking-tight text-white">
+            <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-3xl xl:text-5xl font-black leading-tight sm:leading-tight lg:leading-[1.18] tracking-tight text-white break-words">
               {isAr ? (
                 <>
                   توظيف مشغلي ومبرمجي ماكينات الـ CNC <br className="hidden sm:inline" />
@@ -75,7 +75,7 @@ export function LandingHero() {
               {/* Machinist Action (Primary Solid Cyan/Blue) */}
               <Link 
                 href="/register/candidate" 
-                className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white text-sm sm:text-base font-bold rounded-xl transition-all shadow-md shadow-primary/25 text-center active:scale-[0.99] whitespace-nowrap shrink-0"
+                className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 bg-primary hover:bg-primary/90 text-white text-sm sm:text-base font-bold rounded-xl transition-all shadow-md shadow-primary/25 text-center active:scale-[0.99] sm:whitespace-nowrap shrink-0"
               >
                 <span>{isAr ? "سجل كفني أو مبرمج CNC" : "Register as Machinist"}</span>
                 {isAr ? <ArrowLeft className="w-4 h-4 shrink-0" /> : <ArrowRight className="w-4 h-4 shrink-0" />}
@@ -84,7 +84,7 @@ export function LandingHero() {
               {/* Factory / Machine Shop Action (High-Contrast Solid White) */}
               <Link 
                 href="/register" 
-                className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-slate-100 text-slate-950 text-sm sm:text-base font-bold rounded-xl transition-all shadow-sm text-center active:scale-[0.99] border border-white whitespace-nowrap shrink-0"
+                className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 bg-white hover:bg-slate-100 text-slate-950 text-sm sm:text-base font-bold rounded-xl transition-all shadow-sm text-center active:scale-[0.99] border border-white sm:whitespace-nowrap shrink-0"
               >
                 <span>{isAr ? "وظّف كفاءات لمصنعك" : "Hire CNC Machinists"}</span>
               </Link>

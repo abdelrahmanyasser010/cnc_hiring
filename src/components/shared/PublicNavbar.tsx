@@ -9,6 +9,7 @@
 // - دعم كامل للموبايل والديسكتوب واللغتين العربية والإنجليزية
 
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { 
@@ -34,6 +35,11 @@ export function PublicNavbar() {
   const pathname = usePathname();
   const isAr = lang === "ar";
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -147,9 +153,9 @@ export function PublicNavbar() {
 
       </div>
 
-      {/* Mobile Slide-Over Drawer with Backdrop (High-Contrast & Solid) */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 sm:hidden">
+      {/* Mobile Slide-Over Drawer with Backdrop (Rendered via Portal to document.body to prevent backdrop-blur containment) */}
+      {mounted && isMobileMenuOpen && createPortal(
+        <div className="fixed inset-0 z-[999] sm:hidden">
           {/* Backdrop Overlay */}
           <div 
             className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
@@ -159,7 +165,7 @@ export function PublicNavbar() {
 
           {/* Slide-in Menu Panel - Explicitly Solid & Fully Contrasting */}
           <aside 
-            className="fixed top-0 bottom-0 start-0 z-50 w-[85%] max-w-xs h-full bg-slate-950 text-white border-e border-slate-800 p-5 flex flex-col justify-between shadow-[0_0_60px_rgba(0,0,0,0.9)] text-start overflow-y-auto"
+            className="fixed top-0 bottom-0 start-0 z-[1000] w-[85%] max-w-xs h-full bg-slate-950 text-white border-e border-slate-800 p-5 flex flex-col justify-between shadow-[0_0_60px_rgba(0,0,0,0.9)] text-start overflow-y-auto"
             dir={isAr ? "rtl" : "ltr"}
           >
             {/* Drawer Header */}
@@ -251,7 +257,8 @@ export function PublicNavbar() {
               </Link>
             </div>
           </aside>
-        </div>
+        </div>,
+        document.body
       )}
     </header>
   );
