@@ -28,9 +28,13 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 export interface JobListItem {
   id: string;
   title: string;
+  titleEn?: string;
   companyName: string;
+  companyNameEn?: string;
   industryZone: string;
+  industryZoneEn?: string;
   location: string;
+  locationEn?: string;
   controlRequired: string;
   machineType?: string;
   shift?: string;
@@ -179,9 +183,9 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
       // 1. Text Search Match
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
-        const matchesTitle = job.title.toLowerCase().includes(query);
-        const matchesCompany = (job.companyName || "").toLowerCase().includes(query);
-        const matchesLocation = (job.location || "").toLowerCase().includes(query);
+        const matchesTitle = job.title.toLowerCase().includes(query) || (job.titleEn && job.titleEn.toLowerCase().includes(query));
+        const matchesCompany = (job.companyName || "").toLowerCase().includes(query) || (job.companyNameEn && job.companyNameEn.toLowerCase().includes(query));
+        const matchesLocation = (job.location || "").toLowerCase().includes(query) || (job.locationEn && job.locationEn.toLowerCase().includes(query));
         const matchesControl = (job.controlRequired || "").toLowerCase().includes(query);
         const matchesMachine = (job.machineType || "").toLowerCase().includes(query);
         if (!matchesTitle && !matchesCompany && !matchesLocation && !matchesControl && !matchesMachine) {
@@ -267,7 +271,7 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
                 className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-primary text-white font-bold text-xs rounded-xl hover:bg-primary/90 transition-all shadow-sm"
               >
                 <Plus className="w-4 h-4" />
-                <span>{isAr ? "أعلن عن وظيفة لمصنعك +" : "Post a New Vacancy +"}</span>
+                <span>{isAr ? "أعلن عن وظيفة لمصنعك" : "Post a New Vacancy"}</span>
               </Link>
             </div>
           </div>
@@ -484,7 +488,9 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
                   const isSaved = bookmarkedIds.includes(job.id);
                   const salaryText = job.hideSalary
                     ? (isAr ? "الراتب يحدد في المقابلة" : "Salary: Discussed in Interview")
-                    : `${job.salaryMin.toLocaleString("ar-EG")} - ${job.salaryMax.toLocaleString("ar-EG")} ج.م`;
+                    : isAr
+                      ? `${job.salaryMin.toLocaleString("ar-EG")} - ${job.salaryMax.toLocaleString("ar-EG")} ج.م`
+                      : `EGP ${job.salaryMin.toLocaleString("en-US")} - ${job.salaryMax.toLocaleString("en-US")}`;
 
                   return (
                     <div
@@ -492,17 +498,17 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
                       className="bg-card border border-border rounded-2xl p-5 sm:p-6 shadow-xs hover:shadow-md transition-all flex flex-col md:flex-row md:items-center justify-between gap-5 text-start hover:border-primary/40 relative group"
                     >
                       {/* Job Main Details */}
-                      <div className="space-y-3 flex-1">
+                      <div className="space-y-3 flex-1 min-w-0">
                         
                         {/* Company & Verification Header */}
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <span className="text-xs font-bold text-foreground/80 flex items-center gap-1.5">
-                              <Building2 className="w-3.5 h-3.5 text-primary" />
-                              <span>{job.companyName || (isAr ? "منشأة هندسية معتمدة" : "Certified Plant")}</span>
+                              <Building2 className="w-3.5 h-3.5 text-primary shrink-0" />
+                              <span>{isAr ? (job.companyName || "منشأة هندسية معتمدة") : (job.companyNameEn || job.companyName || "Certified Plant")}</span>
                             </span>
                             <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
-                              <CheckCircle className="w-3 h-3 fill-emerald-500 text-white" />
+                              <CheckCircle className="w-3 h-3 fill-emerald-500 text-white shrink-0" />
                               <span>{isAr ? "موثق بالسجل التجاري" : "Verified Plant"}</span>
                             </span>
                           </div>
@@ -524,7 +530,7 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
                         {/* Job Title */}
                         <Link href={`/jobs/${job.id}`}>
                           <h2 className="text-base sm:text-lg font-black text-foreground hover:text-primary transition-colors cursor-pointer">
-                            <bdi dir="auto">{job.title}</bdi>
+                            <bdi dir="auto">{isAr ? job.title : (job.titleEn || job.title)}</bdi>
                           </h2>
                         </Link>
 
@@ -532,25 +538,33 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
                         <div className="flex flex-wrap items-center gap-2 text-xs">
                           {/* Controller Chip */}
                           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-primary/10 border border-primary/20 text-primary font-bold text-[11px]">
-                            <Cpu className="w-3.5 h-3.5" />
-                            <span>كنترول: {job.controlRequired}</span>
+                            <Cpu className="w-3.5 h-3.5 shrink-0" />
+                            <span>{isAr ? "كنترول: " : "Control: "}{job.controlRequired}</span>
                           </span>
 
                           {/* Location Chip */}
                           <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-secondary/10 border border-border text-foreground/75 font-semibold text-[11px]">
-                            <MapPin className="w-3.5 h-3.5 text-primary" />
-                            <span>{job.location}</span>
+                            <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
+                            <span>{isAr ? job.location : (job.locationEn || job.location)}</span>
                           </span>
 
                           {/* Shift Chip */}
                           <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-secondary/10 border border-border text-foreground/75 font-semibold text-[11px]">
-                            <Clock className="w-3.5 h-3.5 text-primary" />
-                            <span>{job.shift === "EVENING" ? "وردية مسائية" : "وردية صباحية"}</span>
+                            <Clock className="w-3.5 h-3.5 text-primary shrink-0" />
+                            <span>
+                              {job.shift === "EVENING"
+                                ? (isAr ? "وردية مسائية" : "Evening Shift")
+                                : job.shift === "FULL_TIME"
+                                ? (isAr ? "دوام كامل" : "Full-Time")
+                                : job.shift === "PART_TIME"
+                                ? (isAr ? "دوام جزئي" : "Part-Time")
+                                : (isAr ? "وردية صباحية" : "Morning Shift")}
+                            </span>
                           </span>
 
                           {/* Salary Chip */}
                           <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold text-[11px]">
-                            <DollarSign className="w-3.5 h-3.5" />
+                            <DollarSign className="w-3.5 h-3.5 shrink-0" />
                             <span>{salaryText}</span>
                           </span>
                         </div>
@@ -622,16 +636,20 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
                       </span>
                     </div>
                     <div className="text-xs text-foreground/60 flex items-center gap-3">
-                      <span>{job.location}</span>
+                      <span>{isAr ? job.location : (job.locationEn || job.location)}</span>
                       <span>•</span>
-                      <span>كنترول: {job.controlRequired}</span>
+                      <span>{isAr ? "كنترول: " : "Control: "}{job.controlRequired}</span>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3">
                     <div className="text-start">
-                      <div className="text-xs font-bold text-foreground">{job.applicationsCount} متقدم</div>
-                      <div className="text-[10px] text-foreground/50">جاهز للمراجعة</div>
+                      <div className="text-xs font-bold text-foreground">
+                        {job.applicationsCount} {isAr ? "متقدم" : "applicants"}
+                      </div>
+                      <div className="text-[10px] text-foreground/50">
+                        {isAr ? "جاهز للمراجعة" : "Ready for review"}
+                      </div>
                     </div>
 
                     <Link
@@ -662,10 +680,10 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
                   {isAr ? "التقديم السريع المباشر" : "1-Click Direct Application"}
                 </span>
                 <h3 className="text-base sm:text-lg font-black text-foreground mt-1.5">
-                  <bdi dir="auto">{applyingJob.title}</bdi>
+                  <bdi dir="auto">{isAr ? applyingJob.title : (applyingJob.titleEn || applyingJob.title)}</bdi>
                 </h3>
                 <p className="text-xs text-foreground/60">
-                  {applyingJob.companyName || (isAr ? "مصنع معتمد بالسجل التجاري" : "Verified Plant")}
+                  {isAr ? (applyingJob.companyName || "مصنع معتمد بالسجل التجاري") : (applyingJob.companyNameEn || applyingJob.companyName || "Verified Plant")}
                 </p>
               </div>
 

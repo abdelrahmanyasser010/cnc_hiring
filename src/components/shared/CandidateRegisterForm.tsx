@@ -28,7 +28,7 @@ import {
   Clock
 } from "lucide-react";
 import Link from "next/link";
-import { CNC_INDUSTRIES, EGYPTIAN_GOVERNORATES, WORK_SHIFTS } from "@/lib/constants";
+import { CNC_INDUSTRIES, EGYPTIAN_GOVERNORATES, EGYPTIAN_GOVERNORATES_EN, WORK_SHIFTS } from "@/lib/constants";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export function CandidateRegisterForm() {
@@ -191,7 +191,7 @@ export function CandidateRegisterForm() {
           <option value="">{isAr ? "-- اختر الصناعة الرئيسية من القائمة الأبجدية --" : "-- Select Primary Industry --"}</option>
           {CNC_INDUSTRIES.map((ind) => (
             <option key={ind.id} value={ind.ar}>
-              {isAr ? `${ind.ar} — (${ind.en})` : `${ind.en} — (${ind.ar})`}
+              {isAr ? `${ind.ar} — (${ind.en})` : ind.en}
             </option>
           ))}
         </select>
@@ -248,7 +248,10 @@ export function CandidateRegisterForm() {
         {/* أمثلة سريعة للنقر لتسهيل الإدخال من الهاتف */}
         <div className="flex flex-wrap items-center gap-1.5 pt-1">
           <span className="text-[11px] text-foreground/50 font-medium">{isAr ? "إضافة سريعة:" : "Quick Add:"}</span>
-          {["مخرطة CNC", "فريزة CNC", "كنترول Fanuc", "كنترول Siemens", "سلك وشرارة EDM", "راوتر ليزر", "Mastercam", "SolidWorks"].map((tag) => (
+          {(isAr 
+            ? ["مخرطة CNC", "فريزة CNC", "كنترول Fanuc", "كنترول Siemens", "سلك وشرارة EDM", "راوتر ليزر", "Mastercam", "SolidWorks"]
+            : ["CNC Lathe", "CNC Milling", "Fanuc CNC", "Siemens CNC", "Wire EDM", "Laser/Plasma", "Mastercam", "SolidWorks"]
+          ).map((tag) => (
             <button
               key={tag}
               type="button"
@@ -323,9 +326,14 @@ export function CandidateRegisterForm() {
             className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:border-primary text-sm font-medium text-foreground cursor-pointer shadow-xs"
           >
             <option value="">{isAr ? "-- اختر المحافظة --" : "-- Select Governorate --"}</option>
-            {EGYPTIAN_GOVERNORATES.map((gov) => (
-              <option key={gov} value={gov}>{gov}</option>
-            ))}
+            {EGYPTIAN_GOVERNORATES.map((govAr, idx) => {
+              const govEn = EGYPTIAN_GOVERNORATES_EN[idx] || govAr;
+              return (
+                <option key={govAr} value={govAr}>
+                  {isAr ? govAr : `${govEn} (${govAr})`}
+                </option>
+              );
+            })}
           </select>
           {state?.errors?.governorate && (
             <span className="text-xs text-red-500 font-semibold">{state.errors.governorate[0]}</span>
@@ -364,7 +372,7 @@ export function CandidateRegisterForm() {
             id="experienceYears"
             type="number" 
             name="experienceYears" 
-            placeholder="مثال: 5" 
+            placeholder={isAr ? "مثال: 5" : "e.g. 5"} 
             min="0"
             required
             className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:border-primary text-sm font-medium text-foreground placeholder:text-foreground/40 shadow-xs"
@@ -386,7 +394,7 @@ export function CandidateRegisterForm() {
             id="expectedSalary"
             type="number" 
             name="expectedSalary" 
-            placeholder="مثال: 9000" 
+            placeholder={isAr ? "مثال: 9000" : "e.g. 9000"} 
             min="0"
             className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:border-primary text-sm font-medium text-foreground placeholder:text-foreground/40 shadow-xs"
           />

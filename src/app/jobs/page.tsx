@@ -22,9 +22,13 @@ const FALLBACK_JOBS: JobListItem[] = [
   {
     id: "fb-j-1",
     title: "فني تشغيل وضبط مخرطة CNC (كنترول Fanuc)",
+    titleEn: "CNC Lathe Setup & Turning Machinist (Fanuc)",
     companyName: "مصنع النيل للهندسة الدقيقة والميكانيكا",
+    companyNameEn: "Nile Precision Engineering & Machining",
     industryZone: "مدينة بدر الصناعية",
+    industryZoneEn: "Badr City Industrial Zone",
     location: "مدينة بدر - الروبيكي",
+    locationEn: "Badr City - Robbiki Hub",
     controlRequired: "FANUC",
     machineType: "LATHE",
     shift: "MORNING",
@@ -40,9 +44,13 @@ const FALLBACK_JOBS: JobListItem[] = [
   {
     id: "fb-j-2",
     title: "مشغل فريزة CNC 5 محاور وإسطمبات حقن بلاستيك",
+    titleEn: "5-Axis CNC Milling & Injection Mold Machinist",
     companyName: "العربي جروب للصناعات الهندسية",
+    companyNameEn: "ELARABY Group for Engineering Industries",
     industryZone: "قويسنا الصناعية",
+    industryZoneEn: "Qwesna Industrial Zone",
     location: "قويسنا - المنوفية",
+    locationEn: "Qwesna - Monufia",
     controlRequired: "SIEMENS",
     machineType: "MILLING_5AXIS",
     shift: "MORNING",
@@ -58,9 +66,13 @@ const FALLBACK_JOBS: JobListItem[] = [
   {
     id: "fb-j-3",
     title: "مهندس إنتاج وبرمجة CAM (Mastercam / PowerMill)",
+    titleEn: "CAM Production & Programming Engineer (Mastercam / PowerMill)",
     companyName: "الهيئة العربية للتصنيع",
+    companyNameEn: "Arab Organization for Industrialization",
     industryZone: "حلوان",
+    industryZoneEn: "Helwan Industrial Zone",
     location: "القاهرة - حلوان",
+    locationEn: "Cairo - Helwan",
     controlRequired: "HEIDENHAIN",
     machineType: "MILLING_3AXIS",
     shift: "FULL_TIME",
@@ -76,9 +88,13 @@ const FALLBACK_JOBS: JobListItem[] = [
   {
     id: "fb-j-4",
     title: "فني تشغيل ماكينة سلك وتآكل بالشرارة Wire EDM Sodick",
+    titleEn: "Wire EDM Sodick & Spark Erosion Technician",
     companyName: "الأمل للهندسة الميكانيكية وتصنيع الإسطمبات",
+    companyNameEn: "Al Amal Mechanical & Die Mold Engineering",
     industryZone: "العاشر من رمضان",
+    industryZoneEn: "10th of Ramadan",
     location: "العاشر من رمضان - المنطقة الصناعية B3",
+    locationEn: "10th of Ramadan - Industrial Zone B3",
     controlRequired: "OTHER",
     machineType: "WIRE_EDM",
     shift: "EVENING",
@@ -94,9 +110,13 @@ const FALLBACK_JOBS: JobListItem[] = [
   {
     id: "fb-j-5",
     title: "مشغل مخرطة CNC رأسية VTL وسباكة معادن",
+    titleEn: "Vertical Turning Lathe (VTL) Machinist & Foundry Ops",
     companyName: "الوطنية للمسبوكات والصناعات المغذية",
+    companyNameEn: "National Foundry & Feeder Industries",
     industryZone: "حلوان",
+    industryZoneEn: "Helwan Industrial Zone",
     location: "حلوان الصناعية",
+    locationEn: "Helwan Industrial Area",
     controlRequired: "FANUC",
     machineType: "LATHE",
     shift: "MORNING",
@@ -112,9 +132,13 @@ const FALLBACK_JOBS: JobListItem[] = [
   {
     id: "fb-j-6",
     title: "فني قص وتشغيل فايبر ليزر CNC وقاطع بلازما",
+    titleEn: "Fiber Laser CNC Cutting & Plasma Operator",
     companyName: "السويدي للصناعات الهندسية",
+    companyNameEn: "ELSEWEDY Engineering Industries",
     industryZone: "العاشر من رمضان",
+    industryZoneEn: "10th of Ramadan",
     location: "العاشر من رمضان - A1",
+    locationEn: "10th of Ramadan - Zone A1",
     controlRequired: "OTHER",
     machineType: "FIBER_LASER",
     shift: "EVENING",
@@ -130,9 +154,13 @@ const FALLBACK_JOBS: JobListItem[] = [
   {
     id: "fb-j-7",
     title: "مبرمج ومشغل راوتر CNC خشب ديكور وألواح ألومنيوم",
+    titleEn: "CNC Router Operator & CAM Programmer (Wood & Aluminum)",
     companyName: "الكرنك لتشغيل المعادن والديكورات الهندسية",
+    companyNameEn: "Karnak Architectural Metalworks",
     industryZone: "العبور",
+    industryZoneEn: "Obour City",
     location: "مدينة العبور الصناعية",
+    locationEn: "Obour City Industrial Zone",
     controlRequired: "OTHER",
     machineType: "ROUTER",
     shift: "FULL_TIME",
@@ -166,22 +194,29 @@ export default async function JobsPage({ searchParams }: PageProps) {
   try {
     const rawJobs = await jobRepo.getJobsForDashboard();
     if (rawJobs && rawJobs.length > 0) {
-      jobs = rawJobs.map((j, idx) => ({
-        id: j.id,
-        title: j.title || "وظيفة ماكينات CNC",
-        companyName: FALLBACK_JOBS[idx % FALLBACK_JOBS.length].companyName,
-        industryZone: j.location || "المناطق الصناعية بمصر",
-        location: j.location || "العاشر من رمضان / 6 أكتوبر",
-        controlRequired: j.controlRequired || "FANUC",
-        machineType: FALLBACK_JOBS[idx % FALLBACK_JOBS.length].machineType,
-        shift: idx % 2 === 0 ? "MORNING" : "EVENING",
-        salaryMin: Number(j.salaryMin) || 8500,
-        salaryMax: Number(j.salaryMax) || 12500,
-        hideSalary: Boolean(j.hideSalary),
-        status: j.status || "ACTIVE",
-        applicationsCount: Number(j.applicationsCount) || 0,
-        isVerified: true,
-      }));
+      jobs = rawJobs.map((j, idx) => {
+        const fallback = FALLBACK_JOBS[idx % FALLBACK_JOBS.length];
+        return {
+          id: j.id,
+          title: j.title || "وظيفة ماكينات CNC",
+          titleEn: fallback.titleEn,
+          companyName: fallback.companyName,
+          companyNameEn: fallback.companyNameEn,
+          industryZone: j.location || "المناطق الصناعية بمصر",
+          industryZoneEn: fallback.industryZoneEn,
+          location: j.location || "العاشر من رمضان / 6 أكتوبر",
+          locationEn: fallback.locationEn,
+          controlRequired: j.controlRequired || "FANUC",
+          machineType: fallback.machineType,
+          shift: idx % 2 === 0 ? "MORNING" : "EVENING",
+          salaryMin: Number(j.salaryMin) || 8500,
+          salaryMax: Number(j.salaryMax) || 12500,
+          hideSalary: Boolean(j.hideSalary),
+          status: j.status || "ACTIVE",
+          applicationsCount: Number(j.applicationsCount) || 0,
+          isVerified: true,
+        };
+      });
     } else {
       jobs = FALLBACK_JOBS;
     }

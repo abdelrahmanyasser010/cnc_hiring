@@ -151,10 +151,10 @@ export function LandingHero() {
                     <div className="font-semibold text-xs sm:text-sm text-slate-100 truncate">
                       {isAr ? "أحمد محمود (خراط مبرمج CNC)" : "Ahmed Mahmoud (CNC Lathe Programmer)"}
                     </div>
-                    <div className="text-[11px] sm:text-xs text-slate-400 truncate flex items-center gap-1.5 mt-0.5">
-                      <span>{isAr ? "خبرة 6 سنوات • Fanuc Oi-TF" : "6 Yrs Exp • Fanuc Oi-TF"}</span>
-                      <span className="text-slate-600">•</span>
-                      <span className="text-sky-400">{isAr ? "العاشر من رمضان" : "10th of Ramadan"}</span>
+                    <div className="text-[10px] sm:text-xs text-slate-400 min-w-0 flex items-center gap-1 mt-0.5">
+                      <span className="truncate">{isAr ? "خبرة 6 سنوات • Fanuc" : "6 Yrs • Fanuc Oi-TF"}</span>
+                      <span className="text-slate-600 shrink-0">•</span>
+                      <span className="text-sky-400 shrink-0">{isAr ? "العاشر من رمضان" : "10th Ramadan"}</span>
                     </div>
                   </div>
                   <span className="bg-emerald-950 text-emerald-400 border border-emerald-800/60 text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full font-medium shrink-0 whitespace-nowrap">
@@ -171,10 +171,10 @@ export function LandingHero() {
                     <div className="font-semibold text-xs sm:text-sm text-slate-100 truncate">
                       {isAr ? "محمد علي (فني تشغيل فريزة 5 محاور)" : "Mohamed Ali (5-Axis Milling Setter)"}
                     </div>
-                    <div className="text-[11px] sm:text-xs text-slate-400 truncate flex items-center gap-1.5 mt-0.5">
-                      <span>{isAr ? "خبرة 4 سنوات • Siemens Sinumerik" : "4 Yrs Exp • Siemens 840D"}</span>
-                      <span className="text-slate-600">•</span>
-                      <span className="text-sky-400">{isAr ? "6 أكتوبر" : "6th of October"}</span>
+                    <div className="text-[10px] sm:text-xs text-slate-400 min-w-0 flex items-center gap-1 mt-0.5">
+                      <span className="truncate">{isAr ? "خبرة 4 سنوات • Siemens" : "4 Yrs • Siemens 840D"}</span>
+                      <span className="text-slate-600 shrink-0">•</span>
+                      <span className="text-sky-400 shrink-0">{isAr ? "6 أكتوبر" : "6th October"}</span>
                     </div>
                   </div>
                   <span className="bg-amber-950 text-amber-400 border border-amber-800/60 text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full font-medium shrink-0 whitespace-nowrap">
@@ -191,10 +191,10 @@ export function LandingHero() {
                     <div className="font-semibold text-xs sm:text-sm text-slate-100 truncate">
                       {isAr ? "حسن حسين (مبرمج Mastercam & SolidCAM)" : "Hassan Hussein (CAM Specialist)"}
                     </div>
-                    <div className="text-[11px] sm:text-xs text-slate-400 truncate flex items-center gap-1.5 mt-0.5">
-                      <span>{isAr ? "خبرة 8 سنوات • أسطمبات وتشكيل دقيق" : "8 Yrs Exp • Precision Molds"}</span>
-                      <span className="text-slate-600">•</span>
-                      <span className="text-sky-400">{isAr ? "برج العرب" : "Borg El Arab"}</span>
+                    <div className="text-[10px] sm:text-xs text-slate-400 min-w-0 flex items-center gap-1 mt-0.5">
+                      <span className="truncate">{isAr ? "خبرة 8 سنوات • أسطمبات" : "8 Yrs • Tooling & CAM"}</span>
+                      <span className="text-slate-600 shrink-0">•</span>
+                      <span className="text-sky-400 shrink-0">{isAr ? "برج العرب" : "Borg El Arab"}</span>
                     </div>
                   </div>
                   <span className="bg-blue-950 text-blue-400 border border-blue-800/60 text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full font-medium shrink-0 whitespace-nowrap">

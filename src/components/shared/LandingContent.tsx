@@ -292,10 +292,15 @@ export function LandingContent() {
       <footer className="mt-auto bg-secondary text-secondary-foreground border-t border-border/10 py-12 text-start">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-3 gap-8">
           <div>
-            <div className="flex items-center gap-2 font-bold text-xl text-primary mb-4">
-              <span className="bg-primary text-white p-1 rounded-lg">hire</span>
-              <span>CNC {isAr ? "Egypt" : "Egypt"}</span>
-            </div>
+            <Link href="/" className="flex items-center gap-2 font-black text-xl text-primary mb-4">
+              <div className="bg-primary text-white p-1.5 rounded-xl flex items-center justify-center shadow-xs">
+                <Cpu className="w-5 h-5" />
+              </div>
+              <span className="flex items-center gap-1 font-mono">
+                <span className="font-black text-foreground">HIREX</span>
+                <span className="text-primary font-bold">CNC</span>
+              </span>
+            </Link>
             <p className="text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed max-w-sm">
               {isAr 
                 ? "منصة التوظيف والحلول الرقمية الأولى لربط أصحاب مصانع التشغيل بفنيي ومهندسي ومبرمجي الـ CNC المهرة في مصر."

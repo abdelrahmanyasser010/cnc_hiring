@@ -127,7 +127,7 @@ export function PublicNavbar() {
             className="px-4 py-2 text-xs font-bold bg-primary hover:bg-primary/95 text-white rounded-xl transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-1.5 cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>{isAr ? "أعلن عن وظيفة +" : "Post a Job +"}</span>
+            <span>{isAr ? "أعلن عن وظيفة" : "Post a Job"}</span>
           </Link>
         </div>
 
@@ -136,7 +136,7 @@ export function PublicNavbar() {
           <button
             onClick={toggleLang}
             className="p-1.5 rounded-lg bg-secondary/10 text-foreground font-bold text-xs flex items-center gap-1 border border-border"
-            title={isAr ? "English" : "عربي"}
+            title={isAr ? "English" : "العربية"}
           >
             <Globe className="w-3.5 h-3.5 text-primary" />
             <span>{isAr ? "EN" : "عربي"}</span>
@@ -145,7 +145,7 @@ export function PublicNavbar() {
           <button
             onClick={toggleMobileMenu}
             className="p-2 rounded-xl hover:bg-secondary/10 transition-colors text-foreground"
-            aria-label="القائمة الرئيسية"
+            aria-label={isAr ? "القائمة الرئيسية" : "Main menu"}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -188,7 +188,7 @@ export function PublicNavbar() {
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors flex items-center justify-center"
-                  aria-label="إغلاق القائمة"
+                  aria-label={isAr ? "إغلاق القائمة" : "Close menu"}
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -244,7 +244,7 @@ export function PublicNavbar() {
                 className="w-full min-h-[46px] text-center py-2.5 px-4 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary/95 transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2"
               >
                 <Plus className="w-4 h-4" />
-                <span>{isAr ? "أعلن عن وظيفة لمصنعك +" : "Post a Job +"}</span>
+                <span>{isAr ? "أعلن عن وظيفة لمصنعك" : "Post a Job"}</span>
               </Link>
 
               <Link 

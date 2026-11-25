@@ -11,13 +11,17 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 export interface EmployerWithJobs {
   id: string;
   companyName: string;
+  companyNameEn?: string;
   industryZone: string;
+  industryZoneEn?: string;
   address: string;
+  addressEn?: string;
   logoUrl: string | null;
   isVerified: boolean;
   jobs: {
     id: string;
     title: string;
+    titleEn?: string;
   }[];
 }
 
@@ -47,7 +51,9 @@ export function CompaniesClientView({ initialCompanies }: CompaniesClientViewPro
   const filteredCompanies = initialCompanies.filter((comp) => {
     const matchesSearch = !searchQuery.trim() || 
       comp.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      comp.address.toLowerCase().includes(searchQuery.toLowerCase());
+      (comp.companyNameEn && comp.companyNameEn.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      comp.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (comp.addressEn && comp.addressEn.toLowerCase().includes(searchQuery.toLowerCase()));
     
     const matchesZone = !selectedZone || comp.industryZone === selectedZone;
 
@@ -57,9 +63,9 @@ export function CompaniesClientView({ initialCompanies }: CompaniesClientViewPro
   const getInitials = (name: string) => {
     const parts = name.split(" ");
     if (parts.length >= 2) {
-      return `${parts[0] ? parts[0][0] : ""}${parts[1] ? parts[1][0] : ""}`;
+      return `${parts[0] ? parts[0][0] : ""}${parts[1] ? parts[1][0] : ""}`.toUpperCase();
     }
-    return name.slice(0, 2);
+    return name.slice(0, 2).toUpperCase();
   };
 
   return (
@@ -146,85 +152,92 @@ export function CompaniesClientView({ initialCompanies }: CompaniesClientViewPro
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCompanies.map((company) => (
-              <div 
-                key={company.id}
-                className="bg-card border border-border rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-primary/30 transition-all flex flex-col justify-between space-y-5 group"
-              >
-                {/* Header & Logo */}
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-base flex-shrink-0 shadow-xs">
-                    {company.logoUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={company.logoUrl} alt={company.companyName} className="w-full h-full object-cover rounded-xl" />
-                    ) : (
-                      <Building2 className="w-6 h-6 text-primary" />
-                    )}
-                  </div>
+            {filteredCompanies.map((company) => {
+              const compName = isAr ? company.companyName : (company.companyNameEn || company.companyName);
+              const compZone = isAr ? company.industryZone : (company.industryZoneEn || company.industryZone);
+              const compAddr = isAr ? company.address : (company.addressEn || company.address);
+              const initials = getInitials(compName);
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      <h3 className="font-bold text-sm sm:text-base text-foreground group-hover:text-primary transition-colors leading-snug">
-                        <bdi dir="auto">{company.companyName}</bdi>
-                      </h3>
-                      {company.isVerified && (
-                        <span title={isAr ? "منشأة معتمدة بالمنظومة" : "Verified Facility"}>
-                          <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                        </span>
+              return (
+                <div 
+                  key={company.id}
+                  className="bg-card border border-border rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-primary/30 transition-all flex flex-col justify-between space-y-5 group"
+                >
+                  {/* Header & Logo */}
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center font-black text-primary text-sm shrink-0 shadow-xs">
+                      {company.logoUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={company.logoUrl} alt={compName} className="w-full h-full object-cover rounded-xl" />
+                      ) : (
+                        <span>{initials}</span>
                       )}
                     </div>
-                    
-                    <div className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary/90 bg-primary/10 px-2 py-0.5 rounded-md mt-1.5">
-                      <MapPin className="w-3 h-3" />
-                      <span>{company.industryZone}</span>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <h3 className="font-bold text-sm sm:text-base text-foreground group-hover:text-primary transition-colors leading-snug truncate">
+                          <bdi dir="auto">{compName}</bdi>
+                        </h3>
+                        {company.isVerified && (
+                          <span title={isAr ? "منشأة معتمدة بالمنظومة" : "Verified Facility"} className="shrink-0 inline-flex">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                          </span>
+                        )}
+                      </div>
+                      
+                      <div className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary/90 bg-primary/10 px-2 py-0.5 rounded-md mt-1.5 max-w-full">
+                        <MapPin className="w-3 h-3 shrink-0" />
+                        <span className="truncate">{compZone}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Address & Shop Info */}
-                <div className="text-xs text-foreground/60 line-clamp-2 leading-relaxed bg-secondary/5 p-3 rounded-xl border border-border/50">
-                  <div className="font-semibold text-foreground/80 mb-0.5">{isAr ? "الموقع الجغرافي للمصنع:" : "Facility Address:"}</div>
-                  {company.address}
-                </div>
-
-                {/* Active Jobs in Shop */}
-                <div className="pt-2 border-t border-border/60">
-                  <div className="flex items-center justify-between text-xs mb-2.5">
-                    <span className="font-bold text-foreground/80 flex items-center gap-1.5">
-                      <Briefcase className="w-3.5 h-3.5 text-primary" />
-                      <span>{isAr ? "الترشيحات الفنية النشطة" : "Active CNC Openings"}</span>
-                    </span>
-                    <span className="bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 text-[10px] font-bold px-2 py-0.5 rounded-full font-mono">
-                      {company.jobs.length} {isAr ? "شاغر" : "Open"}
-                    </span>
+                  {/* Address & Shop Info */}
+                  <div className="text-xs text-foreground/60 line-clamp-2 leading-relaxed bg-secondary/5 p-3 rounded-xl border border-border/50">
+                    <div className="font-semibold text-foreground/80 mb-0.5">{isAr ? "الموقع الجغرافي للمصنع:" : "Facility Address:"}</div>
+                    {compAddr}
                   </div>
 
-                  {company.jobs.length > 0 ? (
-                    <div className="space-y-1.5">
-                      {company.jobs.slice(0, 2).map((job) => (
-                        <div key={job.id} className="text-xs text-foreground/75 truncate bg-card p-2 rounded-lg border border-border flex items-center justify-between">
-                          <span className="truncate max-w-[200px]">{job.title}</span>
-                          <span className="text-[10px] text-emerald-600 font-bold flex-shrink-0">{isAr ? "مطلوب" : "Hiring"}</span>
-                        </div>
-                      ))}
+                  {/* Active Jobs in Shop */}
+                  <div className="pt-2 border-t border-border/60">
+                    <div className="flex items-center justify-between text-xs mb-2.5">
+                      <span className="font-bold text-foreground/80 flex items-center gap-1.5">
+                        <Briefcase className="w-3.5 h-3.5 text-primary shrink-0" />
+                        <span>{isAr ? "الترشيحات الفنية النشطة" : "Active CNC Openings"}</span>
+                      </span>
+                      <span className="bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 text-[10px] font-bold px-2 py-0.5 rounded-full font-mono">
+                        {company.jobs.length} {isAr ? "شاغر" : "Open"}
+                      </span>
                     </div>
-                  ) : (
-                    <div className="text-xs text-foreground/40 italic py-1">
-                      {isAr ? "لا توجد وظائف معلنة حالياً لهذا المصنع." : "No current public openings."}
-                    </div>
-                  )}
-                  {/* Card Action Link */}
-                  <Link
-                    href={company.jobs.length > 0 ? `/jobs/${company.jobs[0].id}` : `/jobs`}
-                    className="w-full mt-3 py-2.5 px-4 bg-primary/10 hover:bg-primary text-primary hover:text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 border border-primary/20 hover:shadow-sm"
-                  >
-                    <span>{isAr ? "استعراض وظائف المصنع والتقديم" : "View Openings & Apply"}</span>
-                    {isAr ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
-                  </Link>
-                </div>
 
-              </div>
-            ))}
+                    {company.jobs.length > 0 ? (
+                      <div className="space-y-1.5">
+                        {company.jobs.slice(0, 2).map((job) => (
+                          <div key={job.id} className="text-xs text-foreground/75 truncate bg-card p-2 rounded-lg border border-border flex items-center justify-between">
+                            <span className="truncate max-w-[200px]">{isAr ? job.title : (job.titleEn || job.title)}</span>
+                            <span className="text-[10px] text-emerald-600 font-bold shrink-0">{isAr ? "مطلوب" : "Hiring"}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-xs text-foreground/40 italic py-1">
+                        {isAr ? "لا توجد وظائف معلنة حالياً لهذا المصنع." : "No current public openings."}
+                      </div>
+                    )}
+                    {/* Card Action Link */}
+                    <Link
+                      href={company.jobs.length > 0 ? `/jobs/${company.jobs[0].id}` : `/jobs`}
+                      className="w-full mt-3 py-2.5 px-4 bg-primary/10 hover:bg-primary text-primary hover:text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 border border-primary/20 hover:shadow-sm"
+                    >
+                      <span>{isAr ? "استعراض وظائف المصنع والتقديم" : "View Openings & Apply"}</span>
+                      {isAr ? <ArrowLeft className="w-3.5 h-3.5 shrink-0" /> : <ArrowRight className="w-3.5 h-3.5 shrink-0" />}
+                    </Link>
+                  </div>
+
+                </div>
+              );
+            })}
           </div>
         )}
 

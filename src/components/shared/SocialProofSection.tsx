@@ -142,6 +142,7 @@ const TESTIMONIALS = [
     contentAr: "المنصة أثبتت جدارة استثنائية في فرز وتوفير مبرمجي مخارط وفرايز CNC ذوي خبرة موثقة. نظام الترشيح القائم على نوع الماكينة والكنترول وفر علينا أسابيع من المقابلات غير المجدية.",
     contentEn: "The platform demonstrated outstanding capability in vetting CNC lathe and milling programmers. Matching by specific machine type and controller saved us weeks of unproductive interviews.",
     avatar: "ط",
+    avatarEn: "T",
     dateAr: "منذ أسبوعين",
     dateEn: "2 weeks ago",
   },
@@ -159,6 +160,7 @@ const TESTIMONIALS = [
     contentAr: "الميزة الحقيقية هي الدقة الفنية في تصنيف الماكينات. عندما طلبنا مشغلي فريزة 5 محاور وكنترول Heidenhain، وصلتنا ترشيحات دقيقة تفهم التفاوتات الحرجة (Tolerances) ومعايير الجودة الصناعية مباشرة دون أي هدر في وقت الإنتاج.",
     contentEn: "The true advantage is technical precision in machine categorization. When requesting 5-axis milling operators with Heidenhain controllers, we received qualified candidates who fully master critical tolerances and quality standards.",
     avatar: "ع",
+    avatarEn: "E",
     dateAr: "منذ شهر",
     dateEn: "1 month ago",
   },
@@ -176,6 +178,7 @@ const TESTIMONIALS = [
     contentAr: "التوثيق بالسجل التجاري وفحص الخبرة الحقيقية أعطانا ثقة كاملة في الكفاءات المرشحة. التعامل مهني ومنهجي يرتقي بمعايير التوظيف الصناعي في مصر، وسرعة ترشيح الكفاءات فاجأت فريق العمل لدينا.",
     contentEn: "Commercial registration verification and direct hands-on experience evaluation provided complete confidence in nominated specialists. Highly professional and methodical operation for Egypt's manufacturing sector.",
     avatar: "ش",
+    avatarEn: "S",
     dateAr: "منذ 3 أسابيع",
     dateEn: "3 weeks ago",
   },
@@ -193,6 +196,7 @@ const TESTIMONIALS = [
     contentAr: "استقطاب مبرمجي Mastercam ومصممي قوالب الـ SolidWorks كان تحدياً مستمراً. المنصة قدمت حلاً مؤسسياً متكاملاً ربطنا بالكوادر الكفؤة بسرعة ومرونة، وبلا أي نسب عمولة مبالغ فيها.",
     contentEn: "Recruiting Mastercam programmers and SolidWorks mold designers was a persistent bottleneck. The platform delivered an institutional solution that connected us with vetted talent swiftly and reliably with zero contingency fee percentages.",
     avatar: "م",
+    avatarEn: "M",
     dateAr: "منذ شهرين",
     dateEn: "2 months ago",
   },
@@ -317,19 +321,19 @@ export default function SocialProofSection({
               <div className="flex items-center gap-1 bg-card border border-border rounded-xl p-1 shadow-sm">
                 <button
                   type="button"
-                  onClick={() => scrollHorizontally("left")}
-                  aria-label="التمرير لليمين"
-                  className="p-1.5 rounded-lg hover:bg-secondary/15 text-foreground transition-colors"
+                  onClick={() => scrollHorizontally(isAr ? "right" : "left")}
+                  aria-label={isAr ? "السابق" : "Previous"}
+                  className="p-1.5 rounded-lg hover:bg-secondary/15 text-foreground transition-colors cursor-pointer"
                 >
-                  <ChevronRight className="w-4 h-4" />
+                  {isAr ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
                 </button>
                 <button
                   type="button"
-                  onClick={() => scrollHorizontally("right")}
-                  aria-label="التمرير لليسار"
-                  className="p-1.5 rounded-lg hover:bg-secondary/15 text-foreground transition-colors"
+                  onClick={() => scrollHorizontally(isAr ? "left" : "right")}
+                  aria-label={isAr ? "التالي" : "Next"}
+                  className="p-1.5 rounded-lg hover:bg-secondary/15 text-foreground transition-colors cursor-pointer"
                 >
-                  <ChevronLeft className="w-4 h-4" />
+                  {isAr ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
                 </button>
               </div>
             </div>
@@ -445,7 +449,7 @@ export default function SocialProofSection({
                   <div className="space-y-3 pt-3.5 border-t border-border/60">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-sky-700 text-white font-bold text-sm flex items-center justify-center shrink-0">
-                        {t.avatar}
+                        {isAr ? t.avatar : t.avatarEn}
                       </div>
                       <div className="min-w-0 flex-1">
                         <h4 className="text-xs sm:text-sm font-bold text-foreground truncate">{author}</h4>
