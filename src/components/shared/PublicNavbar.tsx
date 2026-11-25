@@ -137,6 +137,7 @@ export function PublicNavbar() {
             onClick={toggleLang}
             className="p-1.5 rounded-lg bg-secondary/10 text-foreground font-bold text-xs flex items-center gap-1 border border-border"
             title={isAr ? "English" : "العربية"}
+            aria-label={isAr ? "Switch to English" : "التبديل إلى العربية"}
           >
             <Globe className="w-3.5 h-3.5 text-primary" />
             <span>{isAr ? "EN" : "عربي"}</span>

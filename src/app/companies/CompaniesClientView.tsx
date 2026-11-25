@@ -194,7 +194,7 @@ export function CompaniesClientView({ initialCompanies }: CompaniesClientViewPro
                   </div>
 
                   {/* Address & Shop Info */}
-                  <div className="text-xs text-foreground/60 line-clamp-2 leading-relaxed bg-secondary/5 p-3 rounded-xl border border-border/50">
+                  <div className="text-xs text-foreground/60 line-clamp-3 min-h-[68px] leading-relaxed bg-secondary/5 p-3 rounded-xl border border-border/50">
                     <div className="font-semibold text-foreground/80 mb-0.5">{isAr ? "الموقع الجغرافي للمصنع:" : "Facility Address:"}</div>
                     {compAddr}
                   </div>

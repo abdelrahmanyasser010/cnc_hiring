@@ -501,13 +501,13 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
                       <div className="space-y-3 flex-1 min-w-0">
                         
                         {/* Company & Verification Header */}
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold text-foreground/80 flex items-center gap-1.5">
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2 flex-wrap min-w-0">
+                            <span className="text-xs font-bold text-foreground/80 flex items-center gap-1.5 truncate max-w-[180px] sm:max-w-none">
                               <Building2 className="w-3.5 h-3.5 text-primary shrink-0" />
-                              <span>{isAr ? (job.companyName || "منشأة هندسية معتمدة") : (job.companyNameEn || job.companyName || "Certified Plant")}</span>
+                              <span className="truncate">{isAr ? (job.companyName || "منشأة هندسية معتمدة") : (job.companyNameEn || job.companyName || "Certified Plant")}</span>
                             </span>
-                            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
+                            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20 shrink-0 whitespace-nowrap">
                               <CheckCircle className="w-3 h-3 fill-emerald-500 text-white shrink-0" />
                               <span>{isAr ? "موثق بالسجل التجاري" : "Verified Plant"}</span>
                             </span>

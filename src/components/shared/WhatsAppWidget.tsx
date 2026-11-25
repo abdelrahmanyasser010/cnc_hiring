@@ -35,7 +35,7 @@ export function WhatsAppWidget() {
           <button 
             onClick={() => setIsOpen(false)}
             className="text-foreground/40 hover:text-foreground p-1 transition-colors rounded-lg"
-            aria-label="إغلاق التنبيه"
+            aria-label={isAr ? "إغلاق التنبيه" : "Close alert"}
           >
             <X className="w-3.5 h-3.5" />
           </button>
@@ -47,7 +47,7 @@ export function WhatsAppWidget() {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="تواصل معنا عبر واتساب"
+        aria-label={isAr ? "تواصل معنا عبر واتساب" : "Contact us on WhatsApp"}
         className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-[#25D366] hover:bg-[#20ba59] text-white rounded-full shadow-lg shadow-emerald-500/30 transition-all duration-300 hover:scale-105 active:scale-95 shrink-0"
       >
         {/* Pulse Ripple Effect */}
