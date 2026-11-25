@@ -276,33 +276,46 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
     async jwt({ token, user, account }) {
-      if (account?.provider === "google" || (user && !token.role)) {
-        const email = user?.email || token?.email;
-        if (email) {
-          const dbUser = await db.user.findUnique({
-            where: { email: email.toLowerCase().trim() },
-          });
-          if (dbUser) {
-            token.id = dbUser.id;
-            token.role = dbUser.role;
-            token.status = dbUser.status;
-            const refreshTokenString = crypto.randomBytes(64).toString("hex");
-            await db.refreshToken.create({
-              data: {
-                userId: dbUser.id,
-                token: refreshTokenString,
-                expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-              },
-            });
-            token.refreshToken = refreshTokenString;
-          }
-        }
-      } else if (user) {
+      // 1. If user just logged in via credentials, populate token directly
+      if (user) {
         token.id = user.id;
         token.role = (user as unknown as { role: string }).role;
         token.status = (user as unknown as { status: string }).status;
         token.refreshToken = (user as unknown as { refreshToken?: string }).refreshToken;
-      } else if (token.refreshToken) {
+        return token;
+      }
+
+      // 2. If Google OAuth provider
+      if (account?.provider === "google") {
+        const email = token?.email;
+        if (email) {
+          try {
+            const dbUser = await db.user.findUnique({
+              where: { email: email.toLowerCase().trim() },
+            });
+            if (dbUser) {
+              token.id = dbUser.id;
+              token.role = dbUser.role;
+              token.status = dbUser.status;
+              const refreshTokenString = crypto.randomBytes(64).toString("hex");
+              await db.refreshToken.create({
+                data: {
+                  userId: dbUser.id,
+                  token: refreshTokenString,
+                  expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+                },
+              });
+              token.refreshToken = refreshTokenString;
+            }
+          } catch (googleDbErr) {
+            console.warn("[NextAuth] Google user DB lookup skipped:", googleDbErr);
+          }
+        }
+        return token;
+      }
+
+      // 3. Subsequent session validation
+      if (token.refreshToken) {
         const tokenStr = token.refreshToken as string;
         // Emergency & demo tokens bypass DB lookup
         if (tokenStr.startsWith("emergency-") || tokenStr.startsWith("demo-")) {
