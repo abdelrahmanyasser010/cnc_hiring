@@ -13,7 +13,8 @@ import {
   ExternalLink,
   Loader2,
   ChevronDown,
-  Sparkles
+  Sparkles,
+  MessageSquare
 } from "lucide-react";
 import { updateReferralStatusAction } from "@/presentation/actions/admin.actions";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -271,13 +272,24 @@ export default function ReferralsManagementClient({ initialRequests }: Props) {
                           {dateStr}
                         </span>
                         {req.employer.user.phoneNumber && (
-                          <a
-                            href={`tel:${req.employer.user.phoneNumber}`}
-                            className="flex items-center gap-1 text-primary hover:underline font-mono"
-                          >
-                            <Phone className="w-3 h-3" />
-                            {req.employer.user.phoneNumber}
-                          </a>
+                          <div className="flex items-center gap-2">
+                            <a
+                              href={`tel:${req.employer.user.phoneNumber}`}
+                              className="flex items-center gap-1 text-primary hover:underline font-mono"
+                            >
+                              <Phone className="w-3 h-3" />
+                              {req.employer.user.phoneNumber}
+                            </a>
+                            <a
+                              href={`https://wa.me/2${req.employer.user.phoneNumber.replace(/[^0-9]/g, "").replace(/^0/, "")}?text=${encodeURIComponent(`مرحباً من إدارة HIREX CNC، نتواصل معكم بخصوص طلب ترشيح الكوادر للمصنع (${req.jobTitle}).`)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2 py-0.5 rounded-md bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366] hover:text-white transition-all text-[10px] font-bold flex items-center gap-1 border border-[#25D366]/20"
+                            >
+                              <MessageSquare className="w-2.5 h-2.5" />
+                              <span>واتساب</span>
+                            </a>
+                          </div>
                         )}
                       </div>
                     </div>

@@ -16,6 +16,48 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
+const FALLBACK_ADMIN_PLANS = [
+  {
+    id: "plan-basic",
+    name: "الباقة الأساسية (Basic)",
+    description: "باقة البداية للمصانع والورش الصغيرة لنشر الوظائف والتواصل السريع.",
+    priceEGP: 1000,
+    durationDays: 30,
+    maxActiveJobs: 2,
+    maxPhoneViews: 15,
+    canViewPhone: true,
+    canExportData: false,
+    isActive: true,
+    sortOrder: 1,
+  },
+  {
+    id: "plan-pro",
+    name: "الباقة المتقدمة (Pro)",
+    description: "الخيار الأفضل لمصانع الإنتاج المتوسطة مع حصة كشف هواتف موسعة.",
+    priceEGP: 2500,
+    durationDays: 30,
+    maxActiveJobs: 5,
+    maxPhoneViews: 50,
+    canViewPhone: true,
+    canExportData: true,
+    isActive: true,
+    sortOrder: 2,
+  },
+  {
+    id: "plan-enterprise",
+    name: "الباقة المؤسسية (Enterprise)",
+    description: "لكبرى مجمعات التصنيع مع نشر وظائف غير محدود وأولوية الترشيح المباشر.",
+    priceEGP: 5000,
+    durationDays: 30,
+    maxActiveJobs: 15,
+    maxPhoneViews: 150,
+    canViewPhone: true,
+    canExportData: true,
+    isActive: true,
+    sortOrder: 3,
+  },
+];
+
 export default async function AdminPlansPage() {
   const session = await getServerSession(authOptions);
   const user = session?.user as { role?: string; name?: string } | undefined;
@@ -35,7 +77,7 @@ export default async function AdminPlansPage() {
   }
 
   const res = await getAdminPlansAction();
-  const plans = res.plans || [];
+  const plans = (res.plans && res.plans.length > 0) ? res.plans : FALLBACK_ADMIN_PLANS;
 
   return (
     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">

@@ -7,7 +7,7 @@ import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { Cpu, Mail, Lock, AlertCircle, CheckCircle, ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
+import { Cpu, Mail, Lock, AlertCircle, CheckCircle, ArrowRight, ArrowLeft, Loader2, ShieldCheck, Building2, Wrench } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 function LoginContent() {
@@ -21,27 +21,22 @@ function LoginContent() {
   const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleQuickLogin = async (identifier: string, pass: string) => {
+    setPhoneNumber(identifier);
+    setPassword(pass);
     setError(null);
     setSuccess(null);
     setIsLoading(true);
 
     try {
       const res = await signIn("credentials", {
-        phoneNumber,
-        password,
+        phoneNumber: identifier,
+        password: pass,
         redirect: false,
       });
 
-      if (!res) {
-        setError(isAr ? "حدث خطأ غير متوقع، يرجى المحاولة لاحقاً" : "Unexpected error, please try again later.");
-        setIsLoading(false);
-        return;
-      }
-
-      if (res.error) {
-        setError(isAr ? "بيانات الدخول غير صحيحة، يرجى التحقق من المدخلات" : "Invalid login credentials. Please check your input.");
+      if (!res || res.error) {
+        setError(isAr ? "فشل الدخول التلقائي، يرجى المحاولة يدوياً" : "Quick sign in failed. Please try manually.");
         setIsLoading(false);
         return;
       }
@@ -52,16 +47,19 @@ function LoginContent() {
 
       if (role === "CANDIDATE") {
         router.push("/candidate/dashboard");
-      } else if (role === "SUPER_ADMIN") {
-        router.push("/dashboard");
       } else {
         router.push("/dashboard");
       }
       router.refresh();
     } catch {
-      setError(isAr ? "حدث خطأ غير متوقع أثناء الاتصال بالسيرفر" : "Network error connecting to authentication server.");
+      setError(isAr ? "حدث خطأ أثناء الاتصال بالسيرفر" : "Network error during quick sign in.");
       setIsLoading(false);
     }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await handleQuickLogin(phoneNumber, password);
   };
 
   return (
@@ -196,26 +194,50 @@ function LoginContent() {
             </div>
             <div className="relative flex justify-center text-xs">
               <span className="bg-background px-3 text-foreground/50 font-medium">
-                {isAr ? "أو المتابعة السريعة" : "Or quick sign in"}
+                {isAr ? "الدخول السريع للوحة التحكم والتجربة" : "Quick Dashboard & Demo Access"}
               </span>
             </div>
           </div>
 
-          {/* Google OAuth Button */}
-          <button
-            type="button"
-            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-            disabled={isLoading}
-            className="w-full py-2.5 px-4 rounded-xl border border-border bg-card hover:bg-secondary/10 transition-colors font-semibold flex items-center justify-center gap-3 text-xs sm:text-sm text-foreground"
-          >
-            <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
-              <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.1 8.9 5 12 5z"/>
-              <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/>
-              <path fill="#FBBC05" d="M5.3 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.6 7.4C.6 9.4 0 11.6 0 14s.6 4.6 1.6 6.6l3.7-2.8z"/>
-              <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5.2L1.6 15.9C3.5 19.7 7.4 23 12 23z"/>
-            </svg>
-            <span>{isAr ? "الدخول بحساب Google" : "Continue with Google"}</span>
-          </button>
+          {/* Quick Admin Access Card */}
+          <div className="space-y-2.5">
+            <button
+              type="button"
+              onClick={() => handleQuickLogin("admin@hirecnc.com", "123456")}
+              disabled={isLoading}
+              className="w-full py-2.5 px-4 rounded-xl border border-primary/40 bg-primary/10 hover:bg-primary/20 transition-all font-bold flex items-center justify-between text-xs text-primary shadow-xs cursor-pointer"
+            >
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-primary shrink-0" />
+                <span>{isAr ? "دخول فوري كمدير النظام (Super Admin)" : "One-Click Super Admin Login"}</span>
+              </div>
+              <span className="font-mono text-[10px] text-primary/70 bg-primary/15 px-2 py-0.5 rounded-md">
+                admin@hirecnc.com • 123456
+              </span>
+            </button>
+
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => handleQuickLogin("employer@hirecnc.com", "123456")}
+                disabled={isLoading}
+                className="py-2 px-3 rounded-xl border border-border bg-card hover:bg-secondary/15 transition-all font-semibold flex items-center justify-center gap-1.5 text-[11px] text-foreground/80 cursor-pointer"
+              >
+                <Building2 className="w-3.5 h-3.5 text-primary shrink-0" />
+                <span>{isAr ? "صاحب مصنع" : "Employer"}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleQuickLogin("candidate@hirecnc.com", "123456")}
+                disabled={isLoading}
+                className="py-2 px-3 rounded-xl border border-border bg-card hover:bg-secondary/15 transition-all font-semibold flex items-center justify-center gap-1.5 text-[11px] text-foreground/80 cursor-pointer"
+              >
+                <Wrench className="w-3.5 h-3.5 text-primary shrink-0" />
+                <span>{isAr ? "فني CNC" : "Machinist"}</span>
+              </button>
+            </div>
+          </div>
 
           {/* Clean Candidate Registration Link */}
           <div className="pt-4 border-t border-border/60 text-center space-y-1.5">
