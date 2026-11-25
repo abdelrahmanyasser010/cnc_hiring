@@ -26,24 +26,24 @@ export function LandingHero() {
       {/* Deep Industrial Gradients preserving Brand Colors */}
       <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-900/80 pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full min-w-0">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-12 items-center w-full min-w-0">
           
           {/* Main Copy & Dual CTA (7 cols on lg) */}
-          <div className="lg:col-span-7 flex flex-col gap-4 sm:gap-6 text-start">
+          <div className="lg:col-span-7 min-w-0 w-full flex flex-col gap-4 sm:gap-6 text-start">
             
             {/* Pill Badge */}
             <div className="inline-flex items-center gap-2 bg-slate-900/90 border border-slate-800 text-sky-400 text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full max-w-full w-fit">
               <span className="flex h-2 w-2 rounded-full bg-sky-400 shrink-0"></span>
-              <span className="whitespace-normal">
+              <span className="truncate sm:whitespace-normal">
                 {isAr 
-                  ? "المنظومة الصناعية المعتمدة لتوظيف كوادر الـ CNC بمصر" 
+                  ? "منظومة توظيف كوادر الـ CNC المعتمدة بمصر" 
                   : "Egypt's Dedicated CNC Staffing Network"}
               </span>
             </div>
             
             {/* Headline */}
-            <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-3xl xl:text-5xl font-black leading-tight sm:leading-tight lg:leading-[1.18] tracking-tight text-white break-words">
+            <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-3xl xl:text-5xl font-black leading-tight sm:leading-tight lg:leading-[1.18] tracking-tight text-white break-words w-full">
               {isAr ? (
                 <>
                   توظيف مشغلي ومبرمجي ماكينات الـ CNC <br className="hidden sm:inline" />
@@ -121,7 +121,7 @@ export function LandingHero() {
           </div>
           
           {/* Right Column: Verified Industrial Talent Showcase (5 cols on lg - Solid & Crisp) */}
-          <div className="lg:col-span-5 relative">
+          <div className="lg:col-span-5 min-w-0 w-full relative">
             <div className="w-full bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 lg:p-4 xl:p-6 shadow-xl relative">
               
               {/* Authentic Header with Live Status Dot */}
