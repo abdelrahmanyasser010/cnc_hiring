@@ -15,9 +15,9 @@ export function LandingHero() {
 
   return (
     <section className="relative overflow-hidden py-14 sm:py-20 lg:py-24 bg-slate-950 text-white border-b border-slate-800/80">
-      {/* Background Industrial Texture & Glow Overlays */}
+      {/* Background Industrial Texture & Clean Overlay */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 mix-blend-luminosity scale-105 transition-transform duration-1000"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 mix-blend-luminosity scale-100 transition-transform duration-1000"
         style={{
           backgroundImage: "url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2000&q=80')"
         }}
@@ -27,15 +27,15 @@ export function LandingHero() {
       <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-900/80 pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-12 items-center">
           
           {/* Main Copy & Dual CTA (7 cols on lg) */}
-          <div className="lg:col-span-7 flex flex-col gap-5 sm:gap-6 text-start">
+          <div className="lg:col-span-7 flex flex-col gap-4 sm:gap-6 text-start">
             
             {/* Pill Badge */}
-            <div className="inline-flex items-center gap-2 bg-slate-900/90 border border-slate-800 text-sky-400 text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full max-w-full">
+            <div className="inline-flex items-center gap-2 bg-slate-900/90 border border-slate-800 text-sky-400 text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full max-w-full w-fit">
               <span className="flex h-2 w-2 rounded-full bg-sky-400 shrink-0"></span>
-              <span className="truncate sm:whitespace-normal">
+              <span className="whitespace-normal">
                 {isAr 
                   ? "المنظومة الصناعية المعتمدة لتوظيف كوادر الـ CNC بمصر" 
                   : "Egypt's Dedicated CNC Staffing Network"}
@@ -43,50 +43,50 @@ export function LandingHero() {
             </div>
             
             {/* Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black leading-[1.15] sm:leading-[1.15] tracking-tight text-white">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-5xl font-black leading-tight sm:leading-tight lg:leading-[1.18] tracking-tight text-white">
               {isAr ? (
                 <>
-                  ربط الكفاءات الهندسية والفنية <br className="hidden sm:inline" />
+                  توظيف مشغلي ومبرمجي ماكينات الـ CNC <br className="hidden sm:inline" />
                   <span className="bg-gradient-to-r from-sky-400 via-primary to-cyan-300 bg-clip-text text-transparent">
-                    بالمصانع والورش الصناعية المتطورة
+                    لكبرى المصانع والورش الإنتاجية في مصر
                   </span>
                 </>
               ) : (
                 <>
-                  Precision CNC Machinists <br className="hidden sm:inline" />
+                  Precision CNC Machinists & Programmers <br className="hidden sm:inline" />
                   <span className="bg-gradient-to-r from-sky-400 via-primary to-cyan-300 bg-clip-text text-transparent">
-                    When Your Facility Needs Them
+                    For Egypt's Leading Machine Shops & Plants
                   </span>
                 </>
               )}
             </h1>
             
             {/* Subheading */}
-            <p className="text-sm sm:text-base md:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal">
+            <p className="text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl font-normal">
               {isAr 
                 ? "منظومة ربط فني مباشر بين مشغلي ومبرمجي ماكينات الـ CNC (فرايز، مخارط، 5 محاور، سلك) وكبرى مصانع وورش مصر في العاشر من رمضان، 6 أكتوبر، وبرج العرب وفق معايير الجودة والتفاوت الهندسي."
                 : "Direct, vetted technical placement connecting CNC machinists (operators, setters, 5-axis & CAM programmers) with leading manufacturing facilities across Egypt's key industrial zones."
               }
             </p>
             
-            {/* Dual Marketplace Action - Clean, Solid & Touch-Optimized for Mobile */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mt-2 w-full max-w-md sm:max-w-none">
+            {/* Dual Marketplace Action - Clean, Solid & Un-truncated */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mt-2 w-full">
               
               {/* Machinist Action (Primary Solid Cyan/Blue) */}
               <Link 
                 href="/register/candidate" 
-                className="w-full sm:w-auto min-h-[50px] inline-flex items-center justify-center gap-2 px-5 py-3 sm:py-3.5 bg-primary hover:bg-primary/90 text-white text-sm sm:text-base font-bold rounded-xl transition-all shadow-md shadow-primary/25 text-center active:scale-[0.99]"
+                className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white text-sm sm:text-base font-bold rounded-xl transition-all shadow-md shadow-primary/25 text-center active:scale-[0.99] whitespace-nowrap shrink-0"
               >
-                <span className="truncate">{isAr ? "سجل كفني أو مبرمج CNC" : "Register as Machinist"}</span>
+                <span>{isAr ? "سجل كفني أو مبرمج CNC" : "Register as Machinist"}</span>
                 {isAr ? <ArrowLeft className="w-4 h-4 shrink-0" /> : <ArrowRight className="w-4 h-4 shrink-0" />}
               </Link>
               
               {/* Factory / Machine Shop Action (High-Contrast Solid White) */}
               <Link 
                 href="/register" 
-                className="w-full sm:w-auto min-h-[50px] inline-flex items-center justify-center gap-2 px-5 py-3 sm:py-3.5 bg-white hover:bg-slate-100 text-slate-950 text-sm sm:text-base font-bold rounded-xl transition-all shadow-sm text-center active:scale-[0.99] border border-white"
+                className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-slate-100 text-slate-950 text-sm sm:text-base font-bold rounded-xl transition-all shadow-sm text-center active:scale-[0.99] border border-white whitespace-nowrap shrink-0"
               >
-                <span className="truncate">{isAr ? "وظّف كفاءات لمصنعك" : "Hire CNC Machinists"}</span>
+                <span>{isAr ? "وظّف كفاءات لمصنعك" : "Hire CNC Machinists"}</span>
               </Link>
             </div>
 
@@ -122,11 +122,11 @@ export function LandingHero() {
           
           {/* Right Column: Verified Industrial Talent Showcase (5 cols on lg - Solid & Crisp) */}
           <div className="lg:col-span-5 relative">
-            <div className="w-full bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl relative">
+            <div className="w-full bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 lg:p-4 xl:p-6 shadow-xl relative">
               
               {/* Authentic Header with Live Status Dot */}
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3.5 mb-4">
-                <div className="flex items-center gap-2.5">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-3.5">
+                <div className="flex items-center gap-2">
                   <span className="relative flex h-2.5 w-2.5">
                     <span className="inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                   </span>
@@ -134,82 +134,82 @@ export function LandingHero() {
                     {isAr ? "أحدث الكفاءات المنضمة لبنك التوظيف" : "Recently Joined CNC Specialists"}
                   </span>
                 </div>
-                <span className="text-[11px] text-sky-400 bg-slate-950 border border-slate-800 px-2.5 py-0.5 rounded-full font-medium">
+                <span className="text-[10px] sm:text-[11px] text-sky-400 bg-slate-950 border border-slate-800 px-2 py-0.5 rounded-full font-medium shrink-0">
                   {isAr ? "المناطق الصناعية • مصر" : "Egypt Industrial Hubs"}
                 </span>
               </div>
               
               {/* Live Candidate Cards with Real Shop Floor Specs */}
-              <div className="space-y-3">
+              <div className="space-y-2.5 sm:space-y-3">
                 
                 {/* Candidate 1 */}
-                <div className="flex items-center gap-3 p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-slate-700 transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center font-bold text-sky-300 text-xs flex-shrink-0 font-mono">
+                <div className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-slate-700 transition-colors">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center font-bold text-sky-300 text-xs shrink-0 font-mono">
                     CNC
                   </div>
                   <div className="flex-1 min-w-0 text-start">
-                    <div className="font-semibold text-sm text-slate-100 truncate">
+                    <div className="font-semibold text-xs sm:text-sm text-slate-100 truncate">
                       {isAr ? "أحمد محمود (خراط مبرمج CNC)" : "Ahmed Mahmoud (CNC Lathe Programmer)"}
                     </div>
-                    <div className="text-xs text-slate-400 truncate flex items-center gap-1.5 mt-0.5">
+                    <div className="text-[11px] sm:text-xs text-slate-400 truncate flex items-center gap-1.5 mt-0.5">
                       <span>{isAr ? "خبرة 6 سنوات • Fanuc Oi-TF" : "6 Yrs Exp • Fanuc Oi-TF"}</span>
                       <span className="text-slate-600">•</span>
                       <span className="text-sky-400">{isAr ? "العاشر من رمضان" : "10th of Ramadan"}</span>
                     </div>
                   </div>
-                  <span className="bg-emerald-950 text-emerald-400 border border-emerald-800/60 text-[11px] px-2 py-0.5 rounded-full font-medium flex-shrink-0">
+                  <span className="bg-emerald-950 text-emerald-400 border border-emerald-800/60 text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full font-medium shrink-0 whitespace-nowrap">
                     {isAr ? "متاح فوري" : "Available"}
                   </span>
                 </div>
 
                 {/* Candidate 2 */}
-                <div className="flex items-center gap-3 p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-slate-700 transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-500/30 flex items-center justify-center font-bold text-cyan-300 text-xs flex-shrink-0 font-mono">
+                <div className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-slate-700 transition-colors">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sky-500/20 border border-sky-500/30 flex items-center justify-center font-bold text-cyan-300 text-xs shrink-0 font-mono">
                     5-AX
                   </div>
                   <div className="flex-1 min-w-0 text-start">
-                    <div className="font-semibold text-sm text-slate-100 truncate">
+                    <div className="font-semibold text-xs sm:text-sm text-slate-100 truncate">
                       {isAr ? "محمد علي (فني تشغيل فريزة 5 محاور)" : "Mohamed Ali (5-Axis Milling Setter)"}
                     </div>
-                    <div className="text-xs text-slate-400 truncate flex items-center gap-1.5 mt-0.5">
+                    <div className="text-[11px] sm:text-xs text-slate-400 truncate flex items-center gap-1.5 mt-0.5">
                       <span>{isAr ? "خبرة 4 سنوات • Siemens Sinumerik" : "4 Yrs Exp • Siemens 840D"}</span>
                       <span className="text-slate-600">•</span>
                       <span className="text-sky-400">{isAr ? "6 أكتوبر" : "6th of October"}</span>
                     </div>
                   </div>
-                  <span className="bg-amber-950 text-amber-400 border border-amber-800/60 text-[11px] px-2 py-0.5 rounded-full font-medium flex-shrink-0">
+                  <span className="bg-amber-950 text-amber-400 border border-amber-800/60 text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full font-medium shrink-0 whitespace-nowrap">
                     {isAr ? "ترشيح جارٍ" : "Interviewing"}
                   </span>
                 </div>
 
                 {/* Candidate 3 */}
-                <div className="flex items-center gap-3 p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-slate-700 transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center font-bold text-indigo-300 text-xs flex-shrink-0 font-mono">
+                <div className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-slate-700 transition-colors">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center font-bold text-indigo-300 text-xs shrink-0 font-mono">
                     CAM
                   </div>
                   <div className="flex-1 min-w-0 text-start">
-                    <div className="font-semibold text-sm text-slate-100 truncate">
+                    <div className="font-semibold text-xs sm:text-sm text-slate-100 truncate">
                       {isAr ? "حسن حسين (مبرمج Mastercam & SolidCAM)" : "Hassan Hussein (CAM Specialist)"}
                     </div>
-                    <div className="text-xs text-slate-400 truncate flex items-center gap-1.5 mt-0.5">
+                    <div className="text-[11px] sm:text-xs text-slate-400 truncate flex items-center gap-1.5 mt-0.5">
                       <span>{isAr ? "خبرة 8 سنوات • أسطمبات وتشكيل دقيق" : "8 Yrs Exp • Precision Molds"}</span>
                       <span className="text-slate-600">•</span>
                       <span className="text-sky-400">{isAr ? "برج العرب" : "Borg El Arab"}</span>
                     </div>
                   </div>
-                  <span className="bg-blue-950 text-blue-400 border border-blue-800/60 text-[11px] px-2 py-0.5 rounded-full font-medium flex-shrink-0">
+                  <span className="bg-blue-950 text-blue-400 border border-blue-800/60 text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full font-medium shrink-0 whitespace-nowrap">
                     {isAr ? "موثق الخبرة" : "Verified Exp"}
                   </span>
                 </div>
               </div>
               
               {/* Quality & Readiness Footnote */}
-              <div className="mt-4 pt-3.5 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+              <div className="mt-3.5 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] sm:text-xs text-slate-400">
                 <span className="inline-flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span>{isAr ? "فحص عملي لأنظمة الكنترول والـ G-code قبل المقابلة" : "Practical machine control & G-code vetting"}</span>
                 </span>
-                <span className="font-mono text-emerald-400 font-bold">100%</span>
+                <span className="font-mono text-emerald-400 font-bold shrink-0">100%</span>
               </div>
               
             </div>
