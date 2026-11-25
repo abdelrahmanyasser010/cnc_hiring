@@ -18,27 +18,59 @@ import DashboardClientView, {
 const MOCK_RECENT_ACTIVITIES = [
   {
     id: "mock-log-1",
-    user: "مشرف النظام",
+    user: "مشرف النظام (Admin)",
     role: "Admin",
-    actionAr: "تم توثيق حساب شركة: الشركة المصرية للصناعات المعدنية",
-    actionEn: "Verified company profile: Egyptian Metal Industries",
-    createdAt: new Date("2026-06-26T12:00:00Z"),
+    actionAr: "تم اعتماد وتوثيق السجل التجاري لـ: السويدي للصناعات الهندسية والميكانيكا",
+    actionEn: "Verified commercial registry: ELSEWEDY Engineering Industries",
+    createdAt: new Date(Date.now() - 1000 * 60 * 25), // 25 mins ago
   },
   {
     id: "mock-log-2",
-    user: "مصنع النيل لتشغيل المعادن",
+    user: "العربي جروب للإسطمبات",
     role: "Employer",
-    actionAr: "تم نشر وظيفة جديدة: فني مخرطة CNC مبرمج",
-    actionEn: "Published new requisition: CNC Lathe Programmer",
-    createdAt: new Date("2026-06-26T11:00:00Z"),
+    actionAr: "تم نشر شاغر تشغيل جديد: فني فريزة CNC خماسية المحاور VMC",
+    actionEn: "Published new requisition: 5-Axis CNC Milling Specialist",
+    createdAt: new Date(Date.now() - 1000 * 60 * 75), // 1.2 hours ago
   },
   {
     id: "mock-log-3",
     user: "أحمد مرسي الشرقاوي",
     role: "Machinist",
-    actionAr: "تم التقديم على وظيفة فني مخرطة CNC بنجاح واجتياز التقييم بنسبة 100%",
-    actionEn: "Applied for CNC Lathe position with 100% technical assessment score",
-    createdAt: new Date("2026-06-26T10:00:00Z"),
+    actionAr: "تم التقديم على وظيفة فني تشغيل وضبط مخرطة بمصنع النيل وتأكيد التفرغ",
+    actionEn: "Applied for Lathe Machinist position at Nile Precision Engineering",
+    createdAt: new Date(Date.now() - 1000 * 60 * 180), // 3 hours ago
+  },
+  {
+    id: "mock-log-4",
+    user: "مسبك الجيزة للحديد والصلب",
+    role: "Employer",
+    actionAr: "تم كشف بيانات الاتصال والمحادثة المباشرة لكادر فني: إبراهيم خليل النحاس",
+    actionEn: "Revealed contact details for candidate: Ibrahim Khalil El-Nahas",
+    createdAt: new Date(Date.now() - 1000 * 60 * 300), // 5 hours ago
+  },
+  {
+    id: "mock-log-5",
+    user: "م. حسام الجيزاوي",
+    role: "Engineer",
+    actionAr: "تم تحديث الملف الفني وإضافة شهادة إتقان Siemens Sinumerik 840D",
+    actionEn: "Updated technical profile with Siemens Sinumerik 840D certification",
+    createdAt: new Date(Date.now() - 1000 * 60 * 480), // 8 hours ago
+  },
+  {
+    id: "mock-log-6",
+    user: "شركة الدلتا للإسطمبات",
+    role: "Employer",
+    actionAr: "تم إرسال طلب ترشيح كفاءة مخصصة (Direct Headhunting) لـ 5 محاور",
+    actionEn: "Submitted direct headhunting request for 5-Axis CAM Engineer",
+    createdAt: new Date(Date.now() - 1000 * 60 * 720), // 12 hours ago
+  },
+  {
+    id: "mock-log-7",
+    user: "مشرف النظام (Admin)",
+    role: "Admin",
+    actionAr: "تم تحديث أسعار وحصص الباقة المتقدمة (Pro Plan) بنجاح",
+    actionEn: "Updated Pro Plan quotas and pricing parameters successfully",
+    createdAt: new Date(Date.now() - 1000 * 60 * 1440), // 1 day ago
   },
 ];
 
@@ -116,36 +148,36 @@ export default async function DashboardPage() {
         {
           titleAr: "إجمالي الكوادر الفنية",
           titleEn: "Total CNC Talent",
-          value: "142",
+          value: "218",
           changeAr: "فنيين ومهندسين مسجلين",
-          changeEn: "Registered Specialists",
+          changeEn: "Registered Specialists & Engineers",
           iconType: "Users",
           color: "text-blue-600 bg-blue-50 dark:bg-blue-950/20 dark:text-blue-400",
         },
         {
           titleAr: "المنشآت والمصانع",
           titleEn: "Industrial Plants",
-          value: "18",
-          changeAr: "شركات وورش مسجلة",
-          changeEn: "Registered Plants",
+          value: "34",
+          changeAr: "منشآت معتمدة في 8 مناطق صناعية",
+          changeEn: "Certified Plants across 8 Hubs",
           iconType: "Building2",
           color: "text-green-600 bg-green-50 dark:bg-green-950/20 dark:text-green-400",
         },
         {
           titleAr: "الوظائف النشطة حالياً",
           titleEn: "Active Requisitions",
-          value: "12",
-          changeAr: "تستقبل طلبات تقديم",
-          changeEn: "Accepting Applications",
+          value: "26",
+          changeAr: "تستقبل طلبات تقديم مباشرة",
+          changeEn: "Accepting Direct Applications",
           iconType: "Briefcase",
           color: "text-amber-600 bg-amber-50 dark:bg-amber-950/20 dark:text-amber-400",
         },
         {
           titleAr: "طلبات توثيق معلقة",
           titleEn: "Pending Verifications",
-          value: "3",
-          changeAr: "تحتاج مراجعة المستندات",
-          changeEn: "Registry Review Required",
+          value: "5",
+          changeAr: "تحتاج مراجعة السجل التجاري",
+          changeEn: "Commercial Registry Review Required",
           iconType: "CheckCircle",
           color: "text-red-600 bg-red-50 dark:bg-red-950/20 dark:text-red-400",
         },

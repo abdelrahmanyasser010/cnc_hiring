@@ -43,13 +43,13 @@ export default async function AdminVerifyPage() {
     console.warn("Database failed to load verification requests. Using mock data.", error);
     isMockData = true;
 
-    // بيانات تجريبية لبيئة التطوير المحلية
+    // بيانات نموذجية متكاملة لبيئة الإدارة
     employers = [
       {
         id: "emp-mock-1",
-        companyName: "مصنع الأمل للهندسة الميكانيكية",
+        companyName: "مصنع الأمل للهندسة الميكانيكية وتصنيع الإسطمبات",
         industryZone: "العاشر من رمضان",
-        address: "المنطقة الصناعية الثالثة، خلف السلاب",
+        address: "المنطقة الصناعية الثالثة B3، خلف سيراميكا كليوباترا، قطعة 14",
         commercialRegId: "CR-992211",
         businessLicenseUrl: "https://placeholder.com/license.pdf",
         isVerified: false,
@@ -60,11 +60,11 @@ export default async function AdminVerifyPage() {
       },
       {
         id: "emp-mock-2",
-        companyName: "مسبك الجيزة للحديد والصلب",
+        companyName: "مسبك الجيزة للصناعات المعدنية والحديد والصلب",
         industryZone: "6 أكتوبر",
-        address: "المنطقة الصناعية الثانية، بلوك 4",
+        address: "المنطقة الصناعية الثانية، محور المطورين، بلوك 44",
         commercialRegId: "CR-883344",
-        businessLicenseUrl: null,
+        businessLicenseUrl: "https://placeholder.com/giza-foundry-cr.pdf",
         isVerified: true,
         user: {
           name: "م. حسام محمود الجيزاوي",
@@ -73,15 +73,106 @@ export default async function AdminVerifyPage() {
       },
       {
         id: "emp-mock-3",
-        companyName: "ورشة النصر لتشكيل المعادن وخراطة الـ CNC",
+        companyName: "ورشة النصر لتشكيل المعادن وخراطة الـ CNC الدقيقة",
         industryZone: "العبور",
-        address: "المنطقة الصناعية الأولى، بجوار البنك الأهلي",
-        commercialRegId: null,
+        address: "المنطقة الصناعية الأولى، شارع المصانع، بجوار البنك الأهلي",
+        commercialRegId: "CR-774411",
         businessLicenseUrl: null,
         isVerified: false,
         user: {
           name: "شريف جلال البساتيني",
           phoneNumber: "01122334455",
+        }
+      },
+      {
+        id: "emp-mock-4",
+        companyName: "السويدي للصناعات الهندسية والميكانيكا",
+        industryZone: "العاشر من رمضان",
+        address: "المنطقة الصناعية A1، طريق الإسماعيلية الصحراوي",
+        commercialRegId: "CR-112233",
+        businessLicenseUrl: "https://placeholder.com/elsewedy-license.pdf",
+        isVerified: true,
+        user: {
+          name: "م. طارق عبد الرؤوف",
+          phoneNumber: "01099887766",
+        }
+      },
+      {
+        id: "emp-mock-5",
+        companyName: "العربي جروب لتصنيع القوالب والاسطمبات الصناعية",
+        industryZone: "قويسنا الصناعية",
+        address: "مجمع مصانع العربي، المنطقة الصناعية بقويسنا، المنوفية",
+        commercialRegId: "CR-445566",
+        businessLicenseUrl: "https://placeholder.com/elaraby-molds.pdf",
+        isVerified: true,
+        user: {
+          name: "م. عصام حجازي",
+          phoneNumber: "01055443322",
+        }
+      },
+      {
+        id: "emp-mock-6",
+        companyName: "الكرنك للصناعات الهندسية وخراطة المعادن",
+        industryZone: "بدر",
+        address: "المنطقة الصناعية الغربية، مجمع الصناعات المغذية، هنجر 8",
+        commercialRegId: "CR-556677",
+        businessLicenseUrl: "https://placeholder.com/karnak-cr.pdf",
+        isVerified: false,
+        user: {
+          name: "الحاج محمود نصار",
+          phoneNumber: "01188776655",
+        }
+      },
+      {
+        id: "emp-mock-7",
+        companyName: "النيل للهندسة والميكانيكا المتقدمة",
+        industryZone: "السادات",
+        address: "المنطقة الصناعية السابعة، محور مصانع الثقيلة",
+        commercialRegId: "CR-667788",
+        businessLicenseUrl: "https://placeholder.com/nile-mech.pdf",
+        isVerified: true,
+        user: {
+          name: "م. شريف الهواري",
+          phoneNumber: "01277665544",
+        }
+      },
+      {
+        id: "emp-mock-8",
+        companyName: "مصنع الإسكندرية لتصنيع التروس والمحاور الدقيقة",
+        industryZone: "برج العرب الجديدة",
+        address: "المنطقة الصناعية الثانية، طريق المطار، مجمع التروس",
+        commercialRegId: "CR-889900",
+        businessLicenseUrl: null,
+        isVerified: false,
+        user: {
+          name: "م. علاء الدين فهمي",
+          phoneNumber: "01066554433",
+        }
+      },
+      {
+        id: "emp-mock-9",
+        companyName: "الأهرام لقطع غيار السيارات ومسبوكات الألومنيوم",
+        industryZone: "حلوان",
+        address: "امتداد حلوان الصناعية، شارع مجمع الصمامات",
+        commercialRegId: "CR-334455",
+        businessLicenseUrl: "https://placeholder.com/ahram-auto.pdf",
+        isVerified: true,
+        user: {
+          name: "م. كمال عبد الشافي",
+          phoneNumber: "01144332211",
+        }
+      },
+      {
+        id: "emp-mock-10",
+        companyName: "الشركة الدولية لقطع غيار معدات البترول والغاز",
+        industryZone: "أبو رواش",
+        address: "المنطقة الصناعية بأبو رواش، طريق مصر الإسكندرية الصحراوي",
+        commercialRegId: "CR-223344",
+        businessLicenseUrl: "https://placeholder.com/petro-machining.pdf",
+        isVerified: false,
+        user: {
+          name: "م. إبراهيم متولي",
+          phoneNumber: "01222113344",
         }
       }
     ];
