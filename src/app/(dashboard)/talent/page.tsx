@@ -359,12 +359,6 @@ export default async function TalentPage({ searchParams }: PageProps) {
       {/* خدمة طلب ترشيح كفاءة مخصصة من إدارة المنصة */}
       <ReferralRequestSection />
 
-      {/* تنبيه بيئة التطوير المحلية */}
-      {isMockData && (
-        <div className="bg-amber-500/10 border border-amber-500/20 text-amber-600 rounded-xl px-4 py-3 text-xs font-bold flex items-center gap-2">
-          <span>⚙️ تنبيه بيئة التطوير: تم استخدام بيانات تجريبية لعدم إمكانية الاتصال بقاعدة بيانات PostgreSQL حالياً.</span>
-        </div>
-      )}
 
       {/* مكون البحث والفلاتر */}
       <TalentFilters

@@ -5,7 +5,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { BookOpen, Calendar, User, ArrowLeft, ArrowRight, Search, Clock, Sparkles } from "lucide-react";
+import { BookOpen, Calendar, User, ArrowLeft, ArrowRight, Search, Clock, Award } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export interface BlogPostItem {
@@ -119,7 +119,7 @@ export function BlogClientView({ initialPosts }: BlogClientViewProps) {
             <div className="grid md:grid-cols-12 gap-6 items-center">
               <div className="md:col-span-7 p-6 sm:p-10 space-y-4">
                 <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-bold px-3 py-1 rounded-full">
-                  <Sparkles className="w-3.5 h-3.5" />
+                  <Award className="w-3.5 h-3.5" />
                   <span>{isAr ? "دراسة ميدانية مميزة" : "Featured Field Report"}</span>
                 </div>
                 <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-snug">

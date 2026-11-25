@@ -23,7 +23,6 @@ import {
   Wrench,
   FileText,
   Plus,
-  Sparkles,
   DollarSign,
   Clock
 } from "lucide-react";

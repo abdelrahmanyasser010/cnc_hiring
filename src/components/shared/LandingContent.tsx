@@ -163,7 +163,7 @@ export function LandingContent() {
                 </li>
                 <li className="flex items-start gap-2.5 text-foreground/50">
                   <Check className="w-4 h-4 sm:w-5 sm:h-5 text-foreground/30 flex-shrink-0 mt-0.5" />
-                  <span>{isAr ? "أسئلة تصفية ذكية (تقييم فني آلي)" : "Smart technical screening questions"}</span>
+                  <span>{isAr ? "اختبارات تصفية وفحص فني عملي" : "Practical technical screening assessments"}</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-foreground/50">
                   <Check className="w-4 h-4 sm:w-5 sm:h-5 text-foreground/30 flex-shrink-0 mt-0.5" />
@@ -215,7 +215,7 @@ export function LandingContent() {
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span>{isAr ? "أسئلة تصفية ذكية (تقييم فني آلي)" : "Smart technical screening questions"}</span>
+                  <span>{isAr ? "اختبارات تصفية وفحص فني عملي" : "Practical technical screening assessments"}</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5" />

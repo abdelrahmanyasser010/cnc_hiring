@@ -13,7 +13,7 @@ import {
   Clock, 
   ArrowLeft, 
   ArrowRight, 
-  Sparkles, 
+  Award, 
   Zap, 
   CheckCircle2, 
   Search,
@@ -213,7 +213,7 @@ export function FeaturedJobsSection() {
           <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
             <div className="space-y-3 max-w-3xl">
               <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-bold px-3 py-1 rounded-full">
-                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                <Award className="w-3.5 h-3.5 text-amber-400" />
                 <span>{isAr ? "فرصة الأسبوع الصناعية الكبرى" : "Featured Enterprise Opportunity"}</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-black text-white">

@@ -146,20 +146,13 @@ export default async function JobApplicationsPage({ params }: PageProps) {
         </div>
         
         <Link 
-          href="/jobs" 
+          href="/jobs/manage" 
           className="flex items-center gap-2 text-xs font-semibold text-foreground/60 hover:text-primary transition-colors border border-border px-3 py-2 rounded-xl bg-card hover:bg-secondary/5"
         >
           <ArrowLeft className="w-4 h-4 rotate-180" />
-          <span>رجوع للوظائف</span>
+          <span>رجوع لإدارة الشواغر</span>
         </Link>
       </div>
-
-      {/* تنبيه بيئة التطوير */}
-      {isMockData && (
-        <div className="bg-amber-500/10 border border-amber-500/20 text-amber-600 rounded-xl px-4 py-3 text-xs font-bold flex items-center gap-2">
-          <span>⚙️ تنبيه بيئة التطوير: تم استخدام قائمة متقدمين تجريبية لعدم إمكانية الاتصال بقاعدة بيانات PostgreSQL حالياً.</span>
-        </div>
-      )}
 
       {/* جدول عرض المتقدمين */}
       <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm">

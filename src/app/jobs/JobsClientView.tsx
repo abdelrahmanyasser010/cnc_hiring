@@ -20,7 +20,6 @@ import {
   ArrowLeft,
   ArrowRight,
   SlidersHorizontal,
-  Sparkles,
   Users
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -238,7 +237,7 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-3 max-w-3xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold">
-                <Sparkles className="w-3.5 h-3.5" />
+                <Briefcase className="w-3.5 h-3.5" />
                 <span>{isAr ? "بورصة وظائف ماكينات الـ CNC المعتمدة في مصر" : "Egypt Certified CNC Machine Shop Careers"}</span>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground tracking-tight">
@@ -290,17 +289,15 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
               <span>{isAr ? `تصفح وظائف CNC المتاحة (${filteredJobs.length})` : `All CNC Openings (${filteredJobs.length})`}</span>
             </button>
 
-            <button
-              onClick={() => setActiveTab("manage")}
-              className={`pb-3 px-3 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-2 ${
-                activeTab === "manage"
-                  ? "border-primary text-primary"
-                  : "border-transparent text-foreground/60 hover:text-foreground"
-              }`}
-            >
-              <Users className="w-4 h-4" />
-              <span>{isAr ? "إدارة إعلانات مصنعي ومتابعة المتقدمين" : "My Plant Requisitions & Applicants"}</span>
-            </button>
+            {isEmployer && (
+              <Link
+                href="/jobs/manage"
+                className="pb-3 px-3 text-xs sm:text-sm font-bold border-b-2 border-transparent text-foreground/60 hover:text-primary transition-all flex items-center gap-2"
+              >
+                <Users className="w-4 h-4" />
+                <span>{isAr ? "لوحة إدارة شواغر مصنعي (لوحة التحكم)" : "Manage My Requisitions (Dashboard)"}</span>
+              </Link>
+            )}
           </div>
 
         </div>
@@ -608,7 +605,7 @@ export function JobsClientView({ initialJobs, isEmployer, userRole, initialTab =
                 </h3>
                 <p className="text-xs text-foreground/60 mt-1">
                   {isAr 
-                    ? "تابع المتقدمين وفلترة مهاراتهم الفنية آلياً بناءً على نظام الكنترول ونوع الماكينة."
+                    ? "تابع المتقدمين وفرز مهاراتهم الفنية وخبراتهم بناءً على نظام الكنترول ونوع الماكينة."
                     : "Track applicants, review test scores, and schedule factory trials."}
                 </p>
               </div>

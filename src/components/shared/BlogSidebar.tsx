@@ -47,7 +47,7 @@ export default function BlogSidebar() {
         </div>
         
         <p className="text-xs text-foreground/60 leading-relaxed">
-          انشر وظيفتك الشاغرة الآن واحصل على تقييمات فنية فورية (التقييم الذكي للـ G-code) وتواصل مع الكفاءات الموثقة القريبة من منطقتك.
+          انشر وظيفتك الشاغرة الآن واحصل على نتائج الاختبارات الفنية لأكواد الـ G-code وتواصل مع الكفاءات الموثقة بالسجل الصناعي.
         </p>
 
         <div className="flex items-center gap-1.5 text-[10px] text-foreground/50 font-semibold">

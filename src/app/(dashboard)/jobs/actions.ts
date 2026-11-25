@@ -103,5 +103,6 @@ export async function createJobAction(
 
   // 3. تحديث الكاش للرابط وتوجيه المستخدم (يجب أن يتم ذلك خارج try-catch لتفادي التقاط استثناء التوجيه)
   revalidatePath("/jobs");
-  redirect("/jobs");
+  revalidatePath("/jobs/manage");
+  redirect("/jobs/manage");
 }

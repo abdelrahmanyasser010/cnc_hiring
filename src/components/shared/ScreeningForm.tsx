@@ -141,7 +141,7 @@ export default function ScreeningForm({ jobId, questions, onClose }: ScreeningFo
                 <span>جاري معالجة طلبك...</span>
               </>
             ) : (
-              <span>{questions.length > 0 ? "ابدأ اختبار التصفية الذكي ⚡" : "تأكيد التقديم السريع"}</span>
+              <span>{questions.length > 0 ? "ابدأ الاختبار الفني للوظيفة" : "تأكيد التقديم السريع"}</span>
             )}
           </button>
         </form>
@@ -220,7 +220,7 @@ export default function ScreeningForm({ jobId, questions, onClose }: ScreeningFo
       <div className="space-y-2">
         <h3 className="text-xl font-bold text-foreground">تم تقديم طلبك بنجاح!</h3>
         <p className="text-xs text-foreground/60 leading-relaxed max-w-md mx-auto">
-          تم استلام ملفك المهني وإجاباتك ومطابقتها ذكياً مع متطلبات المصنع بنجاح.
+          تم استلام ملفك المهني وإجاباتك وإرسالها للمطابقة الفنية مع متطلبات المصنع بنجاح.
         </p>
       </div>
 

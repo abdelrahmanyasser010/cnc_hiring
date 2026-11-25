@@ -24,11 +24,11 @@ export default function NewJobPage() {
         </div>
         
         <Link 
-          href="/jobs" 
+          href="/jobs/manage" 
           className="flex items-center gap-2 text-xs font-semibold text-foreground/60 hover:text-primary transition-colors border border-border px-3 py-2 rounded-xl bg-card hover:bg-secondary/5"
         >
           <ArrowLeft className="w-4 h-4 rotate-180" />
-          <span>رجوع للقائمة</span>
+          <span>رجوع لإدارة الشواغر</span>
         </Link>
       </div>
 
@@ -220,7 +220,7 @@ export default function NewJobPage() {
             </button>
             
             <Link 
-              href="/jobs" 
+              href="/jobs/manage" 
               className="px-6 py-3 border border-border hover:bg-secondary/5 font-semibold text-sm rounded-xl transition-all"
             >
               إلغاء

@@ -11,7 +11,7 @@ import {
   Activity, 
   Plus, 
   Search, 
-  Sparkles, 
+  Target, 
   CreditCard,
   Building2,
   CheckCircle
@@ -224,8 +224,8 @@ export default function DashboardClientView({
                 <h2 className="text-base font-bold">
                   {isAr ? "آخر طلبات التقديم المستلمة لوظائفك" : "Recent Candidate Applications"}
                 </h2>
-                <Link href="/jobs" className="text-xs text-primary font-semibold flex items-center gap-1 hover:underline">
-                  <span>{isAr ? "عرض كل الوظائف" : "View All Jobs"}</span>
+                <Link href="/jobs/manage" className="text-xs text-primary font-semibold flex items-center gap-1 hover:underline">
+                  <span>{isAr ? "إدارة كل الشواغر" : "Manage All Vacancies"}</span>
                   <ChevronRight className={`w-4 h-4 ${isAr ? "rotate-180" : ""}`} />
                 </Link>
               </div>
@@ -374,7 +374,7 @@ export default function DashboardClientView({
                     className="flex items-center justify-between p-3 rounded-xl border border-amber-500/20 bg-amber-500/5 hover:bg-amber-500/10 transition-all group cursor-pointer"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="p-2 rounded-lg bg-amber-500/20 text-amber-700 dark:text-amber-400"><Sparkles className="w-4 h-4" /></span>
+                      <span className="p-2 rounded-lg bg-amber-500/20 text-amber-700 dark:text-amber-400"><Target className="w-4 h-4" /></span>
                       <div>
                         <h4 className="text-xs font-semibold text-amber-700 dark:text-amber-400">
                           {isAr ? "طلب ترشيح كفاءة خاصة" : "Request Tailored Nomination"}

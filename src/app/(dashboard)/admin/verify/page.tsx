@@ -196,12 +196,6 @@ export default async function AdminVerifyPage() {
         </div>
       </div>
 
-      {/* تنبيه بيئة التطوير */}
-      {isMockData && (
-        <div className="bg-amber-500/10 border border-amber-500/20 text-amber-600 rounded-xl px-4 py-3 text-xs font-bold flex items-center gap-2">
-          <span>⚙️ تنبيه بيئة التطوير: تم استخدام قائمة شركات تجريبية لعدم إمكانية الاتصال بقاعدة بيانات PostgreSQL حالياً.</span>
-        </div>
-      )}
 
       {/* كارت الجدول للمراجعة والتوثيق */}
       <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm">

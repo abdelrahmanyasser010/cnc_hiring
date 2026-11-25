@@ -7,7 +7,7 @@ import {
   Download, 
   AlertTriangle,
   CheckCircle,
-  Sparkles,
+  Award,
   Zap,
   ShieldCheck
 } from "lucide-react";
@@ -341,7 +341,7 @@ export default function BillingClientView({
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
                       <h3 className={`font-bold text-base ${isPrimary ? "text-primary" : ""}`}>{planTitle}</h3>
-                      {isGold ? <ShieldCheck className="w-5 h-5 text-amber-500" /> : isPro ? <Sparkles className="w-5 h-5 text-primary" /> : <Zap className="w-5 h-5 text-amber-500" />}
+                      {isGold ? <ShieldCheck className="w-5 h-5 text-amber-500" /> : isPro ? <Award className="w-5 h-5 text-primary" /> : <Zap className="w-5 h-5 text-amber-500" />}
                     </div>
                     <div>
                       <span className="text-3xl font-black">
@@ -431,7 +431,7 @@ export default function BillingClientView({
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <h3 className="font-bold text-base text-primary">{isAr ? "الباقة المتقدمة (Pro)" : "Advanced Plan (Pro)"}</h3>
-                    <Sparkles className="w-5 h-5 text-primary" />
+                    <Award className="w-5 h-5 text-primary" />
                   </div>
                   <div>
                     <span className="text-3xl font-black">{isAr ? "2,500 ج.م" : "2,500 EGP"}</span>

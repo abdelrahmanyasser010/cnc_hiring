@@ -71,7 +71,7 @@ export const AR_DICTIONARY = {
     unlimitedVIP: "∞ غير محدود (Gold VIP)",
     upgradeBtnPrefix: "ترقية إلى",
     processingPayment: "جاري تجهيز بوابة الدفع...",
-    mockCheckoutTitle: "بوابة الدفع التفاعلية (وضع المحاكاة الذكي Paymob Sandbox)",
+    mockCheckoutTitle: "بوابة الدفع التفاعلية (وضع المحاكاة التجريبي Paymob Sandbox)",
     paymentMethodsTabs: {
       card: "💳 بطاقة بنكية / ميزة",
       wallet: "📱 محفظة إلكترونية",

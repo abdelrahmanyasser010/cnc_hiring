@@ -4,6 +4,7 @@
 
 import React from "react";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { jobRepo } from "@/infrastructure/container";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
@@ -183,7 +184,10 @@ interface PageProps {
 
 export default async function JobsPage({ searchParams }: PageProps) {
   const resolvedParams = searchParams ? await searchParams : {};
-  const initialTab = resolvedParams.view === "manage" ? "manage" : "public";
+  if (resolvedParams.view === "manage") {
+    redirect("/jobs/manage");
+  }
+  const initialTab = "public";
 
   const session = await getServerSession(authOptions);
   const user = session?.user as { role?: string; id?: string } | undefined;

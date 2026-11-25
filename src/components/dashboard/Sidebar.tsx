@@ -39,8 +39,8 @@ export function Sidebar({ onItemClick }: SidebarProps) {
       icon: LayoutDashboard,
     },
     {
-      title: t.nav.myJobs,
-      path: "/jobs?view=manage",
+      title: user?.role === "SUPER_ADMIN" ? (lang === "ar" ? "إدارة شواغر المصانع" : "Plant Vacancies") : t.nav.myJobs,
+      path: "/jobs/manage",
       icon: Briefcase,
     },
     {
@@ -97,7 +97,10 @@ export function Sidebar({ onItemClick }: SidebarProps) {
       <nav className="flex-1 py-6 px-4 space-y-1 overflow-y-auto">
         {menuItems.map((item) => {
           const Icon = item.icon;
-          const isActive = pathname === item.path || pathname.startsWith(item.path + "/");
+          const isActive = 
+            pathname === item.path || 
+            (item.path !== "/dashboard" && pathname.startsWith(item.path + "/")) ||
+            (item.path === "/jobs/manage" && (pathname === "/jobs/manage" || pathname.startsWith("/jobs/manage/") || pathname === "/jobs/new" || pathname.startsWith("/jobs/") && pathname.endsWith("/applications")));
           
           return (
             <Link

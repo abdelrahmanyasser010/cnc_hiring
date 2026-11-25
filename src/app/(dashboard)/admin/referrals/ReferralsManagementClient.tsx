@@ -13,7 +13,7 @@ import {
   ExternalLink,
   Loader2,
   ChevronDown,
-  Sparkles,
+  Target,
   MessageSquare
 } from "lucide-react";
 import { updateReferralStatusAction } from "@/presentation/actions/admin.actions";
@@ -141,7 +141,7 @@ export default function ReferralsManagementClient({ initialRequests }: Props) {
               {isAr ? "طلبات الترشيح المباشر للكفاءات" : "Direct Candidate Referral Requests"}
             </h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary/10 text-primary border border-primary/20 flex items-center gap-1">
-              <Sparkles className="w-3 h-3" />
+              <Target className="w-3 h-3" />
               {isAr ? "خدمة المطابقة الفنية المباشرة" : "Direct Matching Service"}
             </span>
           </div>

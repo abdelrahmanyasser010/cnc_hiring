@@ -49,7 +49,7 @@ function MockCheckoutContent() {
       <div className="max-w-xl w-full mb-6 text-center">
         <div className="inline-flex items-center gap-2 bg-blue-600/20 text-blue-400 px-4 py-1.5 rounded-full text-sm font-semibold border border-blue-500/30 mb-3">
           <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
-          بوضع المحاكاة الذكي (Paymob Sandbox Mode)
+          بوضع المحاكاة التجريبي (Paymob Sandbox Mode)
         </div>
         <h1 className="text-2xl font-bold text-white">بوابة الدفع الآمنة (Paymob Simulator)</h1>
         <p className="text-slate-400 text-sm mt-1">

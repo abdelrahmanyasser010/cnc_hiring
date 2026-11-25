@@ -103,12 +103,6 @@ export default async function JobDetailsPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950/40">
-      {isMockData && (
-        <div className="bg-amber-500 text-white font-bold text-xs py-2 px-4 text-center">
-          ⚠️ تنبيه بيئة التطوير: يعرض هذا الرابط بيانات وظيفة تجريبية لعدم إمكانية الاتصال بقاعدة البيانات حالياً.
-        </div>
-      )}
-      
       {/* استدعاء المكون التفاعلي وتمرير البيانات */}
       <JobDetailView job={job} />
     </div>
